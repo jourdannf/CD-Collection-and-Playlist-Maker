@@ -25,7 +25,7 @@ export async function PUT(request) {
             `, values);
 
         if (res.command = "UPDATE") {
-            return Response.json('Resource updated', {status: 204});
+            return Response.json(res.rows, {status: 204});
         }else if (res.command = "INSERT") {
             return Response.json('Resource added', {status: 201});
         }
