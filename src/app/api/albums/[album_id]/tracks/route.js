@@ -15,3 +15,24 @@ export async function GET(request, {params}) {
         throw e;
     }
 }
+
+export async function PUT(request) {
+    const values = [request.track_id, request.title, request.album_id, request.track_number];
+    
+    try {
+        const res = await pool.query(`
+            
+            `, values);
+
+        if (res.command = "UPDATE") {
+            return Response.json('Resource updated', {status: 204});
+        }else if (res.command = "INSERT") {
+            return Response.json('Resource added', {status: 201});
+        }
+
+        return Response.json('PUT unsuccessful', {status: 400})
+    } catch (e) {
+        console.log(e);
+        throw e;
+    }
+} 

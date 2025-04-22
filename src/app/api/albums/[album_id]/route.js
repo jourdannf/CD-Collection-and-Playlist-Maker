@@ -27,3 +27,12 @@ export async function DELETE(request, {params}) {
 
     return Response.json(`Resource with album_id ${album_id} deleted from albums table`);
 }
+
+export async function PUT(request) {
+    const {album_id} = await params;
+
+}
+
+export async function PUT() {
+    
+}
