@@ -21,7 +21,7 @@ export async function PUT(request) {
     
     try {
         const res = await pool.query(`
-            
+                update_album_tracks($1, $2, $3, $4)
             `, values);
 
         if (res.command = "UPDATE") {
