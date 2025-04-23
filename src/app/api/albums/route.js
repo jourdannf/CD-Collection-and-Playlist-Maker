@@ -51,6 +51,6 @@ export async function POST(request) {
         return Response.json("Resource already exists", {status:400});
     }
     
-    return Response.json(res.rows[0], {status: 201});
+    return Response.json(res.rows, {status: 201});
 }
 

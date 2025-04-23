@@ -15,7 +15,9 @@ export async function GET() {
 
 export async function POST(request) {
     try{
-        if (typeof request.name != "string") {
+        const req = await request.json();
+
+        if (typeof req.name != "string") {
             return Response.json("Invalid Data", {status: 400});
         }
 

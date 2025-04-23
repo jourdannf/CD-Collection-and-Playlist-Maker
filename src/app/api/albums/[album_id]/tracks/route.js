@@ -23,7 +23,7 @@ export async function PUT(request) {
         const res = await pool.query(`
                 update_album_tracks($1, $2, $3, $4)
             `, values);
-
+ 
         if (res.command = "UPDATE") {
             return Response.json(res.rows, {status: 204});
         }else if (res.command = "INSERT") {
