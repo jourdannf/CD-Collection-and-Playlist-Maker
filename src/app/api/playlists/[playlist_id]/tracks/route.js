@@ -17,13 +17,20 @@ export async function GET(request, {params}) {
     }
 }
 
-export async function POST(request, {params}) {
-    const {playlist_id} = [params];
+/**REQUEST Body has the following format:
+ * {
+ *  tracks[]: list of track id numbers
+ * }
+ */
+export async function PUT(request, {params}) {
+    const {playlist_id} = params;
     const req = await request.json();
 
     try {
 
         let result = [];
+
+        pool.query(`DELETE FROM playlist_tracks WHERE playlist_id = $1`, [playlist_id]);
 
         for (let i = 0; i < req.tracks.length; i ++) {
             const res = await pool.query(`
@@ -31,11 +38,11 @@ export async function POST(request, {params}) {
                 VALUES($1, $2)
                 `, [playlist_id, req.tracks[i]]);
             
-            result.concat(res.rows);
+            result = result.concat(res.rows);
         }
         
 
-        return Response.json(result.rows, {status: 201})
+        return Response.json(result, {status: 201})
     } catch (e) {
         console.log(e);
         throw e;
