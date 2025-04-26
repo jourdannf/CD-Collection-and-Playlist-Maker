@@ -7,10 +7,12 @@ export default function NavBar ({items}) {
     const [active, setActive] = useState(false);
     
     return (
-        <div>
+        <>
+        <ul>
             {items.map((item, i) => {
                 return <NavBarItem key={`${item.name}_${i}`} info={item} state={active} />
             })}
-        </div>
+        </ul>
+        </>
     )
 }
