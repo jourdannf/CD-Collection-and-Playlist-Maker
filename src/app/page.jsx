@@ -3,6 +3,7 @@ import Album from "./components/Album";
 import TextInput from "./components/Input";
 import Select from "./components/Select";
 import FilteredSelect from "./components/FilteredSelect";
+import Ratings from "./components/Ratings";
 import { Field, Label } from "@headlessui/react";
 
 let recentPlays = [];
@@ -99,9 +100,10 @@ export default async function Home() {
         <h4 className="mb-7">Create a Music Log</h4>
         <Field className="bg-push-play-blue-900/18 h-100 rounded-xl pt-7 px-12">
           <Label className="font-semibold">Album</Label>
-          <FilteredSelect options={options} placeholderText={"What album are you reviewing?"}/>
-          <p> My Rating </p>
-          <input type="text" />
+          <FilteredSelect options={options} placeholderText={"What album are you reviewing?"} />
+          <Label> My Rating </Label>
+          <br />
+          <Ratings />
           <p>My Thougts</p>
           <textarea name="" id=""></textarea>
         </Field>
