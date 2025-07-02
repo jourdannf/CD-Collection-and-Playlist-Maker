@@ -1,10 +1,8 @@
 import Image from "next/image";
 import Album from "./components/Album";
-import TextInput from "./components/Input";
-import Select from "./components/Select";
-import FilteredSelect from "./components/FilteredSelect";
-import Ratings from "./components/Ratings";
-import { Field, Label } from "@headlessui/react";
+import MusicLog from "./components/MusicLog";
+
+
 
 let recentPlays = [];
 let options = [];
@@ -96,18 +94,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="col-start-1 col-end-3">
-        <h4 className="mb-7">Create a Music Log</h4>
-        <Field className="bg-push-play-blue-900/18 h-100 rounded-xl pt-7 px-12">
-          <Label className="font-semibold">Album</Label>
-          <FilteredSelect options={options} placeholderText={"What album are you reviewing?"} />
-          <Label> My Rating </Label>
-          <br />
-          <Ratings />
-          <p>My Thougts</p>
-          <textarea name="" id=""></textarea>
-        </Field>
-      </div>
+      <MusicLog className="col-start-1 col-end-3" />
       
       <div className="col-start-1 col-end-2">
           <h4>My Top Three Picks</h4>

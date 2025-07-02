@@ -13,8 +13,6 @@ export default function Ratings () {
     //input:checked ~ label => [&>span[data-checked]~label+svg]
     //label:hover => [&>label+svg:hover]
     //label:hover ~ label => [&>label:hover~label+svg]
-
-    //[&>label>svg:hover]:fill-green-200 [&>label:hover~label>svg]:fill-green-200 [&>label:hover~span[data-checked]~label>svg]:fill-green-200 [&>span[data-checked]+label>svg]:fill-push-play-pale-yellow-500 [&>span[data-checked]~label>svg]:fill-push-play-pale-yellow-500 [&>span[data-checked]~label:hover~label>svg]:fill-blue-100
     
     return (
         <>
