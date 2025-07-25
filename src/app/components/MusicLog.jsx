@@ -1,6 +1,7 @@
 import Ratings from "./Ratings";
-import { Field, Label } from "@headlessui/react";
+import { Field, Label, Textarea } from "@headlessui/react";
 import FilteredSelect from "./FilteredSelect";
+import Button from "./Button";
 
 export default async function MusicLog ({className}) {
     let options = [];
@@ -35,14 +36,24 @@ export default async function MusicLog ({className}) {
     return (
         <div className={className ?? ""}>
             <h4 className="mb-7">Create a Music Log</h4>
-            <Field className="bg-push-play-blue-900/18 h-100 rounded-xl pt-7 px-12">
+            <Field className="bg-push-play-blue-900/18 rounded-xl pt-7 px-12 relative overflow-hidden">
                 <Label className="font-semibold">Album</Label>
+                <br/>
                 <FilteredSelect options={options} placeholderText={"What album are you reviewing?"} />
+                <br />
                 <Label> My Rating </Label>
                 <br />
                 <Ratings />
-                <p>My Thougts</p>
-                <textarea name="" id=""></textarea>
+                <br />
+                <Label>My Thougts</Label>
+                <br />
+                <Textarea className="w-full h-48 bg-push-play-blue-100 border border-push-play-blue-950 rounded-xl resize-none px-4 py-2 mb-5.5" />
+                <Button 
+                    className="float-end mb-6"
+                    variant="primary"
+                >
+                    Log It
+                </Button>
             </Field>
         </div>
     )

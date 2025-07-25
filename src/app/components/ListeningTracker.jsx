@@ -50,7 +50,7 @@ export default function ListeningTracker () {
             <div className="text-center">
             <Image src={imgLink} width="200" height="200" alt="Music user is currently listening to" className="rounded-xl border border-solid" />
             <Select options={options} position={"centered"} changeImg={setImgLink} />
-            <Button text="PLAY" className="bg-push-play-blue-500 hover:bg-push-play-blue-600 rounded-md inset-shadow-[1px_1px,-1px_-2px_push-play-blue-600,-1px_-2px] inset-shadow-push-play-blue-600 hover:inset-shadow-push-play-blue-700 py-1 px-5 text-sm outline-[1.5px] outline-push-play-blue-950 relative bottom-3.5 hover:cursor-pointer" />
+            <Button className="text-sm relative bottom-3.5" variant="primary"> PLAY </Button>
             </div>
         </div>
     )

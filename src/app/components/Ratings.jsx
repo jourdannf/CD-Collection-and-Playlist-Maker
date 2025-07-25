@@ -32,8 +32,8 @@ export default function Ratings () {
                             </Radio>
                             <Label className="float-right text-push-play-pale-yellow-700">
                                 {starType === "full" ? 
-                                <Star size={24} strokeWidth={2}/> : 
-                                <StarHalf width="12" viewBox="0 0 12 24" className="absolute" size={24} strokeWidth={2} />}
+                                <Star size={22} strokeWidth={2}/> : 
+                                <StarHalf width="12" viewBox="0 0 12 24" className="absolute" size={22} strokeWidth={2} />}
                             </Label>
                         </Field>
                     )

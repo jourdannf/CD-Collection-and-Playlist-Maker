@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Album from "./components/Album";
 import MusicLog from "./components/MusicLog";
-
+import TopThreeContainer from "./components/TopThreeContainer";
 
 
 let recentPlays = [];
@@ -98,6 +98,7 @@ export default async function Home() {
       
       <div className="col-start-1 col-end-2">
           <h4>My Top Three Picks</h4>
+          <TopThreeContainer />
       </div>
       <div className="col-start-2 col-end-3">
           <h4>Recent Logs</h4>
