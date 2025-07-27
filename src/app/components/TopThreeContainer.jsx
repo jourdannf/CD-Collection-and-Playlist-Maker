@@ -91,7 +91,7 @@ export default function TopThreeContainer () {
                 
                 }
             </div>
-            <SpeechBubble />
+            <SpeechBubble albumInfo={logs[selected]} />
         </>
     )
 }
