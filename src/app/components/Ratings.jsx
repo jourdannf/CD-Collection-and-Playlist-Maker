@@ -2,7 +2,7 @@ import { Fragment } from "react"
 import { RadioGroup, Radio, Label, Field } from "@headlessui/react"
 import { Star, StarHalf } from "lucide-react"
 
-export default function Ratings () {
+export default function Ratings ({disabled, rating}) {
     const stars = ["full", "half", "full", "half", "full", "half", "full", "half", "full", "half"]
 
     // input:checked + label:hover => [&>span[data-checked]+label>svg:hover]

@@ -88,7 +88,7 @@ export default async function Home() {
         <div className="grid grid-flow-col auto-cols-[19%] overflow-x-scroll">
           {
             testItems?.map((e) => {
-              return <Album key={e.id} albumInfo={e} width="150" height="150" />
+              return <Album key={e.id} variant="showCaption" albumInfo={e} width="150" height="150" className="row-span-1" />
             })
           }
         </div>

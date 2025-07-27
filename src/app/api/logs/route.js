@@ -4,6 +4,7 @@ export async function GET(request, {params}) {
     const searchParams = request.nextUrl.searchParams;
     
     let qSearch = `SELECT
+        music_logs.log_id,
         albums.title,
         albums.release_date,
         albums.album_art,
@@ -20,6 +21,7 @@ export async function GET(request, {params}) {
 
     if (unique) {
         qSearch = `SELECT
+            logs.log_id,
             albums.title,
             albums.release_date,
             albums.album_art,
