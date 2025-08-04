@@ -1,3 +1,4 @@
+import { configDotenv } from "dotenv";
 import Image from "next/image";
 import Album from "./components/Album";
 import MusicLog from "./components/MusicLog";
@@ -58,12 +59,12 @@ export default async function Home() {
       method: "GET"
     }
     try {
-      const res = await fetch('http://localhost:3001/api/history', opts);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/history`, opts);
       const resArray = await res.json();
 
       recentPlays = resArray;
 
-      const albumsRes = await fetch('http://localhost:3001/api/albums', opts);
+      const albumsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/albums`, opts);
       options = await albumsRes.json();
 
     }catch (e) {
@@ -82,7 +83,7 @@ export default async function Home() {
   
   return (
     <>
-    <div className="grid sm:grid-cols-[0.32fr_0.68fr] grid-rows-[0.20fr_544px_0.36fr] mx-11 h-screen overflow-y-scroll">
+    <div className="grid sm:grid-cols-[0.41fr_0.59fr] grid-rows-[0.20fr_544px_0.36fr] mx-11 h-screen overflow-y-scroll pb-28">
       <div className="col-start-1 col-end-3 h-auto mb-24">
         <h4 className="mb-7 pt-7">Recently Played</h4>
         <div className="grid grid-flow-col auto-cols-[19%] overflow-x-scroll">

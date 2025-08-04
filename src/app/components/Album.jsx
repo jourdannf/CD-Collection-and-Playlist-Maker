@@ -1,6 +1,8 @@
 import Image from "next/image";
 
-export default function Album ({variant, albumInfo, width, height, className}) {
+export default function Album ({variant, albumInfo, width, height, className, id}) {
+
+    
     
     const renderAlbum = () => {
         switch (variant) {
@@ -8,8 +10,8 @@ export default function Album ({variant, albumInfo, width, height, className}) {
                 return (
                     <>
                         <Image src={albumInfo.album_art} width={width} height={height} alt={`Picture of album named ${albumInfo.title}`} className="rounded-md" />
-                        <p>{albumInfo.title}</p>
-                        <p>{albumInfo.artist_name}</p>
+                        <p className="text-base/[120%] font-semibold mt-2">{albumInfo.title}</p>
+                        <p className="text-base/[120%]">{albumInfo.artist_name}</p>
                     </>
                 )
             default:

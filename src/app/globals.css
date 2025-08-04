@@ -124,6 +124,10 @@
   
 }
 
+@utility clip-path {
+  clip-path: path("M0,45  Q0,45  3,42 T7,24 T19,4 T25,10 T24,28 T34,36 T45,45  Z");  
+}
+
 body {
   color: var(--foreground);
   background: var(--background);

@@ -33,6 +33,3 @@ export async function PUT(request) {
 
 }
 
-export async function PUT() {
-    
-}

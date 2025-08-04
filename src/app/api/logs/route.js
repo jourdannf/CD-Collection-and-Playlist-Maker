@@ -5,6 +5,7 @@ export async function GET(request, {params}) {
     
     let qSearch = `SELECT
         music_logs.log_id,
+        music_logs.album_id,
         albums.title,
         albums.release_date,
         albums.album_art,
@@ -22,6 +23,7 @@ export async function GET(request, {params}) {
     if (unique) {
         qSearch = `SELECT
             logs.log_id,
+            logs.album_id,
             albums.title,
             albums.release_date,
             albums.album_art,

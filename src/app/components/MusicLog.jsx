@@ -1,7 +1,9 @@
+import { configDotenv } from "dotenv";
 import Ratings from "./Ratings";
 import { Field, Label, Textarea } from "@headlessui/react";
 import FilteredSelect from "./FilteredSelect";
 import Button from "./Button";
+
 
 export default async function MusicLog ({className}) {
     let options = [];
@@ -11,12 +13,12 @@ export default async function MusicLog ({className}) {
         method: "GET"
       }
       try {
-        const res = await fetch('http://localhost:3001/api/history', opts);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/history`, opts);
         const resArray = await res.json();
   
         recentPlays = resArray;
   
-        const albumsRes = await fetch('http://localhost:3001/api/albums', opts);
+        const albumsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/albums`, opts);
         options = await albumsRes.json();
   
       }catch (e) {
