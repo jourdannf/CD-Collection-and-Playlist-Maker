@@ -42,15 +42,21 @@ export async function GET(request, {params}) {
         if (unique) {
             qSearch += "album_id, "
         }
-
-        if (searchParams.get("order") == "ASC") {
-            qSearch += "rating, date_created "
-            
-        }else if (searchParams.get("order") == "DESC") {            
-            qSearch += "rating DESC, date_created " 
-            
+        if (searchParams.get("order") === "ASC") {
+            qSearch += "rating, date_created "           
+        }else if (searchParams.get("order") === "DESC") {            
+            qSearch += "rating DESC, date_created "             
         }
         
+    }else if (searchParams.get("sort") === "createdat") {
+        qSearch += "ORDER BY "
+
+        if (searchParams.get("order") === "ASC") {
+            qSearch += "date_created "
+
+        }else if (searchParams.get("order") === "DESC"){
+            qSearch += "date_created DESC "
+        }
     }
 
     if (searchParams.has("limit")) {

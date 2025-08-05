@@ -1,9 +1,7 @@
-import { configDotenv } from "dotenv";
-import Image from "next/image";
 import Album from "./components/Album";
-import MusicLog from "./components/MusicLog";
+import MusicLogInput from "./components/MusicLogInput";
 import TopThreeContainer from "./components/TopThreeContainer";
-
+import RecentLogsContainer from "./components/RecentLogsContainer";
 
 let recentPlays = [];
 let options = [];
@@ -95,7 +93,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <MusicLog className="col-start-1 col-end-3" />
+      <MusicLogInput className="col-start-1 col-end-3" />
       
       <div className="col-start-1 col-end-2">
           <h4>My Top Three Picks</h4>
@@ -103,6 +101,7 @@ export default async function Home() {
       </div>
       <div className="col-start-2 col-end-3">
           <h4>Recent Logs</h4>
+          {/* <RecentLogsContainer /> */}
       </div>
       
     </div>
