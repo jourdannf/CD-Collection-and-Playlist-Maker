@@ -8,15 +8,15 @@ export default function Album ({variant, albumInfo, width, height, className, id
         switch (variant) {
             case "showCaption":
                 return (
-                    <>
-                        <Image src={albumInfo?.album_art} width={width} height={height} alt={`Picture of album named ${albumInfo.title}`} className="rounded-md" />
+                    <div>
+                        <Image src={albumInfo?.album_art} width={width} height={height} alt={`Picture of album named ${albumInfo.title}`} className={`rounded-md ${className}`} />
                         <p className="text-base/[120%] font-semibold mt-2">{albumInfo?.title}</p>
                         <p className="text-base/[120%]">{albumInfo?.artist_name}</p>
-                    </>
+                    </div>
                 )
             default:
                 return (
-                    <Image src={albumInfo?.album_art} width={width} height={height} alt={`Picture of album named ${albumInfo.title}`} className={`rounded-md ${className}`} />                 
+                    <Image src={albumInfo?.album_art === "" ? null : albumInfo?.album_art} width={width} height={height} alt={`Picture of album named ${albumInfo?.title}`} className={`rounded-md ${className}`}  />                 
                 )
     }
     }
@@ -24,8 +24,8 @@ export default function Album ({variant, albumInfo, width, height, className, id
     
     
     return (
-        <div className={className}>
+        <>
             {renderAlbum()}
-        </div>
+        </>
     );
 }

@@ -96,12 +96,12 @@ export default async function Home() {
       <MusicLogInput className="col-start-1 col-end-3" />
       
       <div className="col-start-1 col-end-2">
-          <h4>My Top Three Picks</h4>
+          <h4 className="mb-6">My Top Three Picks</h4>
           <TopThreeContainer />
       </div>
       <div className="col-start-2 col-end-3">
-          <h4>Recent Logs</h4>
-          {/* <RecentLogsContainer /> */}
+          <h4 className="mb-6">Recent Logs</h4>
+          <RecentLogsContainer />
       </div>
       
     </div>
