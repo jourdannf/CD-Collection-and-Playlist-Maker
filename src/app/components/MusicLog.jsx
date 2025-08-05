@@ -3,7 +3,7 @@ import Ratings from "./Ratings"
 
 export default function MusicLog ({logInfo, imgWidth, imgHeight, type }) {
     return (
-        <div className="flex gap-5 mb-8">
+        <div className="flex gap-5 mb- content-center">
             <Album albumInfo={logInfo} width={imgWidth} height={imgHeight} className="self-start" />
             <div>
                 <p className="font-semibold">{logInfo?.title}</p>
