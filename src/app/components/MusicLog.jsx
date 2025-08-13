@@ -1,9 +1,9 @@
 import Album from "./Album"
 import Ratings from "./Ratings"
 
-export default function MusicLog ({logInfo, imgWidth, imgHeight, type }) {
+export default function MusicLog ({logInfo, imgWidth, imgHeight, type, className }) {
     return (
-        <div className="flex gap-5 mb- content-center">
+        <div className={`flex gap-5 content-center ${className ? className : ""}`}>
             <Album albumInfo={logInfo} width={imgWidth} height={imgHeight} className="self-start" />
             <div>
                 <p className="font-semibold">{logInfo?.title}</p>

@@ -19,13 +19,10 @@ export default async function RecentLogsContainer () {
         throw e;
     }
 
-    console.log(logs)
-
     return (
        <>
-        {logs.map((logInfo) => {  
-            console.log(logInfo)  
-            return <MusicLog key={logInfo.log_id} logInfo={logInfo} imgHeight={118} imgWidth={118} type={"short"} />
+        {logs.map((logInfo) => {    
+            return <MusicLog key={logInfo.log_id} logInfo={logInfo} imgHeight={118} imgWidth={118} type={"short"} className="mb-8" />
         })}
        </>
     )

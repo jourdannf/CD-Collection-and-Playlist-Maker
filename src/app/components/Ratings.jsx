@@ -2,7 +2,7 @@ import { Fragment } from "react"
 import { RadioGroup, Radio, Label, Field } from "@headlessui/react"
 import { Star, StarHalf } from "lucide-react"
 
-export default function Ratings ({disabled, rating, className}) {
+export default function Ratings ({disabled, rating, className, name, required}) {
     const stars = ["full", "half", "full", "half", "full", "half", "full", "half", "full", "half"]
 
     // input:checked + label:hover => [&>span[data-checked]+label>svg:hover]
@@ -55,13 +55,16 @@ export default function Ratings ({disabled, rating, className}) {
             aria-label="Server size" 
             className={`border-0 inline-block relative [&>span[data-checked]+label>svg:hover]:fill-push-play-pale-yellow-300 [&>span[data-checked]~label>svg:hover]:fill-push-play-pale-yellow-300 [&>span[data-checked]~label:hover~label>svg]:fill-push-play-pale-yellow-300 [&>label:hover~span[data-checked]~label>svg]:fill-push-play-pale-yellow-300 [&>span[data-checked]~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:fill-push-play-pale-yellow-500 [&>label:hover~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:cursor-pointer`}
             disabled={disabled}
+            name={name}
         >
             {stars.map((starType, i) => {
                 return (
                     <Field as={Fragment} key={starType+i}>
                         <Radio
+                            as="input"
                             value={`${10-i}`}
                             className="hidden "
+                            required={required}
                         >
                             
                         </Radio>
