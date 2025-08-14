@@ -3,8 +3,7 @@ import { Field, Label, Textarea } from "@headlessui/react";
 import FilteredSelect from "./FilteredSelect";
 import Button from "./Button";
 import Form from "next/form"
-import { createMusicLog } from "@/lib/utils";
-
+import { createMusicLog } from "../actions";
 
 
 export default async function MusicLogInput ({className}) {
@@ -49,7 +48,7 @@ export default async function MusicLogInput ({className}) {
                   <br />
                   <Label>My Thougts</Label>
                   <br />
-                  <Textarea name="body" className="w-full h-48 bg-push-play-blue-100 border border-push-play-blue-950 rounded-xl resize-none px-4 py-2 mb-5.5" required />
+                  <Textarea name="body" className="w-full h-48 bg-push-play-blue-100 border border-push-play-blue-950 rounded-xl resize-none px-4 py-2 mb-5.5 focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700" required />
                   <Button 
                       className="float-end mb-6"
                       variant="primary"

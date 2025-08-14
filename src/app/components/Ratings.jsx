@@ -5,12 +5,12 @@ import { Star, StarHalf } from "lucide-react"
 export default function Ratings ({disabled, rating, className, name, required}) {
     const stars = ["full", "half", "full", "half", "full", "half", "full", "half", "full", "half"]
 
-    // input:checked + label:hover => [&>span[data-checked]+label>svg:hover]
-    // input:checked ~ label:hover => [&>span[data-checked]~label>svg:hover]
-    // input:checked ~ label:hover ~ label => [&>span[data-checked]~label:hover~label>svg]
-    // label:hover ~ input:checked ~ label => [&>label:hover~span[data-checked]~label>svg]
+    // input:checked + label:hover => [&>input[data-checked]+label>svg:hover]
+    // input:checked ~ label:hover => [&>input[data-checked]~label>svg:hover]
+    // input:checked ~ label:hover ~ label => [&>input[data-checked]~label:hover~label>svg]
+    // label:hover ~ input:checked ~ label => [&>label:hover~input[data-checked]~label>svg]
 
-    //input:checked ~ label => [&>span[data-checked]~label+svg]
+    //input:checked ~ label => [&>input[data-checked]~label+svg]
     //label:hover => [&>label+svg:hover]
     //label:hover ~ label => [&>label:hover~label+svg]
 
@@ -53,7 +53,7 @@ export default function Ratings ({disabled, rating, className, name, required}) 
         <RadioGroup 
             defaultValue={''} 
             aria-label="Server size" 
-            className={`border-0 inline-block relative [&>span[data-checked]+label>svg:hover]:fill-push-play-pale-yellow-300 [&>span[data-checked]~label>svg:hover]:fill-push-play-pale-yellow-300 [&>span[data-checked]~label:hover~label>svg]:fill-push-play-pale-yellow-300 [&>label:hover~span[data-checked]~label>svg]:fill-push-play-pale-yellow-300 [&>span[data-checked]~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:fill-push-play-pale-yellow-500 [&>label:hover~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:cursor-pointer`}
+            className={`border-0 inline-block relative [&>input[data-checked]+label>svg:hover]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label>svg:hover]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label:hover~label>svg]:fill-push-play-pale-yellow-300 [&>label:hover~input[data-checked]~label>svg]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:fill-push-play-pale-yellow-500 [&>label:hover~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:cursor-pointer`}
             disabled={disabled}
             name={name}
         >
@@ -64,7 +64,6 @@ export default function Ratings ({disabled, rating, className, name, required}) 
                             as="input"
                             value={`${10-i}`}
                             className="hidden "
-                            required={required}
                         >
                             
                         </Radio>

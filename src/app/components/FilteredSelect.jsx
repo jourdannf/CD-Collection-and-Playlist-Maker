@@ -5,6 +5,7 @@ import { ChevronDown, ChevronLeft } from "lucide-react";
 
 export default function FilteredSelect ({options, placeholderText, name, required}) {
     const [query, setQuery] = useState('');
+    const [selectedItem, setSelectedItem] = useState('');
 
     
     const filteredOptions = query === '' ? options : options.filter((item) => {
@@ -15,13 +16,13 @@ export default function FilteredSelect ({options, placeholderText, name, require
     
     return (
         <>
-            <Combobox name={name ? name : ""} defaultValue={''}  onClose={() => setQuery('')} >
+            <Combobox name={name ? name : ""} value={selectedItem} onChange={setSelectedItem}  onClose={() => setQuery('')} >
                 <div className="relative">
                 <ComboboxInput 
                     placeholder={placeholderText}
                     onChange={(e) => setQuery(e.target.value)}
                     displayValue={(item) => item?.value}
-                    className="w-full rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal "
+                    className="w-full rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 "
                     required={required}
                 />
                 <ComboboxButton className="group absolute right-0 px-2.5 bottom-1 hover:cursor-pointer">
