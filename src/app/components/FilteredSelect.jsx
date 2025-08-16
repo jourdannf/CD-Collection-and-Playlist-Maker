@@ -2,8 +2,9 @@
 import { useState, useEffect } from "react"
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from "@headlessui/react"
 import { ChevronDown, ChevronLeft } from "lucide-react";
+import { useController } from "react-hook-form";
 
-export default function FilteredSelect ({options, placeholderText, name, required}) {
+export default function FilteredSelect ({options, placeholderText, ...others}) {
     const [query, setQuery] = useState('');
     const [selectedItem, setSelectedItem] = useState('');
 
@@ -12,18 +13,21 @@ export default function FilteredSelect ({options, placeholderText, name, require
         return item.value.toLowerCase().includes(query.toLowerCase());
     });
 
-    // console.log(filteredOptions)
+    const {field, fieldState} = useController(others);
     
     return (
         <>
-            <Combobox name={name ? name : ""} value={selectedItem} onChange={setSelectedItem}  onClose={() => setQuery('')} >
+            <Combobox
+                as="div"
+                onClose={() => setQuery('')}
+                {...field}
+            >
                 <div className="relative">
                 <ComboboxInput 
                     placeholder={placeholderText}
                     onChange={(e) => setQuery(e.target.value)}
                     displayValue={(item) => item?.value}
-                    className="w-full rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 "
-                    required={required}
+                    className="w-full rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 "   
                 />
                 <ComboboxButton className="group absolute right-0 px-2.5 bottom-1 hover:cursor-pointer">
                     <ChevronDown/>

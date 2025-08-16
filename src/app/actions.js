@@ -1,45 +1,51 @@
 "use server";
 
-import * as z from "zod"
-
-const MusicLog = z.object({
-    album_id: z.number("Enter an album title in your collection."),
-    body: z.string("Leave a short desciption of your review"),
-    rating: z.number("Leave a rating in between 1 and 5")
-})
+import { MusicLogSchema } from "@/lib/utils/zodSchemas";
 
 async function createMusicLog(formData) {
-      
 
-      // Turn data into an object
-      // Add it to the request body
-      // Make a post fetch
+    const result = MusicLogSchema.safeParse(formData);
+    if (!result.success) {
+        return {
+            status: "error",
+            message: result.error.message
+        }
+    }
 
-      const rating = Number(formData.get('rating')) * .5;
-      const musicLogBody = {
-        album_id: Number(formData.get('album[id]')),
-        body: formData.get('body'),
+    const rating = Number(formData.rating) * .5;
+    const values = {
+        album_id: Number(formData.album.id),
+        body: formData.body,
         rating: rating,
     }
-    const valid = MusicLog.safeParse(musicLogBody);
-    if (!valid.success) {
-
-    }else {
-        //Perform tasks with valid.data
-        const opts = {
-            method: "POST",
-            body: JSON.stringify(valid.data),
-            headers: {
-                "Content-Type": "application/json"
-            }
+    
+    //Perform tasks with valid.data
+    const opts = {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+            "Content-Type": "application/json"
         }
-        
-        const result = fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/albums/${formData.get('album[id]')}/logs`, opts);
-        
-
-        
-
     }
+
+    try {
+        fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/albums/${formData.album.id}/logs`, opts);
+        return {
+            status: "success",
+            message: `New music log succesfully created for ${formData.album.value}`
+        }
+    }catch(e) {
+        return {
+            status: "error",
+            message: e
+        }
+    }
+    
+    
+
+    
+
+    
 }
 
 export {createMusicLog};

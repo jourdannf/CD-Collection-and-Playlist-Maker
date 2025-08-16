@@ -1,8 +1,11 @@
+"use client"
+
 import { Fragment } from "react"
 import { RadioGroup, Radio, Label, Field } from "@headlessui/react"
 import { Star, StarHalf } from "lucide-react"
+import { useController } from "react-hook-form"
 
-export default function Ratings ({disabled, rating, className, name, required}) {
+export default function Ratings ({disabled, rating, className, ...others}) {
     const stars = ["full", "half", "full", "half", "full", "half", "full", "half", "full", "half"]
 
     // input:checked + label:hover => [&>input[data-checked]+label>svg:hover]
@@ -48,6 +51,10 @@ export default function Ratings ({disabled, rating, className, name, required}) 
         )
     }
 
+    const {field, fieldState} = useController(others)
+
+    console.log(field)
+
     return (
         
         <RadioGroup 
@@ -55,7 +62,7 @@ export default function Ratings ({disabled, rating, className, name, required}) 
             aria-label="Server size" 
             className={`border-0 inline-block relative [&>input[data-checked]+label>svg:hover]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label>svg:hover]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label:hover~label>svg]:fill-push-play-pale-yellow-300 [&>label:hover~input[data-checked]~label>svg]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:fill-push-play-pale-yellow-500 [&>label:hover~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:cursor-pointer`}
             disabled={disabled}
-            name={name}
+            {...field}
         >
             {stars.map((starType, i) => {
                 return (

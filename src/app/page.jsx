@@ -81,7 +81,7 @@ export default async function Home() {
   
   return (
     <>
-    <div className="grid sm:grid-cols-[0.41fr_0.59fr] grid-rows-[0.20fr_544px_0.36fr] mx-11 h-screen overflow-y-scroll pb-28">
+    <div className="grid sm:grid-cols-[0.41fr_0.59fr] auto-rows-auto mx-11 h-screen overflow-y-scroll pb-28">
       <div className="col-start-1 col-end-3 h-auto mb-24">
         <h4 className="mb-7 pt-7">Recently Played</h4>
         <div className="grid grid-flow-col auto-cols-[19%] overflow-x-scroll">
@@ -93,7 +93,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <MusicLogInput className="col-start-1 col-end-3" />
+      <MusicLogInput className="col-start-1 col-end-3 mb-24" />
       
       <div className="col-start-1 col-end-2">
           <h4 className="mb-6">My Top Three Picks</h4>

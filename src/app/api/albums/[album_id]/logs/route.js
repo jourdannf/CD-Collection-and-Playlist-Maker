@@ -31,7 +31,7 @@ export async function GET(request, {params}) {
 }
 
 export async function POST(request, {params}) {
-    const {album_id} = params;
+    const {album_id} = await params;
 
     const req = await request.json();
     const body = req.body;
