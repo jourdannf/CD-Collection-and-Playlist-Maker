@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Track from "./Track";
 
-export default function TrackList ({inputVal}) {
+export default function TrackList ({inputVal, className}) {
     const [tracks, setTracks] = useState([]); 
     
     useEffect(() => {
@@ -19,11 +19,11 @@ export default function TrackList ({inputVal}) {
     },[inputVal]);
     
     return (
-        <>
+        <div className={` ${className}`}>
             {tracks.map((track, i) => {
                 console.log(track)
                 return <Track key={track.track_id} trackNum={i+1} title={track.title} length={track.length} artistName={track.artist_name} />;
             })}
-        </>
+        </div>
     )
 }

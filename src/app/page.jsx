@@ -81,7 +81,7 @@ export default async function Home() {
   
   return (
     <>
-    <div className="grid sm:grid-cols-[0.41fr_0.59fr] auto-rows-auto mx-11 h-screen overflow-y-scroll pb-28">
+    <div className="grid sm:grid-cols-[0.41fr_0.59fr] auto-rows-auto min-h-screen overflow-y-scroll pb-28 pl-7">
       <div className="col-start-1 col-end-3 h-auto mb-24">
         <h4 className="mb-7 pt-7">Recently Played</h4>
         <div className="grid grid-flow-col auto-cols-[19%] overflow-x-scroll">

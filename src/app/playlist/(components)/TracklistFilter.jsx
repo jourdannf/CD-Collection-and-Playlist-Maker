@@ -20,7 +20,7 @@ export default function TracklistFilter() {
                 variant="startIcon"
                 handleChange={handleChange}
             />
-            <TrackList query={inputVal} />
+            <TrackList className="mx-8" query={inputVal} />
         </>
     )
 }

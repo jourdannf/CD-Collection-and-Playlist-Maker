@@ -18,10 +18,10 @@ const navItems = [
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="">
 
-      <div className="grid grid-cols-[auto_1fr]">
-        <header className="pl-8 w-[275px] h-screen bg-push-play-blue-900/18 pt-40 overflow-scroll shadow-black/25 shadow-[1px_0px_24px]">
+      <div className="grid grid-cols-[auto_1fr] ">
+        <header className="pl-8 w-[275px] min-h-screen bg-push-play-blue-900/18 pt-40 overflow-scroll shadow-black/25 shadow-[1px_0px_24px]">
           <div>
             <h4 className="text-push-play-blue-800 mb-11">Push Play</h4>
           </div>
@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
           </nav>
           <ListeningTracker />
         </header>
-        <main>
+        <main className="mx-5">
             {children}
         </main>
         
