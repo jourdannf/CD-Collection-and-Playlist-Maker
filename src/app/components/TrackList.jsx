@@ -12,7 +12,7 @@ export default function TrackList ({inputVal, className}) {
         
         (async () => {
             const result = await fetch(fetchString);
-
+            
             setTracks(await result.json());
         })();
         
@@ -22,7 +22,7 @@ export default function TrackList ({inputVal, className}) {
         <div className={` ${className}`}>
             {tracks.map((track, i) => {
                 console.log(track)
-                return <Track key={track.track_id} trackNum={i+1} title={track.title} length={track.length} artistName={track.artist_name} />;
+                return <Track key={track.track_id} trackId={track.track_id} trackNum={i+1} title={track.title} length={track.length} artistName={track.artist_name} />;
             })}
         </div>
     )
