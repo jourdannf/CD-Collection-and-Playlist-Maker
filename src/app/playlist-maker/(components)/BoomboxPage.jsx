@@ -11,7 +11,7 @@ export default function BoomboxPage ({setInsideBoombox, insideBoombox, setSelect
     const [tracks, setTracks] = useState([]);
 
     useEffect(() => {
-        let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&artist`;
+        let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&artist&date`;
 
         //Filter via fetch string here
         

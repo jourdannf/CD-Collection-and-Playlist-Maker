@@ -3,11 +3,24 @@ import pool from "@/lib/db";
 export async function GET(request, {params}) {
 
     const searchParams = request.nextUrl.searchParams;
-    let qSearch = `SELECT * FROM tracks `;
+    let returnItems = "t.track_id, t.title, t.track_number, t.length "
+    const searchArtist = searchParams.has('artist');
+    const searchDate = searchParams.has('date');
+    
+    if (searchArtist) {
+        returnItems += ", a.artist_name "
 
-    if (searchParams.has('artist')) {
-        qSearch = `SELECT t.track_id, t.title, t.track_number, t.length, a.artist_name FROM tracks t
-            JOIN albums b ON t.album_id = b.album_id
+        
+    }
+
+    if (searchDate) {
+        returnItems += ", b.release_date "
+    }
+
+    let qSearch = `SELECT ${returnItems} FROM tracks t `;
+
+    if (searchArtist || searchDate) {
+        qSearch += `JOIN albums b ON t.album_id = b.album_id
             JOIN artists a ON b.artist_id = a.artist_id `;
     }
 
