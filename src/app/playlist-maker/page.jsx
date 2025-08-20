@@ -7,21 +7,17 @@ import BoomboxPage from "./(components)/BoomboxPage";
 
 
 export default function PlaylistMaker () {
-    const [selectedPage, setSelectedPage] = useState('makePlaylist');
+
     const [insideBoombox, setInsideBoombox] = useState([]);
+    const [createPlaylist, setCreatePlaylist] = useState(false);
 
-    const pages = {
-        makePlaylist: <BoomboxPage 
-                        setSelectedPage={setSelectedPage} 
-                        setInsideBoombox={setInsideBoombox} 
-                        insideBoombox={insideBoombox} 
-                    />,
-        playlistCreated: <PlaylistCreatedPage insideBoombox={insideBoombox} />
-    };
-
-    const ActivePage = pages[selectedPage];
     
-    return ActivePage
+    
+    return (
+        <>
+            {createPlaylist ? <PlaylistCreatedPage insideBoombox={insideBoombox} createPlaylist={createPlaylist} /> : <BoomboxPage insideBoombox={insideBoombox} setInsideBoombox={setInsideBoombox} setCreatePlaylist={setCreatePlaylist} />}
+        </>
+    )
 
     
 }

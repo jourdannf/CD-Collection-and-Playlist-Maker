@@ -6,10 +6,10 @@ export default function PlaylistCreatedPage ({insideBoombox}) {
 
     return (
         <div className="text-center content-center h-screen">
-            <h4 className="mb-8">GRAB THESE CDS AND START MIXING</h4>                        
+            <h4 className="mb-8 hidden">GRAB THESE CDS AND START MIXING</h4>                        
             <StackedCDs insideBoombox={insideBoombox} />
-            <Button variant="secondary" className="block mb-2.5 mx-auto">Make Another Mix</Button>
-            <Button variant="secondary" className="block mx-auto">Add To My Collection</Button>
+            <Button variant="secondary" className=" mb-2.5 mx-auto hidden">Make Another Mix</Button>
+            <Button variant="secondary" className="hidden mx-auto">Add To My Collection</Button>
         </div>
     )
 }

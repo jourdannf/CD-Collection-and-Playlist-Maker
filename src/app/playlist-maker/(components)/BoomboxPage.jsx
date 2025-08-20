@@ -6,7 +6,7 @@ import { DndContext } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useEffect, useState } from "react";
 
-export default function BoomboxPage ({setInsideBoombox, insideBoombox, setSelectedPage}) {
+export default function BoomboxPage ({setInsideBoombox, insideBoombox, setCreatePlaylist}) {
     const [inputVal, setInputVal] = useState('');
     const [tracks, setTracks] = useState([]);
 
@@ -38,7 +38,12 @@ export default function BoomboxPage ({setInsideBoombox, insideBoombox, setSelect
     }
 
     function handleClick(e) {
-        setSelectedPage('playlistCreated');
+        if (insideBoombox.length != 0) {
+            setCreatePlaylist(true);
+        }else {
+            //Make component look like something is invalid
+        }
+        
     }
 
     return (
