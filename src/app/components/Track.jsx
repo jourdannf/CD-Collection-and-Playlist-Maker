@@ -8,7 +8,7 @@ import { Draggable } from "gsap/Draggable";
 //Gap between grid columns will be 16
 //Gonna make a template of grids with a min max property
 
-export default function Track({trackId, title, artistName, length, trackNum, useDrag}) {
+export default function Track({trackId, title, artistName, length, trackNum, useDrag, handleDragEnd}) {
     let attr = {className: `h-14 bg-push-play-blue-900/12 mb-5 w-full rounded-lg grid grid-cols-[12px_minmax(250px,_4fr)_minmax(250px,_5fr)_minmax(250px,_1fr)_19px] gap-4 text-base px-4 [&>*]:text-push-play-blue-900 track`};
 
     // if (useDrag) {
@@ -48,18 +48,18 @@ export default function Track({trackId, title, artistName, length, trackNum, use
             }
         }
 
-        function handleDragEnd (e) {
-            if (this.hitTest("#droppableBoombox")) {
+        // function handleDragEnd (e) {
+        //     if (this.hitTest("#droppableBoombox")) {
                 
-            }else {
-                gsap.to(this.target, {
-                    x: 0,
-                    y: 0,
-                    duration: 2,
-                    ease:'elastic.out(.45)'
-                })
-            }
-        }
+        //     }else {
+        //         gsap.to(this.target, {
+        //             x: 0,
+        //             y: 0,
+        //             duration: 2,
+        //             ease:'elastic.out(.45)'
+        //         })
+        //     }
+        // }
 
         if (useDrag) {
             Draggable.create(".track", {
@@ -72,6 +72,7 @@ export default function Track({trackId, title, artistName, length, trackNum, use
     return (
         <div 
             {...attr}
+            data-track-id={trackId}
         >
             <div className="flex items-center">
                 <p>{trackNum}</p>
