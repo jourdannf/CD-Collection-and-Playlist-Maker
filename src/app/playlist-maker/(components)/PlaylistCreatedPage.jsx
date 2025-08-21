@@ -1,9 +1,20 @@
-import StackedCDs from "./StackedCDs"
-import Button from "@/app/components/Button"
+import StackedCDs from "./StackedCDs";
+import Button from "@/app/components/Button";
 
 
 export default function PlaylistCreatedPage ({insideBoombox, createPlaylist}) {
     //insideBoombox is a list of tracks that were inserted inside boombox
+
+    let uniqueAlbums = [];
+
+    insideBoombox = insideBoombox.filter((track, i) => {
+        if (uniqueAlbums.includes(track.album_title)) {
+            return false;
+        }else {
+            uniqueAlbums.push(track.album_title);
+            return true;
+        }
+    })
 
     return (
         <div className="text-center content-center h-screen">

@@ -1,12 +1,17 @@
-import InputText from "@/app/components/InputText"
-import { Search } from "lucide-react"
-import TrackList from "@/app/components/TrackList"
+"use client";
 
-export default function TracklistFilter({inputVal, setInputVal, tracks}) {
+import InputText from "@/app/components/InputText";
+import { Search } from "lucide-react";
+import TrackList from "@/app/components/TrackList";
+import { useRef } from "react";
+
+export default function TracklistFilter({inputVal, setInputVal, tracks, setTracks}) {
 
     function handleChange(e) {
         setInputVal(e.target.value);
     }
+
+    
     
     return(
         <>
@@ -17,7 +22,7 @@ export default function TracklistFilter({inputVal, setInputVal, tracks}) {
                 variant="startIcon"
                 handleChange={handleChange}
             />
-            <TrackList className="mx-8" query={inputVal} tracks={tracks} />
+            <TrackList className="mx-8" query={inputVal} tracks={tracks} setTracks={setTracks} />
         </>
     )
 }
