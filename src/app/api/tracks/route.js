@@ -12,6 +12,11 @@ export async function GET(request, {params}) {
             JOIN artists a ON b.artist_id = a.artist_id `;
     }
 
+    if (searchParams.has("search") && searchParams.get("serach") != "") {
+        const query = searchParams.get("search");
+
+        qSearch += `WHERE t.title ILIKE '${query}%' OR a.artist_name ILIKE '${query}%' `
+    }
     
     if (searchParams.get('order') === "random") {
         qSearch += `ORDER BY RANDOM() `
