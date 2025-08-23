@@ -5,7 +5,6 @@ export async function GET(request, {params}) {
     const searchParams = request.nextUrl.searchParams;
     let qSearch = `SELECT * FROM tracks `;
 
-
     if (searchParams.has('album-details')) {
         qSearch = `SELECT t.track_id, t.title, t.track_number, t.length, b.title as album_title, a.artist_name, b.release_date FROM tracks t
             JOIN albums b ON t.album_id = b.album_id
@@ -33,10 +32,14 @@ export async function GET(request, {params}) {
     }
 
     try {
+        await pool.query("BEGIN");
+        await pool.query('SELECT setseed($1)', [0.5]);
         const res = await pool.query(qSearch);
+        await pool.query("COMMIT");
 
         return Response.json(res.rows, {status: 200});
     }catch (e) {
+        await pool.query("ROLLBACK")
         throw e;
     }
 
