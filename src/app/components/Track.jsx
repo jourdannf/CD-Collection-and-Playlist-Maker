@@ -1,6 +1,5 @@
 "use client"
 import { Heart } from "lucide-react"
-import { useDraggable } from "@dnd-kit/core"
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Draggable } from "gsap/Draggable";
@@ -8,8 +7,8 @@ import { Draggable } from "gsap/Draggable";
 //Gap between grid columns will be 16
 //Gonna make a template of grids with a min max property
 
-export default function Track({trackId, title, artistName, length, trackNum, useDrag, handleDragEnd, handleDrag, containerID}) {
-    let attr = {className: `h-14 bg-push-play-blue-900/12 mb-5 w-full rounded-lg grid grid-cols-[12px_minmax(250px,_4fr)_minmax(250px,_5fr)_minmax(250px,_1fr)_19px] gap-4 text-base px-4 [&>*]:text-push-play-blue-900 track`};
+export default function Track({trackId, title, artistName, length, trackNum, useDrag, handleDragEnd, handleDrag, containerID, ref}) {
+    let attr = {className: `h-14 bg-push-play-blue-900/12 w-full rounded-lg grid grid-cols-[12px_minmax(250px,_4fr)_minmax(250px,_5fr)_minmax(250px,_1fr)_19px] gap-x-4 text-base px-4 text-push-play-blue-900 track `};
 
 
     gsap.registerPlugin(Draggable, useGSAP);
@@ -27,6 +26,7 @@ export default function Track({trackId, title, artistName, length, trackNum, use
         <div 
             {...attr}
             data-track-id={trackId}
+            ref={ref}
         >
             <div className="flex items-center">
                 <p>{trackNum}</p>

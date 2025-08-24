@@ -130,8 +130,11 @@
 
 html {
   color: var(--foreground);
-  background: var(--background);
+  /* background: var(--background); */
   font-family: "Signika", sans-serif;
-  min-height: 100%;
+  
 }
 
+body {
+  @apply min-h-screen m-0 bg-linear-to-b from-white via-[#EEF4FF] via-51% to-push-play-blue-600 overflow-y-auto bg-no-repeat bg-fixed
+}

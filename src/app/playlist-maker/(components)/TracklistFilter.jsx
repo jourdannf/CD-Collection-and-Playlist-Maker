@@ -3,13 +3,18 @@
 import InputText from "@/app/components/InputText";
 import { Search } from "lucide-react";
 import TrackList from "@/app/components/TrackList";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useInView } from "react-intersection-observer";
 import gsap from "gsap";
 
 export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     const [inputVal, setInputVal] = useState('');
     const [tracks, setTracks] = useState([]);
     const [initialResult, setInitialResult] = useState([]);
+
+    const containerRef = useRef(null);
+
+    const [trackRef, inView, entry] = useInView({threshold: 0.1});
 
     useEffect(() => {
         let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=7&search=${inputVal}`;
@@ -30,13 +35,16 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
 
     }, [inputVal]);
 
+    useEffect(() => {
+        console.log(`The tracklist div is in view with threshold of 90%: ${inView}`)
+    },[inView])
+
     function handleDragEnd(e) {  
-        //Find e.over.id in the tracks, provide it to new array and delete it from the list of tracks
-        gsap.to(this.target, {
+        gsap.to(this.target, {//Changes track color back to normal after drag is over
             backgroundColor: "rgba(0, 31, 92, 0.12)"
         });
 
-        if (this.hitTest("#droppableBoombox")) {
+        if (this.hitTest("#droppableBoombox")) { // removes track from list 
             setTracks(tracks.filter((track) => {
                 if (track.track_id === Number(this.target.dataset.trackId)) {
                     setInsideBoombox([...insideBoombox, track]);
@@ -101,7 +109,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
                 variant="startIcon"
                 handleChange={handleChange}
             />
-            <TrackList className="mx-8" query={inputVal} tracks={tracks} handleDragEnd={handleDragEnd} handleDrag={handleDrag} />
+            <TrackList ref={trackRef} containerRef={containerRef} className="mx-8 " query={inputVal} tracks={tracks} handleDragEnd={handleDragEnd} handleDrag={handleDrag} />
         </>
     )
 }
