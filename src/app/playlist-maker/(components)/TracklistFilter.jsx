@@ -22,6 +22,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
             event: {}
         }
     );
+    const [databaseEmpty, setDatabseEmpty] = useState({valid: false, message: ""});
 
     const [trackRef, inView, entry] = useInView({threshold: 0.1});
     const containerRef = useRef(null);
@@ -39,7 +40,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
         
         (async () => {
             const result = await fetch(fetchString);
-            const tracksResult = await result.json()
+            const tracksResult = await result.json();
             if (initialResult.length === 0 && inputVal === '') { // no intial result and no input value initializies initial result
                 setInitialResult(tracksResult);
             }
@@ -49,17 +50,23 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     }, [inputVal]);
 
     useEffect(() => {
-        let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=7&search=${inputVal}&offset=${offset}`
+        let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=7&search=${inputVal}&offset=${offset.current}`
 
-        if (inView) {
+        if (inView && !databaseEmpty.valid) {// if you're at the last track in the list and there are more songs to load
             (async () => {
                 try {
                     const result = await fetch(fetchString);
                     const additionalTracks = await result.json();
-                    setTracks([...tracks, additionalTracks]);
 
-                    if (inputVal === '') {
-                        setInitialResult([...tracks, additionalTracks]);
+                    if (additionalTracks.length !== 0) {
+                        setTracks([...tracks, ...additionalTracks]);
+                        offset.current += 1;
+
+                        if (inputVal === '') { // no input value adds on to the intial result that should be reverted to if search is empty
+                            setInitialResult([...tracks, ...additionalTracks]);
+                        }
+                    }else {
+                        setDatabseEmpty({valid: true, message: "There are no more songs in your database"})
                     }
 
                 }catch (e) {
@@ -67,7 +74,6 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
                 }
             })();
         }
-
         
     },[inView])
 
