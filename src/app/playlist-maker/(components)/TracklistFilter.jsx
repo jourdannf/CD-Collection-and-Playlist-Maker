@@ -5,13 +5,15 @@ import { Search } from "lucide-react";
 import TrackList from "@/app/components/TrackList";
 import Track from "@/app/components/Track";
 import { useState, useEffect, useRef } from "react";
+import { useDebounce } from "use-debounce";
 import { useInView } from "react-intersection-observer";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 
 export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
-    const [inputVal, setInputVal] = useState('');
+    const [search, setSearch] = useState('');
+    const [inputVal] = useDebounce(search,200);
     const [tracks, setTracks] = useState([]);
     const [initialResult, setInitialResult] = useState([]);
     const [draggedTrack, setDraggedTrack] = useState(
@@ -101,7 +103,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
                     console.log(track.track_id !== Number(this.target.dataset.trackId))
                     return track.track_id !== Number(this.target.dataset.trackId)
                 }));
-                setInputVal("");
+                setSearch("");
             }
 
             gsap.to("#droppableBoombox", {
@@ -168,7 +170,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     }
     
     function handleChange(e) {
-        setInputVal(e.target.value);
+        setSearch(e.target.value);
     }
     
     //How To Execute Drag and Drop Outside of Scroll Div
@@ -186,13 +188,13 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
                     icon={<Search  size={17} strokeWidth={2.5} />}
                     variant="startIcon"
                     handleChange={handleChange}
-                    inputVal={inputVal}
+                    inputVal={search}
                 />
             </div>
             
             <div className="relative top-11" >
                 {draggedTrack && <Track className="clone absolute" track={draggedTrack.track} trackNum={draggedTrack.trackNum} clone={draggedTrack} handleDrag={handleDrag} handleDragEnd={handleDragEnd} draggedTrack={draggedTrack} />}
-                <TrackList ref={trackRef} query={inputVal} tracks={tracks} handleDragEnd={handleDragEnd} handleDrag={handleDrag} setDraggedTrack={setDraggedTrack} containerRef={containerRef} cropped databaseEmpty={databaseEmpty} />
+                <TrackList ref={trackRef} tracks={tracks} handleDragEnd={handleDragEnd} handleDrag={handleDrag} setDraggedTrack={setDraggedTrack} containerRef={containerRef} cropped databaseEmpty={databaseEmpty} />
                 
             </div>
 
