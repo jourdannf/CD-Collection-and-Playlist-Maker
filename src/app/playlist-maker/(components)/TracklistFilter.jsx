@@ -17,7 +17,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     const [draggedTrack, setDraggedTrack] = useState(
         {
             track: {},
-            trackNum: 0,
+            trackNum: 1,
             offset: 0,
             event: {}
         }
@@ -27,11 +27,13 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     const [trackRef, inView, entry] = useInView({threshold: 0.1});
     const containerRef = useRef(null);
     const offset = useRef(1);
+    const numberOfItems = 10;
 
     gsap.registerPlugin(useGSAP);
 
     useEffect(() => { // deal w search inputs
-        let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=7&search=${inputVal}`;
+        
+        let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=${numberOfItems}&search=${inputVal}`;
 
         if (databaseEmpty.valid) {
             setDatabseEmpty({valid: false, message: ""});
@@ -53,7 +55,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     }, [inputVal]);
 
     useEffect(() => { // load more on scroll
-        let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=7&search=${inputVal}&offset=${offset.current}`
+        let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=${numberOfItems}&search=${inputVal}&offset=${offset.current}`
 
         if (inView && !databaseEmpty.valid) {// if you're at the last track in the list and there are more songs to load
             (async () => {
@@ -69,7 +71,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
                             setInitialResult([...tracks, ...additionalTracks]);
                         }
                     }else {
-                        setDatabseEmpty({valid: true, message: "There are no more songs in your database"})
+                        setDatabseEmpty({valid: true, message: "There are no more songs in your collection"})
                     }
 
                 }catch (e) {
@@ -181,7 +183,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
                 <InputText 
                     className={`w-96 h-8`} 
                     placeholder="What song did you want to add?"
-                    icon={<Search className="absolute top-0" size={17} strokeWidth={3} />}
+                    icon={<Search  size={17} strokeWidth={2.5} />}
                     variant="startIcon"
                     handleChange={handleChange}
                     inputVal={inputVal}
@@ -190,8 +192,11 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
             
             <div className="relative top-11" >
                 {draggedTrack && <Track className="clone absolute" track={draggedTrack.track} trackNum={draggedTrack.trackNum} clone={draggedTrack} handleDrag={handleDrag} handleDragEnd={handleDragEnd} draggedTrack={draggedTrack} />}
-                <TrackList ref={trackRef} query={inputVal} tracks={tracks} handleDragEnd={handleDragEnd} handleDrag={handleDrag} setDraggedTrack={setDraggedTrack} containerRef={containerRef} cropped />
+                <TrackList ref={trackRef} query={inputVal} tracks={tracks} handleDragEnd={handleDragEnd} handleDrag={handleDrag} setDraggedTrack={setDraggedTrack} containerRef={containerRef} cropped databaseEmpty={databaseEmpty} />
+                
             </div>
+
+            
         </div>
     )
 }

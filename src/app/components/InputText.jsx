@@ -7,17 +7,17 @@ export default function InputText ({placeholder, variant, name, icon, className,
 
     return (
         <>
-            <div className={`relative ${className}`}>
+            <div className={`relative items-center ${className}`}>
                 <Input
                     id="boomboxSearch"
-                    className={`bg-push-play-blue-100 border border-push-play-blue-950 rounded-xl focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 w-[inherit] h-[inherit] pl-5` }
+                    className={`bg-push-play-blue-100 border border-push-play-blue-950 rounded-xl focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 w-[inherit] h-[inherit] pl-8` }
                     placeholder={placeholder} 
                     name={name ? name : ""} 
                     type="text"
                     onChange={handleChange}
                     value={inputVal}
                 />
-                {variant == "startIcon" && icon}
+                <div className="absolute left-3 top-2">{variant == "startIcon" && icon}</div>
             </div>
         </>
     )

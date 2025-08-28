@@ -15,9 +15,6 @@ export default function Track({track, trackNum, useDrag, handleDragEnd, handleDr
     gsap.registerPlugin(Draggable, useGSAP);
     useGSAP(() => { //handling the drag of the clone
         if (clone) {         
-            gsap.set(".clone", {
-                top: clone.offset
-            })
 
             dragElem = Draggable.create(".clone", {
                 onDragStart: () => {
@@ -38,7 +35,13 @@ export default function Track({track, trackNum, useDrag, handleDragEnd, handleDr
                     visibility: "hidden",
                     opactiy: 0
                 })
+            }else {
+                gsap.set(".clone", {
+                top: clone.offset,
+            })
             }
+
+            
 
             if (Object.keys(e).length !== 0) {//If there's an intiializing event, start the drag immediately
                 dragElem[0].startDrag(clone.event)
