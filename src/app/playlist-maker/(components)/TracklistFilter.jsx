@@ -77,8 +77,6 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
         
     },[inView])
 
-    const {contextSafe} = useGSAP();
-
     function handleDragEnd (e) {
         gsap.to(this.target, {//Changes track color back to normal after drag is over
             backgroundColor: "rgba(0, 31, 92, 0.12)",
@@ -92,6 +90,13 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
 
                 return track.track_id != this.target.dataset.trackId;
             }));
+
+            if (inputVal != "") {
+                setTracks(initialResult.filter(track => {
+                    return track.track_id !== Number(this.target.dataset.trackId)
+                }));
+                setInputVal("");
+            }
 
             gsap.to("#droppableBoombox", {
                 rotation: 0,
@@ -155,8 +160,6 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
             })
         }
     }
-
-    
     
     function handleChange(e) {
         setInputVal(e.target.value);
@@ -169,18 +172,22 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     //When the drag is over, the element will ease back into it's intial place, the state variable will be updated to null, and then the former element display will be set to hidden
     
     return(
-        <>
-            <InputText 
-                className={`w-96 h-8 mb-11 `} 
-                placeholder="What song did you want to add?"
-                icon={<Search className="absolute top-0" size={17} strokeWidth={3} />}
-                variant="startIcon"
-                handleChange={handleChange}
-            />
-            <div className="mx-8 relative" >
+        <div className="relative mx-8">
+            <div className="absolute right-0">
+                <InputText 
+                    className={`w-96 h-8`} 
+                    placeholder="What song did you want to add?"
+                    icon={<Search className="absolute top-0" size={17} strokeWidth={3} />}
+                    variant="startIcon"
+                    handleChange={handleChange}
+                    inputVal={inputVal}
+                />
+            </div>
+            
+            <div className="relative top-11" >
                 {draggedTrack && <Track className="clone absolute" track={draggedTrack.track} trackNum={draggedTrack.trackNum} clone={draggedTrack} handleDrag={handleDrag} handleDragEnd={handleDragEnd} draggedTrack={draggedTrack} />}
                 <TrackList ref={trackRef} query={inputVal} tracks={tracks} handleDragEnd={handleDragEnd} handleDrag={handleDrag} setDraggedTrack={setDraggedTrack} containerRef={containerRef} cropped />
             </div>
-        </>
+        </div>
     )
 }
