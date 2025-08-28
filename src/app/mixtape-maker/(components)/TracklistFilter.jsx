@@ -13,7 +13,7 @@ import gsap from "gsap";
 
 export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     const [search, setSearch] = useState('');
-    const [inputVal] = useDebounce(search,200);
+    const [inputVal] = useDebounce(search, 200);
     const [tracks, setTracks] = useState([]);
     const [initialResult, setInitialResult] = useState([]);
     const [draggedTrack, setDraggedTrack] = useState(
@@ -34,7 +34,6 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     gsap.registerPlugin(useGSAP);
 
     useEffect(() => { // deal w search inputs
-        
         let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=${numberOfItems}&search=${inputVal}`;
 
         if (databaseEmpty.valid) {
@@ -47,7 +46,16 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
         
         (async () => {
             const result = await fetch(fetchString);
-            const tracksResult = await result.json();
+            let tracksResult = await result.json();
+
+            if (inputVal !== "") { // Removes what's inside the boombox from the serach filter
+                tracksResult = tracksResult.filter(track => {                
+                    return insideBoombox.some(boomboxSong => {
+                        return boomboxSong.track_id !== track.track_id
+                    });
+                });
+            }
+            
             if (initialResult.length === 0 && inputVal === '') { // no intial result and no input value initializies initial result
                 setInitialResult(tracksResult);
             }
@@ -98,11 +106,11 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
                 return track.track_id != this.target.dataset.trackId;
             }));
 
+            setInitialResult(initialResult.filter(track => {
+                return track.track_id !== Number(this.target.dataset.trackId)
+            }));
+
             if (inputVal != "") {
-                setTracks(initialResult.filter(track => {
-                    console.log(track.track_id !== Number(this.target.dataset.trackId))
-                    return track.track_id !== Number(this.target.dataset.trackId)
-                }));
                 setSearch("");
             }
 
@@ -178,8 +186,12 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     //Pass this state variable to every track. If the track is being dragged, then the state variable will update upon press
     //When a track is pressed, it will be invisible and the same element will be placed in the outer div that's not hidden using the state variable
     //When the drag is over, the element will ease back into it's intial place, the state variable will be updated to null, and then the former element display will be set to hidden
+
+    
+    
     
     return(
+        
         <div className="relative mx-8">
             <div className="absolute right-0">
                 <InputText 

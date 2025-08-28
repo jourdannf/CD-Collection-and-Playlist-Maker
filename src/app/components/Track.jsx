@@ -32,8 +32,7 @@ export default function Track({track, trackNum, useDrag, handleDragEnd, handleDr
 
             if (Object.keys(track).length === 0) {
                 gsap.set(".clone", {
-                    visibility: "hidden",
-                    opactiy: 0
+                    visibility: "hidden"
                 })
             }else {
                 gsap.set(".clone", {
