@@ -30,9 +30,12 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
 
     gsap.registerPlugin(useGSAP);
 
-    useEffect(() => {
+    useEffect(() => { // deal w search inputs
         let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=7&search=${inputVal}`;
 
+        if (databaseEmpty.valid) {
+            setDatabseEmpty({valid: false, message: ""});
+        }
         if (initialResult.length != 0 && inputVal === '') {
             setTracks(initialResult);
             return;
@@ -49,7 +52,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
 
     }, [inputVal]);
 
-    useEffect(() => {
+    useEffect(() => { // load more on scroll
         let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&album-details&limit=7&search=${inputVal}&offset=${offset.current}`
 
         if (inView && !databaseEmpty.valid) {// if you're at the last track in the list and there are more songs to load
@@ -93,6 +96,7 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
 
             if (inputVal != "") {
                 setTracks(initialResult.filter(track => {
+                    console.log(track.track_id !== Number(this.target.dataset.trackId))
                     return track.track_id !== Number(this.target.dataset.trackId)
                 }));
                 setInputVal("");
