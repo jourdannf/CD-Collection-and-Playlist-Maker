@@ -9,7 +9,7 @@ export default function AlbumCard ({albumInfo, width, height, size}) {
             </div>
 
             <div className ={""}>
-                <p className="text-lg font-semibold mt-2">{albumInfo?.title}</p>
+                <p className="text-lg font-semibold ">{albumInfo?.title}</p>
                 <p className="text-lg ">{albumInfo?.artist_name}</p>
             </div>
             
