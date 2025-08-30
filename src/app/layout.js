@@ -12,7 +12,7 @@ const navItems = [
   {name: "Dashboard"},
   {name: "My Collection"},
   {name: "My Wishlist"},
-  {name: "Playlist Maker"}
+  {name: "Mixtape Maker"}
 ]
 
 export default function RootLayout({ children }) {
@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
           </nav>
           <ListeningTracker />
         </header>
-        <main className="mx-5 h-screen overflow-y-auto">
+        <main className="mx-5 h-screen overflow-y-auto p-13">
             {children}
         </main>
         

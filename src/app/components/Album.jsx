@@ -16,7 +16,7 @@ export default function Album ({variant, albumInfo, width, height, className, id
                 )
             default:
                 return (
-                    <Image src={albumInfo?.album_art === "" ? null : albumInfo?.album_art} width={width} height={height} alt={`Picture of album named ${albumInfo?.title}`} className={`rounded-md ${className}`}  />                 
+                    <Image src={albumInfo?.album_art} width={width} height={height} alt={`Picture of album named ${albumInfo?.title}`} className={`rounded-md ${className}`}  />                 
                 )
     }
     }

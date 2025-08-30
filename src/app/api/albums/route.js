@@ -1,13 +1,48 @@
 import pool from "@/lib/db";
 
-export async function GET() {
-    const res = await pool.query('SELECT * FROM albums');
+export async function GET(request, {params}) {
 
-    if (res.rows.length == 0) {
-        return Response.json('', {status: 400});
+    const searchParams = request.nextUrl.searchParams;
+    let fetchString = `
+        SELECT 
+            album_id,
+            title,
+            release_date,
+            rating,
+            album_art,
+            artist_name,
+            in_library,
+            has_photobook,
+            medium,
+            plays
+        FROM albums 
+        JOIN artists ON albums.artist_id = artists.artist_id `;
+
+    if (searchParams.has("limit")) {
+        let offsetVal = 0;
+
+        if (searchParams.has("offset")){
+            offsetVal = Number(searchParams.get("limit")) * Number(searchParams.get("offset"))
+        }
+
+        fetchString += `LIMIT ${searchParams.get("limit")} OFFSET ${String(offsetVal)} `;
     }
 
-    return Response.json(res.rows, {status: 200});
+    try {
+        const res = await pool.query(fetchString);
+
+        if (res.rows.length == 0) {
+            return Response.json('', {status: 400});
+        }
+
+        return Response.json(res.rows, {status: 200});
+
+    }catch (e) {
+        throw e
+    }
+    
+
+    
 }
 
 export async function POST(request) {
