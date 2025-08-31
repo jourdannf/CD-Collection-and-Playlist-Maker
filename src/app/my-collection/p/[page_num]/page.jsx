@@ -3,20 +3,16 @@ import AlbumsPage from "../../AlbumsPage";
 import InputText from "@/app/components/InputText";
 import fetchAlbums from "@/lib/utils/fetchAlbums";
 
-export default async function MyCollectionPage ({params}) {
-
-    //When you reach page 10, you need to call for 90 more albums
-    // (page_num)%10 = 0 means you need to fetch the next set of albums
-    //Every time the page number is divisibile by 10, you should add one to an offset
-
+export default async function MyCollectionPage ({params, searchParams}) {
     const {page_num} = await params;
+    const {query} = await searchParams;
 
     let albums = [];
+    const limit = 90;
+    const offset = albums.length / limit; 
 
-    if (page_num % 10 === 1) {
+    if (page_num % 10 === 1 && !query) {
         //fetch the albums and push onto array
-        const limit = 90;
-        const offset = albums.length / limit;
         albums.push(...(await fetchAlbums(limit, offset)));
     }
 

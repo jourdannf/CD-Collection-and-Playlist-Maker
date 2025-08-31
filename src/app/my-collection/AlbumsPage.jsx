@@ -3,9 +3,7 @@ import Album from "@/app/components/Album";
 import AlbumCard from "../components/AlbumCard";
 
 export default async function AlbumsPage ({pageNum, albums}) {
-    // Fetch 90 albums from the database => 10 pages of albums if I do 9 albums each page
-    // When I reach album number 90 fetch the next instance of albums
-    // Means that albums shouldn't be fetched in this page but the albums should just be fed to this page
+    // feed all the params and functions here and make this a server component
 
     return (
         <>

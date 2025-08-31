@@ -142,16 +142,6 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
                 visibility: "hidden"
             });
 
-            // gsap.set(".clone", {// hides draggable instance
-            //     opacity: 0,
-            //     visibility: "hidden"
-            // })
-
-            // gsap.set(".track", { // returns track to static form
-            //     opacity: 1,
-            //     visibility: "visible"
-            // })
-
         }
     
     }
@@ -186,9 +176,6 @@ export default function TracklistFilter({setInsideBoombox, insideBoombox}) {
     //Pass this state variable to every track. If the track is being dragged, then the state variable will update upon press
     //When a track is pressed, it will be invisible and the same element will be placed in the outer div that's not hidden using the state variable
     //When the drag is over, the element will ease back into it's intial place, the state variable will be updated to null, and then the former element display will be set to hidden
-
-    
-    
     
     return(
         

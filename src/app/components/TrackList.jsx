@@ -1,7 +1,10 @@
 "use client"
 import Track from "./Track";
+import { useInView } from "react-intersection-observer";
 
 export default function TrackList ({className, tracks, handleDragEnd, handleDrag, cropped, draggedTrack, setDraggedTrack, databaseEmpty, ...refs}) {
+    const [ref, inView, entry] = useInView({threshold: 0.1});
+
 
     return (
         <div ref={refs.containerRef} id="tracklist" className={`space-y-5 ${cropped ? "h-[325px] overflow-y-scroll" : ""} ${className}`}>
