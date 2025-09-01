@@ -1,21 +1,21 @@
-"use client";
-
 import PlaylistCreatedPage from "./(components)/PlaylistCreatedPage";
-import { useState } from "react";
+// import { useState } from "react";
 
 import BoomboxPage from "./(components)/BoomboxPage";
 
 
-export default function PlaylistMaker () {
+export default function MixtapeMakerPage () {
 
-    const [insideBoombox, setInsideBoombox] = useState([]);
-    const [createPlaylist, setCreatePlaylist] = useState(false);
+    // const [insideBoombox, setInsideBoombox] = useState([]);
+    // const [createPlaylist, setCreatePlaylist] = useState(false);
 
     
     
     return (
         <>
-            {createPlaylist ? <PlaylistCreatedPage insideBoombox={insideBoombox} createPlaylist={createPlaylist} /> : <BoomboxPage insideBoombox={insideBoombox} setInsideBoombox={setInsideBoombox} setCreatePlaylist={setCreatePlaylist} />}
+            {/* {createPlaylist ? <PlaylistCreatedPage insideBoombox={insideBoombox} createPlaylist={createPlaylist} /> : <BoomboxPage insideBoombox={insideBoombox} setInsideBoombox={setInsideBoombox} setCreatePlaylist={setCreatePlaylist} />} */}
+
+            <BoomboxPage />
         </>
     )
 

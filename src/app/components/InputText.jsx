@@ -2,8 +2,12 @@
 import { Input } from "@headlessui/react"
 import { useState } from "react"
 
-export default function InputText ({placeholder, variant, name, icon, className, handleChange, inputVal }) {
-    
+export default function InputText ({placeholder, variant, name, icon, className, inputVal }) {
+    //handle change in it's own function and update search params based on it?
+
+    function handleChange (e) {
+        
+    }
 
     return (
         <>

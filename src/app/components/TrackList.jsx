@@ -1,18 +1,21 @@
-"use client"
 import Track from "./Track";
-import { useInView } from "react-intersection-observer";
+import DraggableTrackWrapper from "../mixtape-maker/(components)/DraggableTrackWrapper";
+import { DraggableTracklistContext } from "@/lib/utils/DraggableTracklistProvider";
 
 export default function TrackList ({className, tracks, handleDragEnd, handleDrag, cropped, draggedTrack, setDraggedTrack, databaseEmpty, ...refs}) {
-    const [ref, inView, entry] = useInView({threshold: 0.1});
 
+    // get tracks on your own by calling fetchTracks
+    
 
     return (
-        <div ref={refs.containerRef} id="tracklist" className={`space-y-5 ${cropped ? "h-[325px] overflow-y-scroll" : ""} ${className}`}>
+        <div ref={refs.containerRef} id="tracklist" className={`space-y-5 ${className}`}>
             {tracks.map((track, i) => {
                 if (cropped) {
                     
                     return (
-                        <Track key={track.track_id} ref={i == tracks.length -1 ? refs.ref : null} useDrag handleDrag={handleDrag} handleDragEnd={handleDragEnd} track={track} trackNum={i+1} draggedTrack={draggedTrack} setDraggedTrack={setDraggedTrack} containerRef={refs.containerRef} />
+                        <DraggableTrackWrapper key={track.track_id}>
+                        <Track ref={i == tracks.length -1 ? refs.ref : null} track={track} trackNum={i+1} />
+                        </DraggableTrackWrapper>
                         
                     )
                 }
@@ -31,7 +34,7 @@ export default function TrackList ({className, tracks, handleDragEnd, handleDrag
                         />;
             })}
 
-            <div className="mt-4">{databaseEmpty.valid && databaseEmpty.message} </div>
+            {/* <div className="mt-4">{databaseEmpty.valid && databaseEmpty.message} </div> */}
             
         </div>
     )

@@ -1,6 +1,5 @@
 import StackedCDs from "./StackedCDs";
 import Button from "@/app/components/Button";
-import { useRouter } from "next/router";
 
 
 export default function PlaylistCreatedPage ({insideBoombox, createPlaylist}) {
