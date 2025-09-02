@@ -1,7 +1,6 @@
 "use client";
 import { Input } from "@headlessui/react";
-import { useState } from "react";
-import { useDebounce } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
 export default function InputText ({placeholder, variant, name, icon, className }) {
@@ -10,7 +9,7 @@ export default function InputText ({placeholder, variant, name, icon, className 
     const pathname = usePathname();
     const {replace} = useRouter();
 
-    function handleChange (text) {
+  const handleChange = useDebouncedCallback((text) => {
         const params = new URLSearchParams(searchParams);
         if (text) {
             params.set("query", text);
@@ -20,7 +19,7 @@ export default function InputText ({placeholder, variant, name, icon, className 
 
         replace(`${pathname}?${params.toString()}`, {scroll: false});
 
-    }
+    }, 200)
 
     return (
         <>
@@ -31,7 +30,10 @@ export default function InputText ({placeholder, variant, name, icon, className 
                     placeholder={placeholder} 
                     name={name || ""} 
                     type="text"
-                    onChange={(e) => {handleChange(e.target.value)}}
+                    onChange={(e) => {
+                        
+                        handleChange(e.target.value)
+                    }}
                     defaultValue={searchParams.get("query")?.toString()}
                 />
                 <div className="absolute left-3 top-2">{variant == "startIcon" && icon}</div>

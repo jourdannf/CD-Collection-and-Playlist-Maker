@@ -11,78 +11,10 @@ import { Draggable } from "gsap/Draggable";
 //Turning this into a server component that will remain statuc and only turn draggable when it's wraped by a function
 
 export default function Track({track, trackNum, useDrag, handleDragEnd, handleDrag, className, clone, ref, draggedTrack, setDraggedTrack, containerRef}) {
-
-    // let dragElem;
-    
-    // gsap.registerPlugin(Draggable, useGSAP);
-    // useGSAP(() => { //handling the drag of the clone
-    //     if (clone) {         
-
-    //         dragElem = Draggable.create(".clone", {
-    //             onDragStart: () => {
-    //                 gsap.to(".clone", {
-    //                     backgroundColor: "rgba(0, 31, 92, 0.4)",
-    //                     duration: 0.2
-    //                 });
-    //             },
-    //             onDrag: handleDrag,
-    //             onDragEnd: handleDragEnd,
-    //         })
-
-    //         let e = clone.event;
-    //         let track = draggedTrack.track
-
-    //         if (Object.keys(track).length === 0) {
-    //             gsap.set(".clone", {
-    //                 visibility: "hidden"
-    //             })
-    //         }else {
-    //             gsap.set(".clone", {
-    //             top: clone.offset,
-    //         })
-    //         }
-
-            
-
-    //         if (Object.keys(e).length !== 0) {//If there's an intiializing event, start the drag immediately
-    //             dragElem[0].startDrag(clone.event)
-    //             e = {};
-    //         }
-            
-    //     }
-        
-    // }, [draggedTrack]);
-
-    // const {contextSafe} = useGSAP();
-
-    // let handlePress;
-
-    // if (!clone) { //handling the intial press of the original element
-    //     handlePress = contextSafe((e) => {
-
-    //         gsap.set(e.currentTarget, { //make track disapeear
-    //             opacity: 0.8
-    //         });
-
-    //         gsap.set(".clone", {
-    //             visibility: "visible",
-    //             opacity: 1
-    //         })
-
-    //         setDraggedTrack({
-    //             track: track,
-    //             trackNum: trackNum,
-    //             offset: e.currentTarget.offsetTop - containerRef.current.scrollTop,
-    //             event: e
-    //         })
-
-    //     })
-    // }
-    
     
     return (
         <div 
-            className={`h-14 bg-push-play-blue-900/12 rounded-lg grid grid-cols-[12px_minmax(250px,_4fr)_minmax(250px,_5fr)_minmax(250px,_1fr)_19px] gap-x-4 text-base px-4 text-push-play-blue-900 ${className ? className : ""}`}
+            className={`h-14 bg-push-play-blue-900/12 rounded-lg grid grid-cols-[12px_minmax(250px,_4fr)_minmax(250px,_5fr)_minmax(250px,_1fr)_19px] gap-x-4 text-base px-4 text-push-play-blue-900 ${className || ""}`}
             data-track-id={track.track_id}
             ref={ref}
         >

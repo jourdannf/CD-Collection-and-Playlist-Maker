@@ -25,6 +25,8 @@ export default function TrackList ({className, tracks, draggable, setDraggedTrac
                         />;
             })}
 
+            {tracks.length === 0 && "No songs in your collection"}
+
             {/* <div className="mt-4">{databaseEmpty.valid && databaseEmpty.message} </div> */}
             
         </div>
