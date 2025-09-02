@@ -1,22 +1,23 @@
 "use client";
 
+import { useContext } from "react";
+import { DraggableTracklistContext } from "@/lib/utils/DraggableTracklistProvider";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Draggable from "gsap/Draggable";
-import { useContext } from "react";
-import { DraggableTracklistContext } from "@/lib/utils/DraggableTracklistProvider";
 
 //we will use context in order to get the dragged track and it's updater function
 // Draggable Wrapper turns tracks into draggable tracks
+// Update in the future: Get rid of use context and make it redux instead bc otherwise each track will repaint when only one needs to on dragged track changing
 
-export default function DraggableTrackWrapper({children, handleDragEnd, handleDrag, setDraggedTrack, ref, clone}) {
+export default function DraggableTrackWrapper({children, setDraggedTrack, ref, clone, containerRef}) {
     let dragElem;
 
     let draggedTrack = useContext(DraggableTracklistContext);
     
     gsap.registerPlugin(Draggable, useGSAP);
     useGSAP(() => { //handling the drag of the clone
-        if (clone) {         
+        if (clone) {   
 
             dragElem = Draggable.create(".clone", {
                 onDragStart: () => {
@@ -38,28 +39,29 @@ export default function DraggableTrackWrapper({children, handleDragEnd, handleDr
                 })
             }else {
                 gsap.set(".clone", {
-                top: clone.offset,
+                top: draggedTrack.offset,
             })
             }
 
             
 
             if (Object.keys(e).length !== 0) {//If there's an intiializing event, start the drag immediately
-                dragElem[0].startDrag(clone.event)
+                dragElem[0].startDrag(draggedTrack.event)
                 e = {};
             }
             
         }
         
-    }, );
+    }, [draggedTrack]);
 
-    //[draggedTrack]
+    
 
     const {contextSafe} = useGSAP();
 
     let handlePress;
 
     if (!clone) { //handling the intial press of the original element
+        
         handlePress = contextSafe((e) => {
 
             gsap.set(e.currentTarget, { //make track disapeear
@@ -69,7 +71,7 @@ export default function DraggableTrackWrapper({children, handleDragEnd, handleDr
             gsap.set(".clone", {
                 visibility: "visible",
                 opacity: 1
-            })
+            });
 
             setDraggedTrack({
                 track: children.props.track,
@@ -155,6 +157,8 @@ export default function DraggableTrackWrapper({children, handleDragEnd, handleDr
             })
         }
     }
+
+    //className="hover:cursor-grab"
     
-    return <div ref={ref} onMouseDown={!clone ? handlePress : null}>{children}</div>
+    return <div ref={ref} onMouseDown={!clone ? handlePress : null} >{children}</div>
 }

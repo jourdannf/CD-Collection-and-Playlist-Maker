@@ -82,7 +82,7 @@ export default function Track({track, trackNum, useDrag, handleDragEnd, handleDr
     
     return (
         <div 
-            className={`h-14 bg-push-play-blue-900/12 rounded-lg grid grid-cols-[12px_minmax(250px,_4fr)_minmax(250px,_5fr)_minmax(250px,_1fr)_19px] gap-x-4 text-base px-4 text-push-play-blue-900 hover:cursor-grab track ${className ? className : ""}`}
+            className={`h-14 bg-push-play-blue-900/12 rounded-lg grid grid-cols-[12px_minmax(250px,_4fr)_minmax(250px,_5fr)_minmax(250px,_1fr)_19px] gap-x-4 text-base px-4 text-push-play-blue-900 ${className ? className : ""}`}
             data-track-id={track.track_id}
             ref={ref}
         >
