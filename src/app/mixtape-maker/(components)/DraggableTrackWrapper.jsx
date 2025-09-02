@@ -1,3 +1,4 @@
+//Provides use client functionality needed to allow a track to be dragged - specifically for outside of a scrollable div
 "use client";
 
 import { useContext } from "react";
@@ -10,7 +11,7 @@ import Draggable from "gsap/Draggable";
 // Draggable Wrapper turns tracks into draggable tracks
 // Update in the future: Get rid of use context and make it redux instead bc otherwise each track will repaint when only one needs to on dragged track changing
 
-export default function DraggableTrackWrapper({children, setDraggedTrack, ref, clone, containerRef}) {
+export default function DraggableTrackWrapper({children, setDraggedTrack, ref, clone, containerRef, setInsideBoombox, insideBoombox}) {
     let dragElem;
 
     let draggedTrack = useContext(DraggableTracklistContext);
@@ -54,13 +55,11 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
         
     }, [draggedTrack]);
 
-    
-
     const {contextSafe} = useGSAP();
 
     let handlePress;
 
-    if (!clone) { //handling the intial press of the original element
+    if (!clone) { //handling the intial press of the original div
         
         handlePress = contextSafe((e) => {
 
@@ -83,7 +82,7 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
         })
     }
 
-    function handleDragEnd (e) {
+    function handleDragEnd (e) { 
         gsap.to(this.target, {//Changes track color back to normal after drag is over
             backgroundColor: "rgba(0, 31, 92, 0.12)",
         });
@@ -157,8 +156,6 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
             })
         }
     }
-
-    //className="hover:cursor-grab"
     
-    return <div ref={ref} onMouseDown={!clone ? handlePress : null} >{children}</div>
+    return <div ref={ref} onMouseDown={!clone ? handlePress : null} className="hover:cursor-grab" >{children}</div>
 }

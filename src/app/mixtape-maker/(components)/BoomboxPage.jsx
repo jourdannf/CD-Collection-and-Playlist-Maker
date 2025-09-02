@@ -1,7 +1,7 @@
 import TracklistFilter from "./TracklistFilter";
 import Boombox from "./Boombox";
 
-export default function BoomboxPage ({setInsideBoombox, insideBoombox, setCreatePlaylist}) {
+export default function BoomboxPage ({setInsideBoombox, insideBoombox, setCreatePlaylist, query}) {
     
 
     // function handleClick(e) {
@@ -18,7 +18,7 @@ export default function BoomboxPage ({setInsideBoombox, insideBoombox, setCreate
             <h3 className="text-push-play-blue-900 mb-12 mt-18">Let's Make a Custom Playlist</h3>
             <Boombox className={"flex justify-center mb-7"} />
             <p className="text-push-play-charcoal-700 text-base mb-14">Drag the songs you like to the boombox and it’ll tell you what CDs you need to create a mix. <br /> Click on the boombox when it’s loaded with all the songs you like.</p>
-            <TracklistFilter />
+            <TracklistFilter query={query} /> 
         </div>
     )
 }

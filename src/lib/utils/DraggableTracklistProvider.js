@@ -1,3 +1,5 @@
+//Provides context for track that needs to be cloned
+
 const { createContext } = require("react");
 
 export const DraggableTracklistContext = createContext(undefined);

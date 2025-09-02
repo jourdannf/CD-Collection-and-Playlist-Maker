@@ -1,7 +1,7 @@
+//Special implementation of a tracklist that's able to drag the tracks out of a scrollable div
 "use client"
 
-import TrackList from "@/app/components/TrackList";
-import ScrollableTracklist from "./ScrollableTracklist";
+import ScrollableTracklistContainer from "./ScrollableTracklistContainer";
 import Track from "@/app/components/Track";
 import DraggableTracklistProvider from "@/lib/utils/DraggableTracklistProvider";
 import DraggableTrackWrapper from "./DraggableTrackWrapper";
@@ -24,11 +24,9 @@ export default function DraggableTracklist ({tracks, ...props}) {
         <DraggableTracklistProvider value={draggedTrack}>
             <div className="relative top-11 " >
                 <DraggableTrackWrapper setDraggedTrack={setDraggedTrack} containerRef={containerRef} clone={draggedTrack}>
-                    <Track className="clone absolute" track={draggedTrack.track} trackNum={draggedTrack.trackNum} clone={draggedTrack} draggedTrack={draggedTrack} />
+                    <Track className="clone absolute" track={draggedTrack.track} trackNum={draggedTrack.trackNum} clone={draggedTrack} draggedTrack={draggedTrack} /> {/*clone that's dragged outside of scrollable div*/}
                 </DraggableTrackWrapper>
-                {/* <TrackList containerRef={containerRef} ref={trackRef} tracks={tracks} handleDragEnd={handleDragEnd} handleDrag={handleDrag} cropped className="h-[325px] overflow-y-scroll" setDraggedTrack={setDraggedTrack}/> */}
-
-                <ScrollableTracklist tracks={tracks} containerRef={containerRef} className="h-[325px]" setDraggedTrack={setDraggedTrack} trackRef={trackRef} />
+                <ScrollableTracklistContainer tracks={tracks} containerRef={containerRef} className="h-[325px]" setDraggedTrack={setDraggedTrack} trackRef={trackRef} />
                 
             </div>
         </DraggableTracklistProvider>

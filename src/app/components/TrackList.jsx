@@ -1,11 +1,7 @@
 import Track from "./Track";
 import DraggableTrackWrapper from "../mixtape-maker/(components)/DraggableTrackWrapper";
-import { DraggableTracklistContext } from "@/lib/utils/DraggableTracklistProvider";
 
-export default function TrackList ({className, tracks, handleDragEnd, handleDrag, draggable, draggedTrack, setDraggedTrack, databaseEmpty, ...refs}) {
-
-    // get tracks on your own by calling fetchTracks
-    
+export default function TrackList ({className, tracks, draggable, setDraggedTrack, databaseEmpty, ...refs}) {
 
     return (
         <div id="tracklist" className={`space-y-5 ${className}`}>
@@ -18,9 +14,7 @@ export default function TrackList ({className, tracks, handleDragEnd, handleDrag
                         </DraggableTrackWrapper>
                         
                     )
-                }
-
-                
+                }                
                 
                 return <Track
                             key={`track${track.track_id}`} 

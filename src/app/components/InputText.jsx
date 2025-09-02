@@ -1,12 +1,25 @@
-"use client"
-import { Input } from "@headlessui/react"
-import { useState } from "react"
+"use client";
+import { Input } from "@headlessui/react";
+import { useState } from "react";
+import { useDebounce } from "use-debounce";
+import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
-export default function InputText ({placeholder, variant, name, icon, className, inputVal }) {
+export default function InputText ({placeholder, variant, name, icon, className }) {
     //handle change in it's own function and update search params based on it?
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+    const {replace} = useRouter();
 
-    function handleChange (e) {
-        
+    function handleChange (text) {
+        const params = new URLSearchParams(searchParams);
+        if (text) {
+            params.set("query", text);
+        }else {
+            params.delete("query");
+        }
+
+        replace(`${pathname}?${params.toString()}`, {scroll: false});
+
     }
 
     return (
@@ -16,10 +29,10 @@ export default function InputText ({placeholder, variant, name, icon, className,
                     id="boomboxSearch"
                     className={`bg-push-play-blue-100 border border-push-play-blue-950 rounded-xl focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 w-[inherit] h-[inherit] pl-8` }
                     placeholder={placeholder} 
-                    name={name ? name : ""} 
+                    name={name || ""} 
                     type="text"
-                    onChange={handleChange}
-                    value={inputVal}
+                    onChange={(e) => {handleChange(e.target.value)}}
+                    defaultValue={searchParams.get("query")?.toString()}
                 />
                 <div className="absolute left-3 top-2">{variant == "startIcon" && icon}</div>
             </div>
