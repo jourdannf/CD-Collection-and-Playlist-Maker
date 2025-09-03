@@ -20,7 +20,7 @@ export async function GET(request, {params}) {
     if (searchParams.has("search") && searchParams.get("serach") != "") {
         const query = searchParams.get("search");
 
-        qSearch += `WHERE t.title ILIKE '${query}%' OR a.artist_name ILIKE '${query}%' `
+        qSearch += `WHERE t.title ILIKE '${query}%' OR ar.artist_name ILIKE '${query}%' `
     }
     
     if (searchParams.get('order') === "random") {
