@@ -6,9 +6,15 @@ export async function GET(request, {params}) {
     let qSearch = `SELECT * FROM tracks `;
 
     if (searchParams.has('album-details')) {
-        qSearch = `SELECT t.track_id, t.title, t.track_number, t.length, b.title as album_title, a.artist_name, b.release_date FROM tracks t
-            JOIN albums b ON t.album_id = b.album_id
-            JOIN artists a ON b.artist_id = a.artist_id `;
+        qSearch = `SELECT t.track_id, t.title, t.track_number, t.length, alb.title as album_title, ar.artist_name, alb.release_date FROM tracks t
+            JOIN albums alb ON t.album_id = alb.album_id
+            JOIN artists ar ON alb.artist_id = ar.artist_id `;
+    }
+
+    if (searchParams.has('filter-boombox')) {
+        qSearch += `
+            JOIN boombox b ON t.track_id != b.track_id 
+        `;
     }
 
     if (searchParams.has("search") && searchParams.get("serach") != "") {
