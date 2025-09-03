@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 
-export default function Boombox ({className, handleClick}) {
+export default function Boombox ({className, setDispenseAlbums, insideBoombox}) {
+
+    const handleClick = (e) => {
+        setDispenseAlbums(true);
+        // if (insideBoombox.length !== 0) {setDispenseAlbums(true)};
+    }
 
     return (
         <div 
