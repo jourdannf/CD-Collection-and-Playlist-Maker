@@ -33,7 +33,7 @@ export default async function TracklistFilter({query}) {
                 />
             </div>
 
-            <DraggableTracklist tracks={tracks} /> 
+            <DraggableTracklist tracks={tracks} query={query} /> 
 
             
         </div>

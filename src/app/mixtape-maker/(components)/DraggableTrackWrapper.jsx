@@ -11,7 +11,7 @@ import Draggable from "gsap/Draggable";
 // Draggable Wrapper turns tracks into draggable tracks
 // Update in the future: Get rid of use context and make it redux instead bc otherwise each track will repaint when only one needs to on dragged track changing
 
-export default function DraggableTrackWrapper({children, setDraggedTrack, ref, clone, containerRef, setInsideBoombox, insideBoombox}) {
+export default function DraggableTrackWrapper({children, setDraggedTrack, ref, clone, containerRef, setInsideBoombox, insideBoombox, setTracks, tracks}) {
     let dragElem;
 
     let draggedTrack = useContext(DraggableTracklistContext);
@@ -89,20 +89,20 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
 
         if (this.hitTest("#droppableBoombox")) { // removes track from list 
             setTracks(tracks.filter((track) => {
-                if (track.track_id === Number(this.target.dataset.trackId)) {
-                    setInsideBoombox([...insideBoombox, track]);
-                }
+                // if (track.track_id === Number(this.target.dataset.trackId)) {
+                //     setInsideBoombox([...insideBoombox, track]);
+                // }
 
                 return track.track_id != this.target.dataset.trackId;
             }));
 
-            setInitialResult(initialResult.filter(track => {
-                return track.track_id !== Number(this.target.dataset.trackId)
-            }));
+            // setInitialResult(initialResult.filter(track => {
+            //     return track.track_id !== Number(this.target.dataset.trackId)
+            // }));
 
-            if (inputVal != "") {
-                setSearch("");
-            }
+            // if (inputVal != "") {
+            //     setSearch("");
+            // }
 
             gsap.to("#droppableBoombox", {
                 rotation: 0,

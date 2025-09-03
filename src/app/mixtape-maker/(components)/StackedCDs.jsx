@@ -7,11 +7,11 @@ import { useRef } from "react";
 
 gsap.registerPlugin(useGSAP);
 
-export default function StackedCDs({insideBoombox, createPlaylist}) {
+export default function StackedCDs({insideBoombox, dispenseAlbums}) {
 
     const cdsContainer = useRef();
     useGSAP(() => {
-        if (createPlaylist) {
+        if (dispenseAlbums) {
             gsap.from('.cd', {
                 y: -500,
                 duration: 2,
@@ -23,7 +23,9 @@ export default function StackedCDs({insideBoombox, createPlaylist}) {
             })
         }
         
-    },{dependencies:[createPlaylist], scope: cdsContainer, revertOnUpdate: true})
+    },{ scope: cdsContainer, revertOnUpdate: true})
+
+    // dependencies:[dispenseAlbums]
     
     return (
         <div className="space-y-2 mb-13" ref={cdsContainer}>

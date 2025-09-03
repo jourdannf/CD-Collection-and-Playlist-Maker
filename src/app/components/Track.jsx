@@ -1,9 +1,4 @@
-"use client"
 import { Heart } from "lucide-react"
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
-import { Draggable } from "gsap/Draggable";
-
 
 //Gap between grid columns will be 16
 //Gonna make a template of grids with a min max property

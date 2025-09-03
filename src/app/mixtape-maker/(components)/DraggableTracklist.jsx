@@ -5,10 +5,10 @@ import ScrollableTracklistContainer from "./ScrollableTracklistContainer";
 import Track from "@/app/components/Track";
 import DraggableTracklistProvider from "@/lib/utils/DraggableTracklistProvider";
 import DraggableTrackWrapper from "./DraggableTrackWrapper";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
-export default function DraggableTracklist ({tracks, ...props}) {
+export default function DraggableTracklist ({tracks, query}) {
     const [trackRef, inView, entry] = useInView({threshold: 0.1});
     const containerRef = useRef(null);
     const [draggedTrack, setDraggedTrack] = useState(
@@ -19,14 +19,27 @@ export default function DraggableTracklist ({tracks, ...props}) {
             event: {}
         }
     );
+    const [tempTracks, setTempTracks] = useState(tracks);
+
+    useEffect(() => {
+        setTempTracks(tracks);
+    }, [query]);
+
+    useEffect(() => {
+        if (query == ""){
+            //We will clear out the boombox when there's no query and the user has refreshed the page to start over
+            //Lose progress basically every time you reload the page to it's intial state
+        }
+        
+    }, []);
 
     return (
         <DraggableTracklistProvider value={draggedTrack}>
             <div className="relative top-11 " >
-                <DraggableTrackWrapper setDraggedTrack={setDraggedTrack} containerRef={containerRef} clone={draggedTrack}>
+                <DraggableTrackWrapper setDraggedTrack={setDraggedTrack} containerRef={containerRef} clone={draggedTrack} setTracks={setTempTracks} tracks={tempTracks}>
                     <Track className="clone absolute" track={draggedTrack.track} trackNum={draggedTrack.trackNum} clone={draggedTrack} draggedTrack={draggedTrack} /> {/*clone that's dragged outside of scrollable div*/}
                 </DraggableTrackWrapper>
-                <ScrollableTracklistContainer tracks={tracks} containerRef={containerRef} className="h-[325px]" setDraggedTrack={setDraggedTrack} trackRef={trackRef} />
+                <ScrollableTracklistContainer tracks={tempTracks} containerRef={containerRef} className="h-[325px]" setDraggedTrack={setDraggedTrack} trackRef={trackRef} />
                 
             </div>
         </DraggableTracklistProvider>

@@ -1,4 +1,3 @@
-import MixtapeMakerClientWrapper from "./(components)/MixtapeMakerClientWrapper";
 import BoomboxPage from "./(components)/BoomboxPage";
 import TracklistFilter from "./(components)/TracklistFilter";
 import DispenseAlbumsPage from "./(components)/DispenseAlbumsPage";
@@ -19,7 +18,6 @@ export default async function MixtapeMakerPage ({searchParams}) {
 
             <BoomboxPage>
                 <TracklistFilter query={query} />
-                <DispenseAlbumsPage />
             </BoomboxPage>
 
             {/* <BoomboxPage query={query} /> */}
