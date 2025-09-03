@@ -44,5 +44,5 @@ export async function POST(request, {params}) {
         VALUES ($1, $2, $3) 
         `, values);
     
-    return Response.json((await res.rows), {status: 201});
+    return Response.json(res.rows, {status: 201});
 }
