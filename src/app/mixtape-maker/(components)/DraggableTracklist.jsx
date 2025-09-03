@@ -29,6 +29,19 @@ export default function DraggableTracklist ({tracks, query}) {
         if (query == ""){
             //We will clear out the boombox when there's no query and the user has refreshed the page to start over
             //Lose progress basically every time you reload the page to it's intial state
+            (async () => {
+                try {
+                    const options = {
+                        method: "DELETE"
+                    };
+
+                    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/boombox`, options);
+                    console.log(result.statusText);
+
+                }catch (e) {
+                    throw e;
+                }
+            })();
         }
         
     }, []);

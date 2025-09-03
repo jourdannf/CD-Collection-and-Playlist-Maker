@@ -27,3 +27,21 @@ export async function POST (request) {
         throw e;
     }
 }
+
+export async function DELETE (request) { // add for deleting specific track id later
+    const searchParams = request.nextUrl.searchParams;
+
+    try {
+        if (!searchParams.has("track_id")) {
+            const res = await pool.query(`TRUNCATE boombox`);
+
+            return Response.json(res.rows, {status: 200, statusText: "All tracks were deleted from the boombox"});
+        }else {
+            //Do the work to make it delete by track id 
+        }
+
+    }catch (e) {
+        throw e;
+    }
+
+}
