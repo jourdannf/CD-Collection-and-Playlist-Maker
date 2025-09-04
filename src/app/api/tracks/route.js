@@ -13,12 +13,13 @@ export async function GET(request, {params}) {
 
     const filters = [];
 
+    console.log(searchParams)
+
     if (searchParams.has("filter-boombox")) {
         filters.push(`t.track_id NOT IN (SELECT b.track_id FROM boombox b) `);
     }
 
-    if (searchParams.has("search") && searchParams.get("search") !== "") {
-        console.log("HERE")
+    if (searchParams.has("search")) {
         const query = searchParams.get("search");
         if (query) {
             filters.push(`t.title ILIKE '${query}%' OR ar.artist_name ILIKE '${query}%' `);

@@ -16,7 +16,15 @@ export async function GET(request, {params}) {
             medium,
             plays
         FROM albums 
-        JOIN artists ON albums.artist_id = artists.artist_id `;
+        JOIN artists ON albums.artist_id = artists.artist_id 
+    `;
+
+    if (searchParams.has("search")) {
+        const query = searchParams.get("search");
+        if (query) {
+            fetchString += `WHERE title ILIKE '${query}%' OR artist_name ILIKE '${query}%' `;
+        }
+    }
 
     if (searchParams.has("limit")) {
         let offsetVal = 0;

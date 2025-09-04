@@ -5,15 +5,15 @@ import fetchAlbums from "@/lib/utils/fetchAlbums";
 
 export default async function MyCollectionPage ({params, searchParams}) {
     const {page_num} = await params;
-    const {query} = await searchParams;
+    const query = (await searchParams)?.query || "";
 
     let albums = [];
     const limit = 90;
     const offset = albums.length / limit; 
 
-    if (page_num % 10 === 1 && !query) {
+    if (page_num % 10 === 1) {
         //fetch the albums and push onto array
-        albums.push(...(await fetchAlbums(limit, offset)));
+        albums.push(...(await fetchAlbums(limit, offset, query)));
     }
 
     const start = (page_num - 1) * 10;
