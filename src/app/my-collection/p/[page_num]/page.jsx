@@ -23,7 +23,7 @@ export default async function MyCollectionPage ({params, searchParams}) {
 
     return (
         <div className={" mx-auto mt-17"}>
-            <InputText placeholder={"What album are you looking for?"} className={"w-[599px] h-10 mb-20"} />
+            <InputText placeholder={"What album are you looking for?"} className={"w-[599px] h-10 mb-20 mx-auto"} />
             <AlbumsPage  pageNum={page_num} albums={displayedAlbums}/>
         </div>
     )
