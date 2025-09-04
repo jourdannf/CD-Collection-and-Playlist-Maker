@@ -37,7 +37,7 @@ export default function BoomboxPage ({children, insideBoomboxData}) {
                 <p className="text-push-play-charcoal-700 text-base mb-14">Drag the songs you like to the boombox and it’ll tell you what CDs you need to create a mix. <br /> Click on the boombox when it’s loaded with all the songs you like.</p>
                 {children}
                 </>}
-                {dispenseAlbums && <DispenseAlbumsPage insideBoombox={insideBoombox} dispenseAlbums={dispenseAlbums} />}
+                {dispenseAlbums && <DispenseAlbumsPage dispenseAlbums={dispenseAlbums} />}
             </div>
         </InsideBoomboxContext>
     )

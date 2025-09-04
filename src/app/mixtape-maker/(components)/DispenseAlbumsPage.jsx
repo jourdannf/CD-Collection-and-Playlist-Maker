@@ -2,11 +2,14 @@
 
 import StackedCDs from "./StackedCDs";
 import Button from "@/app/components/Button";
+import { useContext } from "react";
+import { InsideBoomboxContext } from "@/lib/utils/InsideBoomboxProvider";
 
-
-export default function DispenseAlbumsPage ({insideBoombox, dispenseAlbums}) {
+export default function DispenseAlbumsPage ({dispenseAlbums}) {
     //insideBoombox is a list of tracks that were inserted inside boombox
     let uniqueAlbums = [];
+
+    let {insideBoombox} = useContext(InsideBoomboxContext);
 
     //Filter what's inside the boombox so that only a unique set of albums are generated
     insideBoombox = insideBoombox.filter((track, i) => {
