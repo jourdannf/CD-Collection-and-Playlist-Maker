@@ -11,16 +11,30 @@ export async function GET(request, {params}) {
             JOIN artists ar ON alb.artist_id = ar.artist_id `;
     }
 
-    if (searchParams.has('filter-boombox')) {
-        qSearch += `
-            JOIN boombox b ON t.track_id != b.track_id 
-        `;
+    const filters = [];
+
+    if (searchParams.has("filter-boombox")) {
+        filters.push(`t.track_id NOT IN (SELECT b.track_id FROM boombox b) `);
     }
 
-    if (searchParams.has("search") && searchParams.get("serach") != "") {
+    if (searchParams.has("search") && searchParams.get("search") !== "") {
+        console.log("HERE")
         const query = searchParams.get("search");
+        if (query) {
+            filters.push(`t.title ILIKE '${query}%' OR ar.artist_name ILIKE '${query}%' `);
+        }
+    }
 
-        qSearch += `WHERE t.title ILIKE '${query}%' OR ar.artist_name ILIKE '${query}%' `
+    for (let i = 0; i < filters.length; i ++) {
+        if (i == 0) {
+            qSearch += `WHERE `;
+        }
+
+        qSearch += filters[i];
+
+        if (i !== filters.length - 1) {
+            qSearch += `AND `
+        }
     }
     
     if (searchParams.get('order') === "random") {

@@ -19,7 +19,7 @@ export default async function TracklistFilter({query}) {
     const limit = 35;
     const offset = tracks.length/limit;
     
-    tracks = await fetchTracksFilter(query, limit, offset); //fetch the tracks to be displayed 
+    tracks = await fetchTracksFilter(query, limit, offset); //fetch the tracks to be displayed
     
     return(
         

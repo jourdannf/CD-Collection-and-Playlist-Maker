@@ -5,3 +5,9 @@ export async function fetchTracksFilter (query, limit, offset) {
     const tracks = await result.json();
     return tracks;
 }
+
+export async function fetchBoomboxTracks () {
+    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/boombox`);
+    const tracks = await result.json();
+    return tracks;
+}

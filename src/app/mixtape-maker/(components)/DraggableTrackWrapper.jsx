@@ -3,6 +3,7 @@
 
 import { useContext } from "react";
 import { DraggableTracklistContext } from "@/lib/utils/DraggableTracklistProvider";
+import { InsideBoomboxContext } from "@/lib/utils/InsideBoomboxProvider";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Draggable from "gsap/Draggable";
@@ -11,10 +12,10 @@ import Draggable from "gsap/Draggable";
 // Draggable Wrapper turns tracks into draggable tracks
 // Update in the future: Get rid of use context and make it redux instead bc otherwise each track will repaint when only one needs to on dragged track changing
 
-export default function DraggableTrackWrapper({children, setDraggedTrack, ref, clone, containerRef, setInsideBoombox, insideBoombox, setTracks, tracks}) {
+export default function DraggableTrackWrapper({children, setDraggedTrack, ref, clone, containerRef, setTracks, tracks}) {
     let dragElem;
-
     let draggedTrack = useContext(DraggableTracklistContext);
+    let {insideBoombox, updateInsideBoombox} = useContext(InsideBoomboxContext);
     
     gsap.registerPlugin(Draggable, useGSAP);
     useGSAP(() => { //handling the drag of the clone
@@ -54,7 +55,6 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
         }
         
     }, [draggedTrack]);
-
     const {contextSafe} = useGSAP();
 
     let handlePress;
@@ -88,21 +88,32 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
         });
 
         if (this.hitTest("#droppableBoombox")) { // removes track from list 
+            (async () => { // Adds track to inside of boombox
+                
+                try {
+                    
+                    const options = {
+                        method: "POST",
+                        body: JSON.stringify({track_id: Number(this.target.dataset.trackId)}),
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": 'application/json'
+                        }
+                    }
+                    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/boombox`, options);
+                    console.log(result.statusText);
+                }catch (e) {
+                    throw e;
+                }
+            })();
+            
             setTracks(tracks.filter((track) => {
-                // if (track.track_id === Number(this.target.dataset.trackId)) {
-                //     setInsideBoombox([...insideBoombox, track]);
-                // }
+                if (track.track_id === Number(this.target.dataset.trackId)) {
+                    updateInsideBoombox([...insideBoombox, track]);
+                }
 
                 return track.track_id != this.target.dataset.trackId;
             }));
-
-            // setInitialResult(initialResult.filter(track => {
-            //     return track.track_id !== Number(this.target.dataset.trackId)
-            // }));
-
-            // if (inputVal != "") {
-            //     setSearch("");
-            // }
 
             gsap.to("#droppableBoombox", {
                 rotation: 0,
