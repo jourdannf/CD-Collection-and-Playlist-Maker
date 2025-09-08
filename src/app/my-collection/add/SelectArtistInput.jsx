@@ -11,7 +11,7 @@ export default function SelectArtistInput ({control}) {
     
     return (
     <Field>
-        <Label className="font-semibold">Artist Name</Label>
+        <Label className="font-semibold" htmlFor="artist_name">Artist Name</Label>
         <FilteredSelect 
             options={artists} 
             placeholderText={"Artist Name"} 

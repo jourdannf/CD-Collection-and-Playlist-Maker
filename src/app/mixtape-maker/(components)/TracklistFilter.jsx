@@ -1,7 +1,7 @@
 
 import DraggableTracklist from "./DraggableTracklist";
 import { fetchTracksFilter } from "@/lib/utils/fetchTracks";
-import InputText from "@/app/components/InputText";
+import SearchInput from "@/app/components/SearchInput";
 import { Search } from "lucide-react";
 
 //Will change into a server component so that I can call a function to fetch albums here
@@ -25,11 +25,11 @@ export default async function TracklistFilter({query}) {
         
         <div className="relative mx-8">
             <div className="absolute right-0">
-                <InputText 
+                <SearchInput 
                     className={`w-96 h-8`} 
                     placeholder="What song did you want to add?"
                     icon={<Search  size={17} strokeWidth={2.5} />}
-                    variant="startIcon"
+                    variant="startIcon"                
                 />
             </div>
 

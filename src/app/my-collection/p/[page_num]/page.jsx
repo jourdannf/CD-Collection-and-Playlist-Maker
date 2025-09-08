@@ -1,6 +1,6 @@
 
 import AlbumsPage from "../../AlbumsPage";
-import InputText from "@/app/components/InputText";
+import SearchInput from "@/app/components/SearchInput";
 import fetchAlbums from "@/lib/utils/fetchAlbums";
 import Button from "@/app/components/Button";
 import { Plus } from "lucide-react";
@@ -31,7 +31,7 @@ export default async function MyCollectionPage ({params, searchParams}) {
 
     return (
         <div className={" mx-auto mt-17 relative"}>
-            <InputText placeholder={"What album are you looking for?"} className={"w-[599px] h-10 mb-20 mx-auto"} />
+            <SearchInput placeholder={"What album are you looking for?"} className={"w-[599px] h-10 mb-20 mx-auto"} />
             <AlbumsPage  pageNum={page_num} albums={displayedAlbums}/>
             <div className="absolute right-6">
                 <Button variant="primary" className="sticky" handleClick={handleClick}>

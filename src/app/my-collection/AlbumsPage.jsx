@@ -1,4 +1,3 @@
-import InputText from "@/app/components/InputText";
 import Album from "@/app/components/Album";
 import AlbumCard from "../components/AlbumCard";
 
