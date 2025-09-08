@@ -48,7 +48,7 @@ export default function TopThreeContainer () {
              If album is clicked on the speech bubble is filled with related text
              If album is clicked on the z index comes up to the forefront */
              }
-            <div className="flex *:hover:z-4 *:hover:cursor-pointer mb-16 *:hover:drop-shadow-sm *:hover:drop-shadow-push-play-charcoal-700" onClick={handleClick}>
+            <div className="flex *:hover:z-4 mb-16 *:hover:drop-shadow-sm *:hover:drop-shadow-push-play-charcoal-700" onClick={handleClick}>
                 
                 {logs.length == 3 &&
                 <> 

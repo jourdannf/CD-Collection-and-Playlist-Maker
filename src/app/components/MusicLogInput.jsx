@@ -1,4 +1,5 @@
 "use client"
+//Need to refactor to separate concerns of client and server components
 
 import Ratings from "./Ratings";
 import { Field, Label, Textarea } from "@headlessui/react";

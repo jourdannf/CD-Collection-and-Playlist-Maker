@@ -4,7 +4,7 @@ import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOption
 import { ChevronDown, ChevronLeft } from "lucide-react";
 import { useController } from "react-hook-form";
 
-export default function FilteredSelect ({options, placeholderText, ...others}) {
+export default function FilteredSelect ({options, placeholderText, addOption, ...others}) {
     const [query, setQuery] = useState('');
     const [selectedItem, setSelectedItem] = useState('');
 
@@ -14,19 +14,26 @@ export default function FilteredSelect ({options, placeholderText, ...others}) {
     });
 
     const {field, fieldState} = useController(others);
+
+    function handleClose (e) {
+        if (!addOption) {
+            setQuery('');
+        }
+    }
     
     return (
         <>
             <Combobox
                 as="div"
-                onClose={() => setQuery('')}
+                onClose={handleClose}
+                defaultValue={query}
                 {...field}
             >
                 <div className="relative">
                 <ComboboxInput 
-                    placeholder={placeholderText}
+                    placeholder={placeholderText || ""}
                     onChange={(e) => setQuery(e.target.value)}
-                    displayValue={(item) => item?.value}
+                    displayValue={(item) => item?.value || query}
                     className="w-full rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 "   
                 />
                 <ComboboxButton className="group absolute right-0 px-2.5 bottom-1 hover:cursor-pointer">
@@ -34,6 +41,11 @@ export default function FilteredSelect ({options, placeholderText, ...others}) {
                 </ComboboxButton>
                 </div>
                 <ComboboxOptions anchor="bottom" className="border empty:invisible w-(--input-width)" >
+                    {(addOption && query.length > 0) && 
+                    <ComboboxOption value={{id:null, value: query}}>
+                            {query}
+                    </ComboboxOption>
+                    }
                     {filteredOptions.map((item) => (
                     <ComboboxOption key={item?.id} value={item} className="data-focus:bg-push-play-blue-300">
                         {`${item?.value}`}

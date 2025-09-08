@@ -2,6 +2,9 @@
 import AlbumsPage from "../../AlbumsPage";
 import InputText from "@/app/components/InputText";
 import fetchAlbums from "@/lib/utils/fetchAlbums";
+import Button from "@/app/components/Button";
+import { Plus } from "lucide-react";
+import { redirect, RedirectType } from "next/navigation";
 
 export default async function MyCollectionPage ({params, searchParams}) {
     const {page_num} = await params;
@@ -21,10 +24,20 @@ export default async function MyCollectionPage ({params, searchParams}) {
 
     const displayedAlbums = albums.slice(start, end);
 
+    async function handleClick(e) {
+        "use server";
+        redirect("../../add", RedirectType.push);
+    }
+
     return (
-        <div className={" mx-auto mt-17"}>
+        <div className={" mx-auto mt-17 relative"}>
             <InputText placeholder={"What album are you looking for?"} className={"w-[599px] h-10 mb-20 mx-auto"} />
             <AlbumsPage  pageNum={page_num} albums={displayedAlbums}/>
+            <div className="absolute right-6">
+                <Button variant="primary" className="sticky" handleClick={handleClick}>
+                    <Plus />
+                </Button>
+            </div>
         </div>
     )
 

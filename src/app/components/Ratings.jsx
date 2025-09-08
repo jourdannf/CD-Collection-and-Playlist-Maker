@@ -53,14 +53,12 @@ export default function Ratings ({disabled, rating, className, ...others}) {
 
     const {field, fieldState} = useController(others)
 
-    console.log(field)
-
     return (
         
         <RadioGroup 
             defaultValue={''} 
             aria-label="Server size" 
-            className={`border-0 inline-block relative [&>input[data-checked]+label>svg:hover]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label>svg:hover]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label:hover~label>svg]:fill-push-play-pale-yellow-300 [&>label:hover~input[data-checked]~label>svg]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:fill-push-play-pale-yellow-500 [&>label:hover~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:cursor-pointer`}
+            className={`border-0 inline-block relative [&>input[data-checked]+label>svg:hover]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label>svg:hover]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label:hover~label>svg]:fill-push-play-pale-yellow-300 [&>label:hover~input[data-checked]~label>svg]:fill-push-play-pale-yellow-300 [&>input[data-checked]~label>svg]:fill-push-play-pale-yellow-500 [&>label>svg:hover]:fill-push-play-pale-yellow-500 [&>label:hover~label>svg]:fill-push-play-pale-yellow-500`}
             disabled={disabled}
             {...field}
         >

@@ -11,6 +11,13 @@ const MusicLogSchema = z.object({
     }, albumErrorMessage),
     body: z.string(bodyErrorMessage).min(1, bodyErrorMessage).nullable(false, bodyErrorMessage),
     rating: z.coerce.number(ratingErrorMessage).gt(0, ratingErrorMessage).lte(10)
-})
+});
 
-export {MusicLogSchema};
+const albumArtErrorMssg = "You can only upload images."
+
+const AlbumSchema = z.object({
+    album_art: z.string(),
+    artist_name: z.string()
+});
+
+export {MusicLogSchema, AlbumSchema};
