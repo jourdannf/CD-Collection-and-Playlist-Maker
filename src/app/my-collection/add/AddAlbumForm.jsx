@@ -10,6 +10,7 @@ import { AlbumSchema } from "@/lib/utils/zodSchemas";
 import { useForm } from "react-hook-form";
 import TextInput from "@/app/components/TextInput";
 import { useState } from "react";
+import ErrorMessage from "@/app/components/ErrorMessage";
 
 
 
@@ -28,26 +29,35 @@ export default function AddAlbumForm () {
         }
     });
 
+    console.log(formState?.errors)
+
     function onSubmit (values) {
         console.log(values);
     }
 
+    function onError(e) {
+       //Handle showing errors
+    }
+
     return (
-        <Form onSubmit={handleSubmit(onSubmit)} className="bg-push-play-blue-900/18 rounded-xl pt-7 px-12 relative overflow-hidden pb-15" >
+        <Form onSubmit={handleSubmit(onSubmit, onError)} className="bg-push-play-blue-900/18 rounded-xl pt-7 px-12 relative overflow-hidden pb-15" >
             <Fieldset className="space-y-5">
                 <Field >
                     <Label className="font-semibold" htmlFor="album_art">Album Cover Image</Label>
                     <ImageUplaod name="album_art" required register={register} />
+                    <ErrorMessage>{formState?.errors?.album_art?.message}</ErrorMessage>
                 </Field>
                 <Field>
                     <Label className="font-semibold" htmlFor="title">Album Title</Label>
                     <TextInput placeholder="Album Title" name="title" />
+                    <ErrorMessage>{formState?.errors?.title?.message}</ErrorMessage>
                 </Field>
-                <SelectArtistInput control={control} />
+                <SelectArtistInput control={control} formState={formState} />
                 <Field>
                     <Label className="font-semibold" htmlFor="release_date">Release Date</Label>
                     <br></br>
                     <input type="date" className="input w-full pr-3" name="release_date" {...register("release_date")} />
+                    <ErrorMessage>{formState?.errors?.release_date?.message}</ErrorMessage>
                 </Field>
                 <Field className="space-y-1.5">
                     <Label className="font-semibold" htmlFor="tracks">Tracks</Label>                    
@@ -57,8 +67,9 @@ export default function AddAlbumForm () {
                             return <TextInput key={`track${i+1}`} placeholder={`Track ${i + 1}`} name="tracks" {...register(`tracks.${i}`)} />
                         })
                     }
+                    <ErrorMessage>{formState?.errors?.tracks?.message}</ErrorMessage>
 
-                    <Button variant="primary" handleClick={(e) => setTrackLength(trackLength + 1)}>ADD</Button>
+                    <Button variant="primary" handleClick={(e) => {e.preventDefault(); setTrackLength(trackLength + 1);}}>ADD</Button>
                 </Field>
             </Fieldset>
 

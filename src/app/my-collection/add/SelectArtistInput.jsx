@@ -2,11 +2,12 @@
 import { Field } from "@headlessui/react";
 import { Label } from "@headlessui/react";
 import FilteredSelect from "@/app/components/FilteredSelect";
+import ErrorMessage from "@/app/components/ErrorMessage";
 import fetchAlbums from "@/lib/utils/fetchAlbums";
 
 
 
-export default function SelectArtistInput ({control}) {
+export default function SelectArtistInput ({control, formState}) {
     const artists = [{value: "SOLE", id: 1}];
     
     return (
@@ -20,6 +21,8 @@ export default function SelectArtistInput ({control}) {
             control={control}
             addOption
         />
+        <ErrorMessage>{formState?.errors?.artist_name?.message}</ErrorMessage>
+
     </Field>
     )
 }

@@ -18,10 +18,10 @@ const albumArtErrorMssg = "You can only upload images."
 const AlbumSchema = z.object({
     album_art: z
         .file("Please attach an image for the album art of your album")
-        .mime(["image/jpeg", "image/png", "image/jpg", "image/webp"], {error: "Sorry, file format is not accepted."})
-        .max(2000000, "File is too big."),
-    title: z.string("Please leave a name for the title of the album"),
-    artist_name: z.string("Please leave the name of the artist who made the album"),
+        .mime(["image/jpeg", "image/png", "image/jpg", "image/webp"], {error: "Sorry, file format is not accepted"})
+        .max(2000000, "File size limit has been exceeded. Maximum size allowed is 2MB"),
+    title: z.string("Please leave a name for the title of the album").min(2, "Please leave a name for the title of the album"),
+    artist_name: z.string("Please leave the name of the artist who made the album").min(2, "Please enter the name of an artist this album belongs to"),
     release_date: z.iso.date("Please provide a valid date"),
     tracks: z.array(z.string()).min(1, {error: "All albums must be submitted with at least one track."})
 });
