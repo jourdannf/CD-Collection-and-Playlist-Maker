@@ -7,9 +7,9 @@ import Form from "next/form";
 import SelectArtistInput from "./SelectArtistInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AlbumSchema } from "@/lib/utils/zodSchemas";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import TextInput from "@/app/components/TextInput";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ErrorMessage from "@/app/components/ErrorMessage";
 
 
@@ -18,25 +18,26 @@ export default function AddAlbumForm () {
     const [trackLength, setTrackLength] = useState(2);
     const currentDate = new Date(Date.now()).toISOString();
 
-    const {control, register, handleSubmit, formState, reset} = useForm({
+    const {control, register, unregister, handleSubmit, formState, reset} = useForm({
         resolver: zodResolver(AlbumSchema),
         defaultValues: {
             album_art: "",
             title: "",
             artist_name: "",
             release_date: currentDate.slice(0, currentDate.indexOf("T")),
-            tracks: []
+            tracks: [{value: ""}]
         }
     });
 
-    console.log(formState?.errors)
+    const {fields, append} = useFieldArray({control, name: "tracks"})
 
     function onSubmit (values) {
         console.log(values);
     }
 
     function onError(e) {
-       //Handle showing errors
+       //Handle showing errors 
+       console.log(e)
     }
 
     return (
@@ -59,17 +60,24 @@ export default function AddAlbumForm () {
                     <input type="date" className="input w-full pr-3" name="release_date" {...register("release_date")} />
                     <ErrorMessage>{formState?.errors?.release_date?.message}</ErrorMessage>
                 </Field>
-                <Field className="space-y-1.5">
-                    <Label className="font-semibold" htmlFor="tracks">Tracks</Label>                    
+                <Field className="space-y-1.5"> 
+                    <Label className="font-semibold" htmlFor="tracks">Tracks</Label>   
+
                     {
-                        //Create array out of tracklength and use that to genereate the textinputs
-                        [...Array(trackLength).keys()].map((i) => {
-                            return <TextInput key={`track${i+1}`} placeholder={`Track ${i + 1}`} name="tracks" {...register(`tracks.${i}`)} />
+                        fields.map((field, index) => {
+                            
+                            return <TextInput key={field.id} {...register(`tracks.${index}.value`)} placeholder={`Track ${index + 1}`} />
                         })
                     }
-                    <ErrorMessage>{formState?.errors?.tracks?.message}</ErrorMessage>
 
-                    <Button variant="primary" handleClick={(e) => {e.preventDefault(); setTrackLength(trackLength + 1);}}>ADD</Button>
+                    {/* {
+                        //Create array out of tracklength and use that to genereate the textinputs
+                        [...Array(trackLength).keys()].map((i) => {
+                            return <TextInput key={`track${i+1}`} placeholder={`Track ${i + 1}`} name="tracks" {...register(`tracks[${i}].value`)} />
+                        })
+                    } */}
+                    <Button variant="primary" handleClick={(e) => {e.preventDefault(); append({value: ""});}}>ADD</Button>
+                    <ErrorMessage>{formState?.errors?.tracks ? "At least one track is required" : ""}</ErrorMessage>
                 </Field>
             </Fieldset>
 

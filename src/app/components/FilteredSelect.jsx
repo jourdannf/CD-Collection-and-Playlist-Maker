@@ -19,7 +19,7 @@ export default function FilteredSelect ({options, placeholderText, addOption, ..
         if (!addOption) {
             setQuery('');
         }
-    }
+    } 
     
     return (
         <>

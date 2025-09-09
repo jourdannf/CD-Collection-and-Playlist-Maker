@@ -8,8 +8,6 @@ export default function ImageUplaod ({name, register}) {
     const inputRef = useRef(null);
     const [uploadFile, setUploadFile] = useState({message: "Upload Image File", successful: false});
 
-    // const {field, fieldState} = useController(others);
-
     function handleClick (e) {
         inputRef.current.click();
     }
@@ -47,10 +45,15 @@ export default function ImageUplaod ({name, register}) {
         e.preventDefault();
     }
 
+    const {ref, ...rest} = register("album_art");
+
     return (
         <div className="font-semibold text-push-play-charcoal-700 text-base min-w-[976px] h-[169px] bg-push-play-blue-100 border border-push-play-blue-950 rounded-2xl content-center">
             <div className="w-40 grid grid-flow-col gap-2 grid-cols-[24px_150px] mx-auto hover:cursor-pointer hover:underline hover:text-push-play-charcoal-900 text-ellipsis" onClick={handleClick} onDrop={handleDrop} onChange={(e) => {validateFiles(e.target.files)}} onDragOver={handleDragOver}>
-                <input name={name} ref={inputRef} type="file" className="hidden" accept="image/*" {...register("album_art")} />
+                <input name={name} type="file" className="hidden" accept="image/*" {...rest} ref={(e) => {
+                    ref(e);
+                    inputRef.current = e;
+                }} />
                 <ImageUpIcon />
                 <p>{uploadFile?.message}</p>
             </div>

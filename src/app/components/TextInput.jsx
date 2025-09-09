@@ -1,26 +1,7 @@
 "use client";
 import { Input } from "@headlessui/react";
-import { useDebouncedCallback } from "use-debounce";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
-export default function TextInput ({placeholder, variant, name, icon, className }) {
-    //handle change in it's own function and update search params based on it?
-    // const searchParams = useSearchParams();
-    // const pathname = usePathname();
-    // const {replace} = useRouter();
-
-    
-    // const handleChange = useDebouncedCallback((text) => {
-    //     const params = new URLSearchParams(searchParams);
-    //     if (text) {
-    //         params.set("query", text);
-    //     }else {
-    //         params.delete("query");
-    //     }
-
-    //     replace(`${pathname}?${params.toString()}`, {scroll: false});
-
-    // }, 200)
+export default function TextInput ({placeholder, variant, name, icon, className, ...register }) {
 
     return (
         <>
@@ -31,6 +12,7 @@ export default function TextInput ({placeholder, variant, name, icon, className 
                     placeholder={placeholder} 
                     name={name || ""} 
                     type="text"
+                    {...(register || {})}
                 />
             </div>
         </>
