@@ -30,7 +30,7 @@ export default function FilteredSelect ({options, placeholderText, addOption, on
             const value = option?.value || ""
             if (option) {
                 setQuery(option.value);
-                inputRef.current.removeAttribute("data-focus")
+                inputRef.current.removeAttribute("data-focus") // figure out how to blur input after an option is selected
                 if (isSubmitted) { //should validate only after submit
                     setValue(name, value, {shouldValidate: true});
                 }else {

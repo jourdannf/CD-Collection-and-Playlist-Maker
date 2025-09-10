@@ -33,8 +33,11 @@ export default function AddAlbumForm () {
 
     const {fields, append} = useFieldArray({control, name: "tracks"})
 
-    function onSubmit (values) {
-        console.log(values);
+    async function onSubmit (values) {
+        //Deal with the file
+        //Take the file object and send it to the cdn
+        //CDN sends you back the link to the photo
+        //Add that link to the body that's being sent to the database
     }
 
     function onError(e) {
