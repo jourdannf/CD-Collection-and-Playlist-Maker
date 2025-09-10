@@ -3,6 +3,7 @@ import { Input } from "@headlessui/react";
 
 export default function TextInput ({placeholder, variant, name, icon, className, ...register }) {
 
+
     return (
         <>
             <div className={`relative items-center ${className}`}>

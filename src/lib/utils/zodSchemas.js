@@ -17,11 +17,12 @@ const trackInfoSchema = z.object({
     value: z.string().min(1, "At least one traack is required")
 })
 
-const AlbumSchema = z.object({ //figure out how to make the second track optional -- too tired to figure it out rn
-    album_art: z
-        .file("Please attach an image for the album art of your album")
+const imageSchema = z.file("Please attach an image for the album art of your album")
         .mime(["image/jpeg", "image/png", "image/jpg", "image/webp"], {error: "Sorry, file format is not accepted"})
-        .max(2000000, "File size limit has been exceeded. Maximum size allowed is 2MB"),
+        .max(2000000, "File size limit has been exceeded. Maximum size allowed is 2MB");
+
+const AlbumSchema = z.object({ //figure out how to make the second track optional -- too tired to figure it out rn
+    album_art: z.array(imageSchema, "Please attach an image for the album art of your album").length(1, "Upload exactly one image for the album art"),
     title: z.string("Please leave a name for the title of the album").min(2, "Please leave a name for the title of the album"),
     artist_name: z.string("Please leave the name of the artist who made the album").min(2, "Please enter the name of an artist this album belongs to"),
     release_date: z.iso.date("Please provide a valid date"),

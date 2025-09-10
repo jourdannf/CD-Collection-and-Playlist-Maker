@@ -4,7 +4,7 @@ import { ImageUpIcon } from "lucide-react"
 import { useRef, useState } from "react"
 import { useController } from "react-hook-form";
 
-export default function ImageUplaod ({name, register}) {
+export default function ImageUplaod ({name, ref, onChange, setValue, getValues, ...register}) {
     const inputRef = useRef(null);
     const [uploadFile, setUploadFile] = useState({message: "Upload Image File", successful: false});
 
@@ -19,25 +19,13 @@ export default function ImageUplaod ({name, register}) {
         const dt = e.dataTransfer;
         const files = dt.files;
 
-        validateFiles(files);
+        validateFiles([...files]);
 
     }
 
     function validateFiles (files) {
-        if (files.length > 1) { // checks if file is a singular file
-            //return an error
-        }
-
-        //check for size
-        const file = files[0];
-        const fileSize = file.size/1024; //file size in kb
-        const limit = 2000; //2mb in kb double check later
-        if (fileSize < limit) {
-            //return an error
-        }
-
-        //update file name
-        setUploadFile({message: file.name, sucessful:true});
+        setValue("album_art", files, {shouldValidate: true});
+        setUploadFile({message: files[0]?.name, sucessful:true});
     }
 
     function handleDragOver(e) {
@@ -45,15 +33,16 @@ export default function ImageUplaod ({name, register}) {
         e.preventDefault();
     }
 
-    const {ref, ...rest} = register("album_art");
-
     return (
-        <div className="font-semibold text-push-play-charcoal-700 text-base min-w-[976px] h-[169px] bg-push-play-blue-100 border border-push-play-blue-950 rounded-2xl content-center">
-            <div className="w-40 grid grid-flow-col gap-2 grid-cols-[24px_150px] mx-auto hover:cursor-pointer hover:underline hover:text-push-play-charcoal-900 text-ellipsis" onClick={handleClick} onDrop={handleDrop} onChange={(e) => {validateFiles(e.target.files)}} onDragOver={handleDragOver}>
-                <input name={name} type="file" className="hidden" accept="image/*" {...rest} ref={(e) => {
+        <div className="font-semibold text-push-play-charcoal-700 text-base min-w-[976px] h-[169px] bg-push-play-blue-100 border border-push-play-blue-950 rounded-2xl content-center" onDrop={handleDrop} onDragOver={handleDragOver} >
+            <div className="w-40 grid grid-flow-col gap-2 grid-cols-[24px_150px] mx-auto hover:cursor-pointer hover:underline hover:text-push-play-charcoal-900 text-ellipsis" onClick={handleClick} onChange={(e) => {
+                const files = [...e.target.files];
+                validateFiles(files);
+            }}>
+                <input name={name} type="file" className="hidden" accept="image/*" ref={(e) => {
                     ref(e);
                     inputRef.current = e;
-                }} />
+                }} onChange={onChange} />
                 <ImageUpIcon />
                 <p>{uploadFile?.message}</p>
             </div>

@@ -7,7 +7,7 @@ import fetchAlbums from "@/lib/utils/fetchAlbums";
 
 
 
-export default function SelectArtistInput ({control, formState}) {
+export default function SelectArtistInput ({formState, setValue, isSubmitted, ...register}) {
     const artists = [{value: "SOLE", id: 1}];
     
     return (
@@ -17,9 +17,10 @@ export default function SelectArtistInput ({control, formState}) {
             options={artists} 
             placeholderText={"Artist Name"} 
             name="artist_name"
-            required
-            control={control}
             addOption
+            setValue={setValue}
+            isSubmitted={isSubmitted}
+            {...register}
         />
         <ErrorMessage>{formState?.errors?.artist_name?.message}</ErrorMessage>
 

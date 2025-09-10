@@ -11,3 +11,4 @@ Additionally, support for songs outside of the users' collection but inside of t
 - ImageKit (for images)
 - GSAP (for animations)
 - PostgreSQL
+- React Hook Form and Zod (for form validation)

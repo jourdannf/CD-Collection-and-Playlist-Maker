@@ -1,40 +1,71 @@
 'use client'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions } from "@headlessui/react"
 import { ChevronDown, ChevronLeft } from "lucide-react";
 import { useController } from "react-hook-form";
 
-export default function FilteredSelect ({options, placeholderText, addOption, ...others}) {
+export default function FilteredSelect ({options, placeholderText, addOption, onChange, name, setValue, isSubmitted, ref, ...others}) {
     const [query, setQuery] = useState('');
+    const [prevItem, setPrevItem] = useState({});
     const [selectedItem, setSelectedItem] = useState('');
+    const inputRef = useRef(null);
 
     
     const filteredOptions = query === '' ? options : options.filter((item) => {
         return item.value.toLowerCase().includes(query.toLowerCase());
     });
 
-    const {field, fieldState} = useController(others);
+    // const {field, fieldState} = useController(others);
+    // console.log(field)
+    // console.log(others)
 
     function handleClose (e) {
         if (!addOption) {
             setQuery('');
         }
-    } 
+    }
+
+    function handleOptionChange(option) {
+        if (addOption){
+            const value = option?.value || ""
+            if (option) {
+                setQuery(option.value);
+                inputRef.current.removeAttribute("data-focus")
+                if (isSubmitted) { //should validate only after submit
+                    setValue(name, value, {shouldValidate: true});
+                }else {
+                    setValue(name, value)
+                }
+            }
+        }
+        
+    }
+
+    function handleDispalyValue (item) {
+        return query
+    }
     
     return (
         <>
             <Combobox
-                as="div"
+                // as="div"
                 onClose={handleClose}
                 defaultValue={query}
-                {...field}
+                onChange={handleOptionChange}
             >
                 <div className="relative">
                 <ComboboxInput 
                     placeholder={placeholderText || ""}
-                    onChange={(e) => setQuery(e.target.value)}
-                    displayValue={(item) => item?.value || query}
-                    className="w-full rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 "   
+                    onChange={async (e) => { setQuery(e.target.value); onChange(e)}}
+                    displayValue={handleDispalyValue}
+                    className="w-full rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal focus:outline-1 focus:drop-shadow-sm data-focus:drop-shadow-push-play-purple-600 data-focus:outline-push-play-purple-700 "
+                    name={name || ""}
+                    ref={(e) => {
+                        ref(e);
+                        inputRef.current = e;
+                    }}
+                    {...others} 
+                    
                 />
                 <ComboboxButton className="group absolute right-0 px-2.5 bottom-1 hover:cursor-pointer">
                     <ChevronDown/>

@@ -11,20 +11,22 @@ import { useFieldArray, useForm } from "react-hook-form";
 import TextInput from "@/app/components/TextInput";
 import { useEffect, useRef, useState } from "react";
 import ErrorMessage from "@/app/components/ErrorMessage";
+import * as z from 'zod';
 
 
 
 export default function AddAlbumForm () {
     const [trackLength, setTrackLength] = useState(2);
     const currentDate = new Date(Date.now()).toISOString();
+    //currentDate.slice(0, currentDate.indexOf("T"))
 
-    const {control, register, unregister, handleSubmit, formState, reset} = useForm({
+    const {control, register, unregister, handleSubmit, formState, reset, setValue, getValues} = useForm({
         resolver: zodResolver(AlbumSchema),
         defaultValues: {
-            album_art: "",
+            album_art: [""],
             title: "",
             artist_name: "",
-            release_date: currentDate.slice(0, currentDate.indexOf("T")),
+            release_date: "",
             tracks: [{value: ""}]
         }
     });
@@ -40,44 +42,45 @@ export default function AddAlbumForm () {
        console.log(e)
     }
 
+    function convertErrorsIntoObj (errors) {
+        if (!Array.isArray(errors)){
+            return errors;
+        }
+
+        return Object.assign({}, ...errors);
+    }
+
     return (
         <Form onSubmit={handleSubmit(onSubmit, onError)} className="bg-push-play-blue-900/18 rounded-xl pt-7 px-12 relative overflow-hidden pb-15" >
             <Fieldset className="space-y-5">
                 <Field >
-                    <Label className="font-semibold" htmlFor="album_art">Album Cover Image</Label>
-                    <ImageUplaod name="album_art" required register={register} />
-                    <ErrorMessage>{formState?.errors?.album_art?.message}</ErrorMessage>
+                    <Label className="font-semibold" htmlFor="album_art">Album Cover Image<span className="text-push-play-purple-700">*</span></Label>
+                    <ImageUplaod {...register("album_art")} setValue={setValue} getValues={getValues} />
+                    <ErrorMessage>{convertErrorsIntoObj(formState?.errors?.album_art)?.message}</ErrorMessage>
                 </Field>
                 <Field>
                     <Label className="font-semibold" htmlFor="title">Album Title</Label>
-                    <TextInput placeholder="Album Title" name="title" />
+                    <TextInput placeholder="Album Title" {...register("title")} />
                     <ErrorMessage>{formState?.errors?.title?.message}</ErrorMessage>
                 </Field>
-                <SelectArtistInput control={control} formState={formState} />
+                <SelectArtistInput control={control} formState={formState} setValue={setValue} isSubmitted={formState.isSubmitted} {...register("artist_name", {required: true})} />
                 <Field>
                     <Label className="font-semibold" htmlFor="release_date">Release Date</Label>
                     <br></br>
-                    <input type="date" className="input w-full pr-3" name="release_date" {...register("release_date")} />
+                    <input type="date" className="input w-full pr-3" {...register("release_date")} />
                     <ErrorMessage>{formState?.errors?.release_date?.message}</ErrorMessage>
                 </Field>
                 <Field className="space-y-1.5"> 
                     <Label className="font-semibold" htmlFor="tracks">Tracks</Label>   
-
                     {
                         fields.map((field, index) => {
                             
                             return <TextInput key={field.id} {...register(`tracks.${index}.value`)} placeholder={`Track ${index + 1}`} />
                         })
                     }
-
-                    {/* {
-                        //Create array out of tracklength and use that to genereate the textinputs
-                        [...Array(trackLength).keys()].map((i) => {
-                            return <TextInput key={`track${i+1}`} placeholder={`Track ${i + 1}`} name="tracks" {...register(`tracks[${i}].value`)} />
-                        })
-                    } */}
-                    <Button variant="primary" handleClick={(e) => {e.preventDefault(); append({value: ""});}}>ADD</Button>
                     <ErrorMessage>{formState?.errors?.tracks ? "At least one track is required" : ""}</ErrorMessage>
+                    <Button variant="primary" handleClick={(e) => { append({value: ""});}}>ADD</Button>
+                    
                 </Field>
             </Fieldset>
 
