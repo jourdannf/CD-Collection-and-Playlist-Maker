@@ -1,5 +1,5 @@
 import Track from "./Track";
-import DraggableTrackWrapper from "../mixtape-maker/(components)/DraggableTrackWrapper";
+import DraggableTrackWrapper from "../(main)/mixtape-maker/(components)/DraggableTrackWrapper";
 
 export default function TrackList ({className, tracks, draggable, setDraggedTrack, databaseEmpty, ...refs}) {
 

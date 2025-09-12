@@ -4,7 +4,7 @@
 
 import { getUserBySession } from "@/auth/core/session";
 import { redirect } from "next/navigation";
-import Home from "./dashboard/page";
+import Home from "./(main)/dashboard/page";
 
 export default async function IndexPage () {
 
@@ -12,8 +12,6 @@ export default async function IndexPage () {
 
     if (!user) redirect('/sign-up');
 
-    return (
-        <Home user={user} />
-    )
+    redirect('/dashboard')
 
 }

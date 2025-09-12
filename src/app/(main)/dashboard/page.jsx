@@ -1,7 +1,7 @@
-import Album from "../components/Album";
-import MusicLogInput from "../components/MusicLogInput";
-import TopThreeContainer from "../components/TopThreeContainer";
-import RecentLogsContainer from "../components/RecentLogsContainer";
+import Album from "../../components/Album";
+import MusicLogInput from "../../components/MusicLogInput";
+import TopThreeContainer from "../../components/TopThreeContainer";
+import RecentLogsContainer from "../../components/RecentLogsContainer";
 
 let recentPlays = [];
 let options = [];

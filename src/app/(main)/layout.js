@@ -1,7 +1,5 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import NavBar from "./components/NavBar";
-import ListeningTracker from "./components/ListeningTracker";
-import "./globals.css";
+import NavBar from "../components/NavBar";
+import ListeningTracker from "../components/ListeningTracker";
 
 export const metadata = {
   title: "Push Play",
@@ -15,10 +13,8 @@ const navItems = [
   {name: "Mixtape Maker"}
 ]
 
-export default function RootLayout({ children }) {
+export default function MainLayout({ children }) {
   return (
-    <html lang="en">
-      <body className="">
 
       <div className="grid grid-cols-[auto_1fr] ">
         <header className="pl-8 w-[275px] bg-push-play-blue-900/18 pt-40 overflow-y-auto shadow-black/25 shadow-[1px_0px_24px] h-screen ">
@@ -35,7 +31,6 @@ export default function RootLayout({ children }) {
         </main>
         
       </div>
-      </body>
-    </html>
+
   );
 }

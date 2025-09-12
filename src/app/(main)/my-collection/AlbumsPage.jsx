@@ -1,5 +1,5 @@
 import Album from "@/app/components/Album";
-import AlbumCard from "../components/AlbumCard";
+import AlbumCard from "../../components/AlbumCard";
 
 export default async function AlbumsPage ({pageNum, albums}) {
     // feed all the params and functions here and make this a server component
