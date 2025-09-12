@@ -29,11 +29,11 @@ export const AlbumSchema = z.object({ //figure out how to make the second track 
     tracks: z.tuple([trackInfoSchema], z.object({value: z.string()})) //Has to have at least one track with a name, other vals can be empty
 });
 
-export const userRegisterationSchema = z.object({
-    username: z.string(),
-    password: z.string(),
-    email: z.email()
-});
+// export const userRegisterationSchema = z.object({
+//     username: z.string(),
+//     password: z.string(),
+//     email: z.email()
+// });
 
 
 

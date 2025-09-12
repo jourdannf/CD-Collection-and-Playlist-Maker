@@ -29,7 +29,8 @@ export default async function TracklistFilter({query}) {
                     className={`w-96 h-8`} 
                     placeholder="What song did you want to add?"
                     icon={<Search  size={17} strokeWidth={2.5} />}
-                    variant="startIcon"                
+                    variant="startIcon"
+                    id="boomboxSearch"
                 />
             </div>
 

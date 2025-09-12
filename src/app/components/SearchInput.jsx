@@ -3,7 +3,7 @@ import { Input } from "@headlessui/react";
 import { useDebouncedCallback } from "use-debounce";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 
-export default function SearchInput ({placeholder, variant, name, icon, className }) {
+export default function SearchInput ({placeholder, variant, name, icon, className, id }) {
     //handle change in it's own function and update search params based on it?
     const searchParams = useSearchParams();
     const pathname = usePathname();
@@ -26,7 +26,7 @@ export default function SearchInput ({placeholder, variant, name, icon, classNam
         <>
             <div className={`relative items-center ${className}`}>
                 <Input
-                    id="boomboxSearch"
+                    id={id || ""}
                     className={`bg-push-play-blue-100 border border-push-play-blue-950 rounded-xl focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 w-[inherit] h-[inherit] pl-8 py-0.5` }
                     placeholder={placeholder} 
                     name={name || ""} 
