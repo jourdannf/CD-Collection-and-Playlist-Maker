@@ -7,5 +7,5 @@ export const userRegisterationSchema = z.object({
 });
 
 export const sessionSchema = z.object({
-    id: z.string()
+    user_id: z.number()
 });

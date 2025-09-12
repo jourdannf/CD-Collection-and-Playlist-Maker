@@ -3,6 +3,7 @@
 import pool from "@/lib/db";
 import crypto from "crypto";
 import { cookies } from "next/headers";
+import { sessionSchema } from "../nextjs/zodSchemas";
 
 //seven days
 const SESSION_EXPIRATION_SECONDS = 60*60*24*7;
@@ -25,10 +26,27 @@ export async function createUserSession(user) {
     }
 }
 
+export async function getUserBySession() {//might have to change location because I don't want this to necessarily be a server action
+    const sessionId = (await cookies()).get(COOKIE_SESSION_KEY);
+    if (!sessionId.value) return null;
+
+    const user = await pool.query(`
+        SELECT user_id FROM user_sessions
+            WHERE session_id = $1
+            AND expiry_date > NOW()
+    `, [sessionId.value]);
+
+    const currentUser = user.rows[0]
+
+
+    const {success, data} = sessionSchema.safeParse(currentUser);
+
+    if (!success) return null;
+    return currentUser;
+}
+
 async function setCookie(sessionId) {
     const cookieStore = await cookies();
-
-    console.log(COOKIE_SESSION_KEY);
     
     cookieStore.set(COOKIE_SESSION_KEY, sessionId, {
         secure: true,
@@ -37,3 +55,6 @@ async function setCookie(sessionId) {
         expires: Date.now() + SESSION_EXPIRATION_SECONDS * 1000
     });
 }
+
+
+

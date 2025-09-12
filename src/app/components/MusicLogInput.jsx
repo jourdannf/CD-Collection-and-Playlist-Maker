@@ -76,13 +76,13 @@ export default function MusicLogInput ({className}) {
             <Field className="bg-push-play-blue-900/18 rounded-xl pt-7 px-12 relative overflow-hidden">
                 <Label className="font-semibold">Album</Label>
                 <br/>
-                <FilteredSelect 
+                {/* <FilteredSelect 
                   options={options} 
                   placeholderText={"What album are you reviewing?"} 
                   name="album"
                   required
                   control={control}
-                />
+                /> */}
                 <ErrorMessage>{formState.errors.album ? formState.errors.album.message : ""}</ErrorMessage>
                 <br />
                 <Label> My Rating </Label>
