@@ -3,7 +3,7 @@
 
 import { useContext } from "react";
 import { DraggableTracklistContext } from "@/lib/utils/DraggableTracklistProvider";
-import { InsideBoomboxContext } from "@/lib/utils/InsideBoomboxProvider";
+import { InsideBoomboxContext } from "@/lib/utils/contexts";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Draggable from "gsap/Draggable";

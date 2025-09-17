@@ -4,7 +4,7 @@
 import Boombox from "./Boombox";
 import DispenseAlbumsPage from "./DispenseAlbumsPage";
 import { useState, useContext } from "react";
-import { InsideBoomboxContext } from "@/lib/utils/InsideBoomboxProvider";
+import { InsideBoomboxContext } from "@/lib/utils/contexts";
 
 export default function BoomboxPage ({children, insideBoomboxData}) {
     

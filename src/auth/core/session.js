@@ -9,7 +9,7 @@ import { sessionSchema } from "../nextjs/zodSchemas";
 const SESSION_EXPIRATION_SECONDS = 60*60*24*7;
 const COOKIE_SESSION_KEY = "session-id";
 
-export async function createUserSession(user) {
+export async function createUserSession(user, cookies) {
     const sessionId = crypto.randomBytes(512).toString("hex").normalize();
 
     try {
@@ -19,7 +19,7 @@ export async function createUserSession(user) {
         `, [user.id, sessionId, SESSION_EXPIRATION_SECONDS]);
 
         // console.log("We are in create user sessions")
-        setCookie(sessionId);
+        await setCookie(sessionId, cookies);
     }catch (e) {
         pool.query("ROLLBACK");
         throw e;
@@ -28,7 +28,7 @@ export async function createUserSession(user) {
 
 export async function getUserBySession() {//might have to change location because I don't want this to necessarily be a server action
     const sessionId = (await cookies()).get(COOKIE_SESSION_KEY);
-    if (!sessionId.value) return null;
+    if (!sessionId?.value) return null;
 
     const user = await pool.query(`
         SELECT user_id FROM user_sessions
@@ -45,11 +45,25 @@ export async function getUserBySession() {//might have to change location becaus
     return currentUser;
 }
 
-async function setCookie(sessionId) {
-    const cookieStore = await cookies();
+export async function removeUserFromSession() {
+    const cookiesStore = await cookies()
+    const sessionId = cookiesStore.get(COOKIE_SESSION_KEY);
+    if (!sessionId?.value) return null;
+
+    const result = await pool.query(`
+        DELETE FROM user_sessions
+            WHERE session_id = $1
+    `, [sessionId.value]);
+
+    if (!result.rowCount) return null;
+
+    cookiesStore.delete(COOKIE_SESSION_KEY);
+}
+
+async function setCookie(sessionId, cookies) {
     
-    cookieStore.set(COOKIE_SESSION_KEY, sessionId, {
-        secure: true,
+    cookies.set(COOKIE_SESSION_KEY, sessionId, {// TODO: set secure to true for production
+        secure: false,
         httpOnly: true,
         sameSite: 'lax',
         expires: Date.now() + SESSION_EXPIRATION_SECONDS * 1000

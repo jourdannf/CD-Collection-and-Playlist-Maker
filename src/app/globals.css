@@ -140,5 +140,12 @@ body {
 }
 
 .input {
-  @apply rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700
+  @apply rounded-2xl bg-push-play-blue-100 border border-push-play-blue-950 pl-4 py-0.5 font-normal focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700;
+}
+
+.form-group:has([required]) label{
+  &:after {
+    content: " *";
+    @apply text-push-play-purple-800;
+  }
 }

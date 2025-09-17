@@ -9,3 +9,8 @@ export const userRegisterationSchema = z.object({
 export const sessionSchema = z.object({
     user_id: z.number()
 });
+
+export const signInSchema = z.object ({
+    email: z.email(),
+    password: z.string().min(8)
+});

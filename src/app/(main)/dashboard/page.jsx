@@ -2,6 +2,7 @@ import Album from "../../components/Album";
 import MusicLogInput from "../../components/MusicLogInput";
 import TopThreeContainer from "../../components/TopThreeContainer";
 import RecentLogsContainer from "../../components/RecentLogsContainer";
+import UserInfo from "@/app/components/UserInfo";
 
 let recentPlays = [];
 let options = [];
@@ -78,6 +79,8 @@ export default async function Home() {
       value: `${album.title} - Artist Name`
     }
   });
+
+  // const user = useUserContext();
   
   return (
     <>

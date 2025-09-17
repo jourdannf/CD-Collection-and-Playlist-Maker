@@ -29,7 +29,12 @@ export default function SignUpForm () {
         }
 
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/register`, opts);
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/register`, opts);
+
+            !response.ok ? setError("root.serverError", {
+                type: response.status.toString(),
+                message: response.body
+            }) : redirect("/");
         }catch (e) {
             throw e;
         }
@@ -38,24 +43,22 @@ export default function SignUpForm () {
     return (
         <div>
             <Form onSubmit={handleSubmit(submitHandler)}>
-                <Fieldset className="mb-4">
-                    <Field>
-                        <Label>Email</Label>
-                        <TextInput {...register("email")} />
-                        <ErrorMessage>{errors?.email && errors?.email.message}</ErrorMessage>
-                    </Field>
-                    <Field>
-                        <Label>Username</Label>
-                        <TextInput {...register("username")} />
-                        <ErrorMessage>{errors?.username && errors?.username.message}</ErrorMessage>
-                    </Field>
-                    <Field>
-                        <Label>Password</Label>
-                        <TextInput type="password" {...register("password")} />
-                        <ErrorMessage>{errors?.username && errors?.username.message}</ErrorMessage>
-                    </Field>
-                </Fieldset>
-                <Button type="submit" variant="primary">Sign Up</Button>
+                <Field className="form-group">
+                    <Label htmlFor="email">Email</Label>
+                    <TextInput id="email" {...register("email")} required />
+                    <ErrorMessage>{errors?.email && errors?.email.message}</ErrorMessage>
+                </Field>
+                <Field className="form-group">
+                    <Label htmlFor="username">Username</Label>
+                    <TextInput id="username" {...register("username")} required />
+                    <ErrorMessage>{errors?.username && errors?.username.message}</ErrorMessage>
+                </Field>
+                <Field className="form-group">
+                    <Label htmlFor="password">Password</Label>
+                    <TextInput id="password" type="password" {...register("password")} required />
+                    <ErrorMessage>{errors?.password && errors?.password.message}</ErrorMessage>
+                </Field>
+                <Button type="submit" variant="primary" className="mt-4">Sign Up</Button>
             </Form>
         </div>
     )

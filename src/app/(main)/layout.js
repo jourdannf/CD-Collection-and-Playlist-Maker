@@ -1,5 +1,8 @@
 import NavBar from "../components/NavBar";
 import ListeningTracker from "../components/ListeningTracker";
+import { getUserBySession } from "@/auth/core/session";
+import { UserContextProvier } from "@/lib/utils/contexts";
+import UserInfo from "../components/UserInfo";
 
 export const metadata = {
   title: "Push Play",
@@ -13,7 +16,8 @@ const navItems = [
   {name: "Mixtape Maker"}
 ]
 
-export default function MainLayout({ children }) {
+export default async function MainLayout({ children }) {
+
   return (
 
       <div className="grid grid-cols-[auto_1fr] ">
@@ -26,10 +30,12 @@ export default function MainLayout({ children }) {
           </nav>
           <ListeningTracker />
         </header>
-        <main className="mx-5 h-screen overflow-y-auto p-13">
-            {children}
-        </main>
-        
+        <UserContextProvier>
+          <main className="mx-5 h-screen overflow-y-auto p-13">
+            <UserInfo />
+              {children}
+          </main>
+          </UserContextProvier>
       </div>
 
   );

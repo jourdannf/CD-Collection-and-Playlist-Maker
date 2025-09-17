@@ -10,7 +10,7 @@ export default async function IndexPage () {
 
     const user = await getUserBySession();
 
-    if (!user) redirect('/sign-up');
+    if (!user) redirect('/login');
 
     redirect('/dashboard')
 

@@ -1,7 +1,7 @@
 "use client";
 import { Input } from "@headlessui/react";
 
-export default function TextInput ({placeholder, variant, name, icon, className, type, ...register }) {
+export default function TextInput ({placeholder, variant, name, icon, className, type, required, ...register }) {
 
     return (
         <>
@@ -13,6 +13,7 @@ export default function TextInput ({placeholder, variant, name, icon, className,
                     type={type || "text"}
                     {...(register || {})}
                     autoComplete="on"
+                    required
                 />
             </div>
         </>

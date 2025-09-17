@@ -3,7 +3,7 @@
 import StackedCDs from "./StackedCDs";
 import Button from "@/app/components/Button";
 import { useContext } from "react";
-import { InsideBoomboxContext } from "@/lib/utils/InsideBoomboxProvider";
+import { InsideBoomboxContext } from "@/lib/utils/contexts";
 
 export default function DispenseAlbumsPage ({dispenseAlbums}) {
     //insideBoombox is a list of tracks that were inserted inside boombox

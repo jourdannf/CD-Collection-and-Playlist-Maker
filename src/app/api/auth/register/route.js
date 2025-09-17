@@ -45,13 +45,9 @@ export async function POST(request) {
 
         if (!newUser) return Response.json("Unable to create new user", {status: 500});
         
-        try {
-            await createUserSession(newUser);
-        }catch (e) {
-            pool.query("ROLLBACK");
-            throw e;
-        }
-
+        
+        await createUserSession(newUser);//need to see if createuser session can work without me passing a cookie!
+        
         return Response.json(`New user created with ${newUser.id}`, {status: 201});
 
         // redirect('/')
