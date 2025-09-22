@@ -22,7 +22,9 @@ export async function POST (request) {
             VALUES ($1)
         `, [track_id]);
 
-        return Response.json(res.rows, {status: 201, statusText: "Track added to boombox"});
+        if (!res.rowCount) return Response.json("Unable to add track to boombox", {status: 500});
+
+        return Response.json(res.rows, {status: 201});
     }catch (e) {
         throw e;
     }

@@ -20,28 +20,25 @@ export async function POST (request, {params}) {
         const track_id = req.track_id;
 
         const res = await pool.query(` 
-            INSERT INTO boombox (track_id)
-            VALUES ($1)
-        `, [track_id]); // add where based on user id
+            INSERT INTO boombox (track_id, user_id)
+            VALUES ($1, $2)
+        `, [track_id, id]);
 
-        return Response.json(res.rows, {status: 201, statusText: "Track added to boombox"});
+        if (!res.rowCount) return Response.json("Unable to add track to boombox", {status: 500});
+        return Response.json(res.rows, {status: 201});
     }catch (e) {
         throw e;
     }
 }
 
 export async function DELETE (request, {params}) { // add for deleting specific track id later
-    const searchParams = request.nextUrl.searchParams;
 
     try {
         const {id} = await params;
-        if (!searchParams.has("track_id")) { // add delete based on user id
-            const res = await pool.query(`TRUNCATE boombox`);
+        console.log("here")
+        await pool.query(`DELETE FROM boombox WHERE user_id = $1`, [id]);
 
-            return Response.json(res.rows, {status: 200, statusText: "All tracks were deleted from the boombox"});
-        }else {
-            //Do the work to make it delete by track id 
-        }
+        return new Response(null, {status: 204});
 
     }catch (e) {
         throw e;

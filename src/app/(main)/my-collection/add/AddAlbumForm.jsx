@@ -9,15 +9,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AlbumSchema } from "@/lib/utils/zodSchemas";
 import { useFieldArray, useForm } from "react-hook-form";
 import TextInput from "@/app/components/TextInput";
-import { useEffect, useRef, useState } from "react";
 import ErrorMessage from "@/app/components/ErrorMessage";
-import * as z from 'zod';
+import { useUserContext } from "@/lib/utils/contexts";
 
 
 
 export default function AddAlbumForm () {
-    const [trackLength, setTrackLength] = useState(2);
     const currentDate = new Date(Date.now()).toISOString();
+    const {user} = useUserContext();
     //currentDate.slice(0, currentDate.indexOf("T"))
 
     const {control, register, unregister, handleSubmit, formState, reset, setValue, getValues} = useForm({
@@ -33,11 +32,21 @@ export default function AddAlbumForm () {
 
     const {fields, append} = useFieldArray({control, name: "tracks"})
 
-    async function onSubmit (values) {
+    async function onSubmit (formData) {
         //Deal with the file
         //Take the file object and send it to the cdn
         //CDN sends you back the link to the photo
         //Add that link to the body that's being sent to the database
+
+        const opts = {
+            method: "POST",
+            body: JSON.stringify(formData),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+
+        const result = fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/upload-auth/route.ts`, opts);
     }
 
     function onError(e) {

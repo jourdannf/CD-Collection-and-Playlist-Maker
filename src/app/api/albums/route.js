@@ -1,8 +1,12 @@
+import { getUserBySession } from "@/auth/core/session";
 import pool from "@/lib/db";
+import { headers } from "next/headers";
 
 export async function GET(request, {params}) {
-
+    //TODO: Check that user has authentiation to use this route based on their user id, maybe in middleware
     const searchParams = request.nextUrl.searchParams;
+    const offsetVal = searchParams.get('limit') * searchParams.get('offset');
+    const values = [(searchParams.get('search') || null) , searchParams.get('limit'), offsetVal, searchParams.get('userId')];
     let fetchString = `
         SELECT 
             album_id,
@@ -16,28 +20,13 @@ export async function GET(request, {params}) {
             medium,
             plays
         FROM albums 
-        JOIN artists ON albums.artist_id = artists.artist_id 
+        JOIN artists ON albums.artist_id = artists.artist_id
+        WHERE ($1::text is NULL OR title ILIKE $1 || '%' OR artist_name ILIKE $1 || '%') AND owner = $4
+        LIMIT $2 OFFSET $3
     `;
 
-    if (searchParams.has("search")) {
-        const query = searchParams.get("search");
-        if (query) {
-            fetchString += `WHERE title ILIKE '${query}%' OR artist_name ILIKE '${query}%' `;
-        }
-    }
-
-    if (searchParams.has("limit")) {
-        let offsetVal = 0;
-
-        if (searchParams.has("offset")){
-            offsetVal = Number(searchParams.get("limit")) * Number(searchParams.get("offset"))
-        }
-
-        fetchString += `LIMIT ${searchParams.get("limit")} OFFSET ${String(offsetVal)} `;
-    }
-
     try {
-        const res = await pool.query(fetchString);
+        const res = await pool.query(fetchString, values);
 
         if (res.rows.length == 0) {
             return Response.json('', {status: 400});
@@ -61,7 +50,9 @@ export async function POST(request) {
 
     try {
         const req = await request.json();
-        const artist_id = await pool.query(`SELECT add_new_artist($1)`, [req.artist_name]);
+        const body = req.body;
+        //TODO: Validate body
+        const artist_id = await pool.query(`SELECT add_new_artist($1)`, [body.artist_name]);
 
         // Check that the release date is in correct format
         // Check that artist is a name that's actually registered in artist databased from rec software

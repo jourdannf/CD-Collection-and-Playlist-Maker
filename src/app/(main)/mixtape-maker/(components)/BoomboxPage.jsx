@@ -13,14 +13,6 @@ export default function BoomboxPage ({children, insideBoomboxData}) {
     const updateInsideBoombox = (value) => {
         setInsideBoombox(value);
     }
-    // function handleClick(e) {
-    //     if (insideBoombox.length != 0) {
-    //         setCreatePlaylist(true);
-    //     }else {
-    //         //Make component look like something is invalid
-    //     }
-        
-    // }
 
     //Make boombox dependent on dispense state variable
     //Make children appear and disappear on state variable

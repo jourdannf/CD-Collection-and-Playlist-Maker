@@ -7,6 +7,7 @@ import DraggableTracklistProvider from "@/lib/utils/DraggableTracklistProvider";
 import DraggableTrackWrapper from "./DraggableTrackWrapper";
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { useUserContext } from "@/lib/utils/contexts";
 
 export default function DraggableTracklist ({tracks, query}) {
     const [trackRef, inView, entry] = useInView({threshold: 0.1});
@@ -20,6 +21,7 @@ export default function DraggableTracklist ({tracks, query}) {
         }
     );
     const [tempTracks, setTempTracks] = useState(tracks);
+    const {user} = useUserContext();
 
     useEffect(() => {
         setTempTracks(tracks);
@@ -30,13 +32,16 @@ export default function DraggableTracklist ({tracks, query}) {
             //We will clear out the boombox when there's no query and the user has refreshed the page to start over
             //Lose progress basically every time you reload the page to it's intial state
             (async () => {
+                if (!user) return;
+
                 try {
                     const options = {
                         method: "DELETE"
                     };
 
-                    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/boombox`, options);
-                    console.log(result.statusText);
+                    fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/${user.id}/boombox`, options);
+
+                    
 
                 }catch (e) {
                     throw e;
@@ -44,7 +49,7 @@ export default function DraggableTracklist ({tracks, query}) {
             })();
         }
         
-    }, []);
+    }, [user]);
 
     return (
         <DraggableTracklistProvider value={draggedTrack}>

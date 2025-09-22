@@ -13,17 +13,17 @@ export function DraggableTracklistProvider({children, value}) {
 
 export const UserContext = createContext(undefined);
 
-export const UserContextProvier = ({children}) => {
+export const UserContextProvider = ({children}) => {
     const [user, setUser] = useState(null);
 
     const fetchUser = async () => {
-        setUser(await getUserBySession());
+        setUser(await getUserBySession({getFullUser: true}));
     }
 
     return <UserContext.Provider value={{user, fetchUser}}>{children}</UserContext.Provider>
 }
 
-export function useUserContext() {
+export function useUserContext(props) {
 
     const user = useContext(UserContext);
 

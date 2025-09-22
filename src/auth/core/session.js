@@ -4,12 +4,17 @@ import pool from "@/lib/db";
 import crypto from "crypto";
 import { cookies } from "next/headers";
 import { sessionSchema } from "../nextjs/zodSchemas";
+import { cache } from "react";
 
 //seven days
 const SESSION_EXPIRATION_SECONDS = 60*60*24*7;
 const COOKIE_SESSION_KEY = "session-id";
 
-export async function createUserSession(user, cookies) {
+export const getCurrentUser = async () => {
+
+}
+
+export async function createUserSession(user) {
     const sessionId = crypto.randomBytes(512).toString("hex").normalize();
 
     try {
@@ -19,14 +24,16 @@ export async function createUserSession(user, cookies) {
         `, [user.id, sessionId, SESSION_EXPIRATION_SECONDS]);
 
         // console.log("We are in create user sessions")
-        await setCookie(sessionId, cookies);
+        await setCookie(sessionId);
     }catch (e) {
         pool.query("ROLLBACK");
         throw e;
     }
 }
 
-export async function getUserBySession() {//might have to change location because I don't want this to necessarily be a server action
+export async function getUserBySession({getFullUser = false} = {}) {//might have to change location because I don't want this to necessarily be a server action
+
+    
     const sessionId = (await cookies()).get(COOKIE_SESSION_KEY);
     if (!sessionId?.value) return null;
 
@@ -36,12 +43,27 @@ export async function getUserBySession() {//might have to change location becaus
             AND expiry_date > NOW()
     `, [sessionId.value]);
 
-    const currentUser = user.rows[0]
-
+    let currentUser = user.rows[0]
 
     const {success, data} = sessionSchema.safeParse(currentUser);
+    console.log(success)
 
     if (!success) return null;
+
+    //If there's an option or prop to get full user, then change currentUser to query from db for full user
+    if (getFullUser) {
+        const fullUser = await pool.query(`
+            SELECT id, username, email FROM users
+                WHERE id = $1
+        `, [currentUser.user_id]);
+
+        //TODO: validate
+
+        currentUser = fullUser.rows[0];
+
+        if (!fullUser.rowCount) throw new Error("User not found in database");
+    }
+    
     return currentUser;
 }
 
@@ -60,9 +82,9 @@ export async function removeUserFromSession() {
     cookiesStore.delete(COOKIE_SESSION_KEY);
 }
 
-async function setCookie(sessionId, cookies) {
-    
-    cookies.set(COOKIE_SESSION_KEY, sessionId, {// TODO: set secure to true for production
+async function setCookie(sessionId) {
+    const cookieStore = await cookies();
+    cookieStore.set(COOKIE_SESSION_KEY, sessionId, {// TODO: set secure to true for production
         secure: false,
         httpOnly: true,
         sameSite: 'lax',

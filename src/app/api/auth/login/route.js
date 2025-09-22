@@ -6,7 +6,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function POST (request) {
-    console.log(request)
     
     try {
         const body = await request.json();
@@ -29,7 +28,7 @@ export async function POST (request) {
         });
 
         if (!isCorrectPassword) return Response.json("Invalid username or password", {status: 404});
-        await createUserSession(user, await cookies());
+        await createUserSession(user);
 
         
         return Response.json({data: user}, {status: 200});

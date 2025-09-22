@@ -1,8 +1,9 @@
 import NavBar from "../components/NavBar";
 import ListeningTracker from "../components/ListeningTracker";
 import { getUserBySession } from "@/auth/core/session";
-import { UserContextProvier } from "@/lib/utils/contexts";
+import { UserContextProvider } from "@/lib/utils/contexts";
 import UserInfo from "../components/UserInfo";
+
 
 export const metadata = {
   title: "Push Play",
@@ -18,6 +19,9 @@ const navItems = [
 
 export default async function MainLayout({ children }) {
 
+  const pathname = "";
+  const noUserPath = ["/my-collection/add"]
+
   return (
 
       <div className="grid grid-cols-[auto_1fr] ">
@@ -30,12 +34,12 @@ export default async function MainLayout({ children }) {
           </nav>
           <ListeningTracker />
         </header>
-        <UserContextProvier>
+        <UserContextProvider>
           <main className="mx-5 h-screen overflow-y-auto p-13">
-            <UserInfo />
+            { !noUserPath.includes(pathname) ? <UserInfo /> : ""}
               {children}
           </main>
-          </UserContextProvier>
+          </UserContextProvider>
       </div>
 
   );

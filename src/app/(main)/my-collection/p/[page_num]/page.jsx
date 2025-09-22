@@ -16,7 +16,8 @@ export default async function MyCollectionPage ({params, searchParams}) {
 
     if (page_num % 10 === 1) {
         //fetch the albums and push onto array
-        albums.push(...(await fetchAlbums(limit, offset, query)));
+        const data = await fetchAlbums(limit, offset, query)
+        albums.push(...data);
     }
 
     const start = (page_num - 1) * 10;

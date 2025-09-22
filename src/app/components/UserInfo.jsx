@@ -1,17 +1,18 @@
 "use client";
 
 import { useUserContext } from "@/lib/utils/contexts";
-import { redirect } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function UserInfo({className}) {
-    // const user = useUserContext();
-
     const {user, fetchUser} = useUserContext();
     const [isLoggedOut, setLoggedOut] = useState({
         success: false,
         message: ""
     });
+
+    const pathname = usePathname();
+    const hideUserPath = ["/my-collection/add"]
 
     useEffect( () => {
         fetchUser();
@@ -35,10 +36,11 @@ export default function UserInfo({className}) {
          redirect("/");
     };
 
+    if (hideUserPath.includes(pathname)) return;
 
     return (
-        <div className="flex gap-1.5 ">
-            <p>{user?.user_id}</p><button className="hover:underline" onClick={handleClick}>(Log out)</button>
+        <div className="flex gap-1.5 justify-end">
+            <p>{user?.username}</p><button className="hover:underline" onClick={handleClick}>(Log out)</button>
         </div>
     )
     

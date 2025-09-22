@@ -3,7 +3,7 @@
 
 import { useContext } from "react";
 import { DraggableTracklistContext } from "@/lib/utils/DraggableTracklistProvider";
-import { InsideBoomboxContext } from "@/lib/utils/contexts";
+import { InsideBoomboxContext, useUserContext } from "@/lib/utils/contexts";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Draggable from "gsap/Draggable";
@@ -15,6 +15,7 @@ import Draggable from "gsap/Draggable";
 export default function DraggableTrackWrapper({children, setDraggedTrack, ref, clone, containerRef, setTracks, tracks}) {
     let dragElem;
     let draggedTrack = useContext(DraggableTracklistContext);
+    let {user} = useUserContext();
     let {insideBoombox, updateInsideBoombox} = useContext(InsideBoomboxContext);
     
     gsap.registerPlugin(Draggable, useGSAP);
@@ -100,8 +101,8 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
                             "Accept": 'application/json'
                         }
                     }
-                    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/boombox`, options);
-                    console.log(result.statusText);
+                    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/${user.id}/boombox`, options);
+                    console.log(result)
                 }catch (e) {
                     throw e;
                 }

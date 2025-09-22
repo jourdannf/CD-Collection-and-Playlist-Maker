@@ -6,7 +6,7 @@ import gsap from "gsap"
 gsap.registerPlugin(useGSAP);
 
 export default function CDSpine ({track}) {
-    const trackDate = new Date(track.release_date);
+    const trackDate = new Date(track.album.release_date);
     
 
     return (
