@@ -1,21 +1,29 @@
 import { getUserBySession } from "@/auth/core/session";
 
+export async function fetchTracksFilter (query, limit, offset, cookies, filterBoombox) {
+    // const {user_id} = await getUserBySession();
 
+    if (!query && !filterBoombox) {
+        //call delete function
 
-export async function fetchTracksFilter (query, limit, offset) {
-    const {user_id} = await getUserBySession();
+        const options = {
+            method: "DELETE",
+            ...(cookies ? {headers: {"Cookie": cookies}} : {})
+        }
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/${17}/boombox`, options);
+    }
     
-    let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&limit=${limit}&offset=${offset}&search=${query}&userId=${user_id}`;
+    let fetchString = `${process.env.NEXT_PUBLIC_BASE_API_URL}/tracks?order=random&limit=${limit}&offset=${offset}&search=${query}&userId=${17}`;
 
-    const result = await fetch(fetchString);
+    const result = cookies ? await fetch(fetchString, {headers: {"Cookie": cookies}, next: {tags: 'fetchTracks'}}) : await fetch(fetchString);
     const tracks = await result.json();
     return tracks;
 }
 
 export async function fetchBoomboxTracks () {
-    const {user_id} = await getUserBySession();
-    if (!user_id) return;
-    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/${user_id}/boombox`);
+    // const {user_id} = await getUserBySession();
+    // if (!user_id) return;
+    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/${17}/boombox`);
     const tracks = await result.json();
     return tracks;
 }

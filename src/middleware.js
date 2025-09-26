@@ -17,6 +17,9 @@ async function middlewareAuth(request) {
         if (!user) {
             return NextResponse.redirect(new URL("/login", request.url))
         }
+        // const response = NextResponse.next()
+        // response.cookies.set('user', user);
+        // return response;
     }
 }
 

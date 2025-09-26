@@ -1,15 +1,33 @@
+import { getUserBySession } from "@/auth/core/session";
 import pool from "@/lib/db";
+import { cookies } from "next/headers";
 //TODO: Make seed random on each login
 
 export async function GET(request, {params}) {
 
     const searchParams = request.nextUrl.searchParams;
     let qSearch = `SELECT * FROM tracks `;
-    const offsetVal = searchParams.get('limit') * searchParams.get('offset');
+    const offsetVal = searchParams.get("limit") * searchParams.get("offset");
+    const filterBoombox = searchParams.has("filter-boombox");
+    const q = searchParams.get("search");
 
-    const values = [searchParams.get("userId"), searchParams.get("search"), searchParams.get("limit"), offsetVal, searchParams.get("order")];
+    const {user_id} = await getUserBySession();
 
-    //add check for the tracks that are in the user's database only
+    const values = [user_id, q, searchParams.get("limit"), offsetVal, searchParams.get("order")];
+
+    //If the filterBoombox is not available in the search and there's no query, you should clear out the boombox
+    
+    // if (!filterBoombox && q == null) {
+    //     const options = {
+    //         method: "DELETE",
+    //         headers: {
+    //             Cookie: await cookies()
+    //         }
+    //     }
+    //     await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/17/boombox`, options);
+    // }
+
+
     qSearch = `
         SELECT 
             t.track_id, t.title, t.track_number, to_jsonb(alb) album, ar.artist_name
@@ -19,9 +37,9 @@ export async function GET(request, {params}) {
                 FROM albums) AS alb ON t.album_id = alb.album_id
             JOIN artists ar ON alb.artist_id = ar.artist_id
         WHERE
-            ($1::integer IS NULL OR t.track_id NOT IN (SELECT b.track_id FROM boombox b WHERE user_id = $1))
+            (($1::integer IS NULL OR (t.track_id NOT IN (SELECT b.track_id FROM boombox b WHERE user_id = $1)) AND alb.album_id IN (SELECT alb_owned.album_id FROM user_albums alb_owned WHERE user_id = $1)))
             AND ($2::text IS NULL OR t.title ILIKE $2 || '%' OR ar.artist_name ILIKE $2 || '%')
-            AND ($1::integer IS NULL OR alb.album_id IN (SELECT alb_owned.album_id FROM user_albums alb_owned WHERE user_id = $1))
+            
         ORDER BY 
             CASE 
                 WHEN $5 = 'random' THEN RANDOM()::text

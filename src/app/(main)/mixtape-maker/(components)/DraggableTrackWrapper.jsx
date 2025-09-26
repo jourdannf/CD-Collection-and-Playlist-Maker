@@ -7,6 +7,7 @@ import { InsideBoomboxContext, useUserContext } from "@/lib/utils/contexts";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import Draggable from "gsap/Draggable";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 //we will use context in order to get the dragged track and it's updater function
 // Draggable Wrapper turns tracks into draggable tracks
@@ -17,7 +18,10 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
     let draggedTrack = useContext(DraggableTracklistContext);
     let {user} = useUserContext();
     let {insideBoombox, updateInsideBoombox} = useContext(InsideBoomboxContext);
-    
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const pathname = usePathname();
+
     gsap.registerPlugin(Draggable, useGSAP);
     useGSAP(() => { //handling the drag of the clone
         if (clone) {   
@@ -102,11 +106,22 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
                         }
                     }
                     const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/users/${user.id}/boombox`, options);
-                    console.log(result)
+
+                    if (!result.ok) throw new Error("Unable to add track to boombox");
+                    
+                    const params = new URLSearchParams(searchParams);
+                    if (!params.has("filter-boombox")) {
+                        params.append("filter-boombox", true);
+                        router.replace(`${pathname}?${params.toString()}`, {scroll: false})
+                    }else {
+                        router.refresh();
+                    }
                 }catch (e) {
                     throw e;
                 }
             })();
+
+            // router.refresh(); //refreshes the route so set tracks is no longer needed
             
             setTracks(tracks.filter((track) => {
                 if (track.track_id === Number(this.target.dataset.trackId)) {
@@ -170,4 +185,6 @@ export default function DraggableTrackWrapper({children, setDraggedTrack, ref, c
     }
     
     return <div ref={ref} onMouseDown={!clone ? handlePress : null} className="hover:cursor-grab" >{children}</div>
+
+    
 }

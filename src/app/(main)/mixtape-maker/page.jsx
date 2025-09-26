@@ -11,6 +11,7 @@ export default async function MixtapeMakerPage ({searchParams}) {
     //Make a client component and pass it two render functions for Boombox and Playlist created in order to keep those two as server components
 
     const query = (await searchParams)?.query || "";
+    const filterBoombox = (await searchParams)?.["filter-boombox"] || "";
     //Call a function that will get what's inside the boombox
     //It will pass that to the boombox page
     const insideBoomboxData = await fetchBoomboxTracks();
@@ -20,7 +21,7 @@ export default async function MixtapeMakerPage ({searchParams}) {
             {/* {createPlaylist ? <PlaylistCreatedPage insideBoombox={insideBoombox} createPlaylist={createPlaylist} /> : <BoomboxPage insideBoombox={insideBoombox} setInsideBoombox={setInsideBoombox} setCreatePlaylist={setCreatePlaylist} />} */}
 
             <BoomboxPage insideBoomboxData={insideBoomboxData}>
-                <TracklistFilter query={query} />
+                <TracklistFilter query={query} filterBoombox={filterBoombox} />
             </BoomboxPage>
 
             {/* <BoomboxPage query={query} /> */}

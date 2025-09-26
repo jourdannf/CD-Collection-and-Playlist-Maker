@@ -33,7 +33,6 @@ export async function createUserSession(user) {
 
 export async function getUserBySession({getFullUser = false} = {}) {//might have to change location because I don't want this to necessarily be a server action
 
-    
     const sessionId = (await cookies()).get(COOKIE_SESSION_KEY);
     if (!sessionId?.value) return null;
 
@@ -46,7 +45,6 @@ export async function getUserBySession({getFullUser = false} = {}) {//might have
     let currentUser = user.rows[0]
 
     const {success, data} = sessionSchema.safeParse(currentUser);
-    console.log(success)
 
     if (!success) return null;
 

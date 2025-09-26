@@ -19,6 +19,7 @@ export default function SearchInput ({placeholder, variant, name, icon, classNam
         }
 
         replace(`${pathname}?${params.toString()}`, {scroll: false});
+        
 
     }, 200)
 
