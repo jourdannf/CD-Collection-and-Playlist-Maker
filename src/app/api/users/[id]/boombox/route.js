@@ -9,8 +9,8 @@ export async function GET (request, {params}) {
             SELECT t.track_id, t.title, t.track_number, t.album_id, to_jsonb(alb) album FROM boombox b
                 JOIN tracks t ON b.track_id = t.track_id
                 JOIN (SELECT 
-                    album_id, title, release_date, artist_id, '/albums/' || album_id AS href
-                FROM albums) AS alb ON t.album_id = alb.album_id
+                    album_id, title, release_date, artist_name, '/albums/' || album_id AS href
+                FROM albums a JOIN artists ar ON ar.artist_id = a.artist_id) AS alb ON t.album_id = alb.album_id
                 
             `); // add where based on user id
         return Response.json(result.rows, {status: 200});
