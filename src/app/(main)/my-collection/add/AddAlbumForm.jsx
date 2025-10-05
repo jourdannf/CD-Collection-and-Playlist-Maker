@@ -13,7 +13,6 @@ import ErrorMessage from "@/app/components/ErrorMessage";
 import { useUserContext } from "@/lib/utils/contexts";
 
 
-
 export default function AddAlbumForm () {
     const currentDate = new Date(Date.now()).toISOString();
     const {user} = useUserContext();

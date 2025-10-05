@@ -2,11 +2,12 @@ import pool from "@/lib/db";
 
 export async function GET(request, {params}) {
 
-    const {album_id} = params;
+    const {album_id} = await params;
 
     try {
         const res = await pool.query(`
             SELECT * FROM tracks WHERE album_id = $1
+            ORDER BY track_number
             `, [album_id]);
 
         return Response.json(res.rows, {status: 200});

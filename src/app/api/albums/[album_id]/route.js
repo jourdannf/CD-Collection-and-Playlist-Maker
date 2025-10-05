@@ -4,9 +4,15 @@ export async function GET(request, {params}) {
     const {album_id} = await params;
 
     try {
-        const res = await pool.query(`SELECT * from albums WHERE album_id = $1`, [album_id]);
+        const res = await pool.query(`
+            SELECT 
+                album_id, title, release_date, rating, album_art, artist_name, in_library, has_photobook, medium, plays
+            FROM albums 
+            JOIN artists ON albums.artist_id = artists.artist_id
+            WHERE album_id = $1
+            `, [album_id]);
 
-        return Response.json(res.rows, {status: 200});
+        return Response.json(res.rows[0], {status: 200});
         
     } catch (e) {
         console.log(e);

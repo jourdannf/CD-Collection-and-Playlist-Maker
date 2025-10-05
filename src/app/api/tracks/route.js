@@ -39,7 +39,6 @@ export async function GET(request, {params}) {
         WHERE
             (($1::integer IS NULL OR (t.track_id NOT IN (SELECT b.track_id FROM boombox b WHERE user_id = $1)) AND alb.album_id IN (SELECT alb_owned.album_id FROM user_albums alb_owned WHERE user_id = $1)))
             AND ($2::text IS NULL OR t.title ILIKE $2 || '%' OR ar.artist_name ILIKE $2 || '%')
-            
         ORDER BY 
             CASE 
                 WHEN $5 = 'random' THEN RANDOM()::text

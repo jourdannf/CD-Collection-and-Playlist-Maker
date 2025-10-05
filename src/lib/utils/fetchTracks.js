@@ -27,3 +27,11 @@ export async function fetchBoomboxTracks () {
     const tracks = await result.json();
     return tracks;
 }
+
+export async function fetchTracks(album) {
+    const {album_id} = album;
+
+    const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/albums/${album_id}/tracks`)
+    const tracks = await result.json();
+    return tracks;
+}

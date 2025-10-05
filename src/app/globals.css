@@ -128,6 +128,13 @@
   clip-path: path("M0,45  Q0,45  3,42 T7,24 T19,4 T25,10 T24,28 T34,36 T45,45  Z");  
 }
 
+@utility size-* {
+  width: --value();
+  width: --value([length]);
+  height: --value();
+  height: --value([length]);
+}
+
 html {
   color: var(--foreground);
   /* background: var(--background); */
@@ -148,4 +155,16 @@ body {
     content: " *";
     @apply text-push-play-purple-800;
   }
+}
+
+.album-header li:not(:last-child) > h6{
+  &:after {
+    content: " \00b7";
+    @apply text-push-play-blue-950 mx-2 font-semibold text-xl;
+  }
+  
+}
+
+.logs-row-item {
+  grid-template-columns: repeat(auto-fit, 1fr);
 }

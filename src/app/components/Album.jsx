@@ -1,8 +1,8 @@
 import Image from "next/image";
 
-export default function Album ({variant, albumInfo, width, height, className, id}) {
+export default function Album ({variant, albumInfo, width, height, className, showCaption, id}) {
 
-    
+    //If size is small then width and height is 118, meidum is 180, and large is 230
     
     const renderAlbum = () => {
         switch (variant) {
@@ -20,12 +20,24 @@ export default function Album ({variant, albumInfo, width, height, className, id
                 )
     }
     }
-    
+
+    const containerSize = {
+        xs: `size-118px`,
+        small: `size-[140px]`,
+        medium: `size-[180px]`,
+        large: `size-[230px]`
+    }
     
     
     return (
-        <>
-            {renderAlbum()}
-        </>
+        <div className={`rounded-md ${className || {}} relative w-full aspect-square`}>
+            <Image className="rounded-md" src={albumInfo?.album_art} fill alt={`Picture of album named ${albumInfo?.title}`} />
+            {showCaption && 
+            <>
+                <p className="text-base/[120%] font-semibold mt-2">{albumInfo?.title}</p>
+                <p className="text-base/[120%]">{albumInfo?.artist_name}</p>
+            </>}
+            {/* {renderAlbum()} */}
+        </div>
     );
 }

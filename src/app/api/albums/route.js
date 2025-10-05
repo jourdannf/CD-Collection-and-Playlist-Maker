@@ -1,12 +1,13 @@
 import { getUserBySession } from "@/auth/core/session";
 import pool from "@/lib/db";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 export async function GET(request, {params}) {
     //TODO: Check that user has authentiation to use this route based on their user id, maybe in middleware
     const searchParams = request.nextUrl.searchParams;
     const offsetVal = searchParams.get('limit') * searchParams.get('offset');
-    const values = [(searchParams.get('search') || null) , searchParams.get('limit'), offsetVal, searchParams.get('userId')];
+    const {user_id} = await getUserBySession();
+    const values = [(searchParams.get('search') || null) , searchParams.get('limit'), offsetVal, user_id];
     let fetchString = `
         SELECT 
             album_id,
@@ -27,6 +28,7 @@ export async function GET(request, {params}) {
 
     try {
         const res = await pool.query(fetchString, values);
+        console.log(res)
 
         if (res.rows.length == 0) {
             return Response.json('', {status: 400});

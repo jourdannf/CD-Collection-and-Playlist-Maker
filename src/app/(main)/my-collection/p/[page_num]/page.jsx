@@ -1,7 +1,7 @@
 
 import AlbumsPage from "../../AlbumsPage";
 import SearchInput from "@/app/components/SearchInput";
-import fetchAlbums from "@/lib/utils/fetchAlbums";
+import {fetchAlbums} from "@/lib/utils/fetchAlbums";
 import Button from "@/app/components/Button";
 import { Plus } from "lucide-react";
 import { redirect, RedirectType } from "next/navigation";

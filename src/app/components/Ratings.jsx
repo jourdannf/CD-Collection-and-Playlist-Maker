@@ -37,12 +37,12 @@ export default function Ratings ({disabled, rating, className, ...others}) {
 
 
         return (
-            <div className={`inline-block ${ratingVariants[roundedRating]} ${className ? className : ""}`}>
+            <div className={`flex flex-row-reverse justify-end items-center ${ratingVariants[roundedRating]} ${className ? className : ""}`}>
                 {stars.map((starType, i) => {
                     return (
-                        <div key={i} className = "text-push-play-pale-yellow-700 float-right relative">
+                        <div key={i} className = "text-push-play-pale-yellow-700 relative h-[22px]">
                         {starType === "full" ?
-                        <Star size={22} strokeWidth={2}/> :
+                        <Star className="" size={22} strokeWidth={2}/> :
                         <StarHalf className="absolute" width="12" viewBox="0 0 12 24" size={22} strokeWidth={2} />}
                         </div>
                     )

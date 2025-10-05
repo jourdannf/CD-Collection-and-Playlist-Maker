@@ -1,6 +1,6 @@
 import { getUserBySession } from "@/auth/core/session";
 
-export default async function fetchAlbums (limit, offset, query) {
+export async function fetchAlbums (limit, offset, query) { // fetches all the albums for a user
     try {
         const user = await getUserBySession();
 
@@ -11,5 +11,19 @@ export default async function fetchAlbums (limit, offset, query) {
         return albums
     }catch (e) {
         throw e;
+    }
+}
+
+export default async function fetchAlbum(album_id, cookies) { // fetches a singular album for a user
+    try {
+        const options = {...(cookies ? {headers: {"Cookie": cookies}} : {})}
+
+        const result = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/albums/${album_id}`, options);
+
+        const album = await result.json();
+
+        return album;
+    }catch (e) {
+        console.log(e);
     }
 }
