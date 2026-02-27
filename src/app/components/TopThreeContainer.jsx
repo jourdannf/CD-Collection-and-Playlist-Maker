@@ -48,7 +48,7 @@ export default function TopThreeContainer () {
              If album is clicked on the speech bubble is filled with related text
              If album is clicked on the z index comes up to the forefront */
              }
-            <div className="flex *:hover:z-4 mb-16 *:hover:drop-shadow-sm *:hover:drop-shadow-push-play-charcoal-700" onClick={handleClick}>
+            <div className="mx-auto max-w-max justify-items-center flex *:hover:z-4 mb-16 *:hover:drop-shadow-sm *:hover:drop-shadow-push-play-charcoal-700" onClick={handleClick}>
                 
                 {logs.length == 3 &&
                 <> 
@@ -56,21 +56,24 @@ export default function TopThreeContainer () {
                     albumInfo={logs[1]} 
                     width="100" 
                     height="100"
-                    className={`${zindexes.element1} -rotate-20 z-2 translate-y-3 translate-x-9.5 ${selected === 1 ? "drop-shadow-sm drop-shadow-push-play-charcoal-700": ""}`}
+                    size="small"
+                    className={`relative ${zindexes.element1} -rotate-20 translate-y-5 translate-x-9.5 ${selected === 1 ? "drop-shadow-sm drop-shadow-push-play-charcoal-700": ""}`}
                 />
 
                 <Album 
                     albumInfo={logs[0]} 
                     width="100" 
                     height="100"
-                    className={`${zindexes.element2} ${selected === 0 ? "drop-shadow-sm drop-shadow-push-play-charcoal-700": ""}`}
+                    size="small"
+                    className={`relative ${zindexes.element2} ${selected === 0 ? "drop-shadow-sm drop-shadow-push-play-charcoal-700": ""}`}
                 />
 
                 <Album  
                     albumInfo={logs[2]} 
                     width="100" 
                     height="100"
-                    className={`${zindexes.element3} rotate-20 z-1 translate-y-3 -translate-x-9.5 ${selected === 2 ? "drop-shadow-sm drop-shadow-push-play-charcoal-700": ""}`}
+                    size="small"
+                    className={`relative ${zindexes.element3} rotate-20 translate-y-5 -translate-x-9.5 ${selected === 2 ? "drop-shadow-sm drop-shadow-push-play-charcoal-700": ""}`}
                     
                 />
                 </>

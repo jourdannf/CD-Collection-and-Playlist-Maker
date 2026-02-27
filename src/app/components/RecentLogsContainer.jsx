@@ -11,7 +11,7 @@ export default async function RecentLogsContainer () {
         const opts = {
             method: "GET"
         }
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/logs?sort=createdat&order=DESC&limit=3`, opts);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/logs?sort=createdate&order=DESC&limit=3`, opts);
         logs = await response.json();
         
     }catch (e) {
@@ -21,8 +21,8 @@ export default async function RecentLogsContainer () {
 
     return (
        <>
-        {logs.map((logInfo) => {    
-            return <MusicLog key={logInfo.log_id} logInfo={logInfo} imgHeight={118} imgWidth={118} type={"short"} className="mb-8" />
+        {logs.map((logInfo) => {
+            return <MusicLog key={logInfo.log_id} logInfo={logInfo} type={"short"} className="mb-8" direction="horizontal" imgSize="small"/>
         })}
        </>
     )

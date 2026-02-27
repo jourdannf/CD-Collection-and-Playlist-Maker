@@ -13,7 +13,7 @@ export default function SpeechBubble ({albumInfo}) {
     }
 
     return (
-        <div className={`relative text-base w-80 h-44 bg-push-play-charcoal-50 rounded-sm px-5 pt-4 drop-shadow-md drop-shadow-push-play-charcoal-600 before:content-[''] before:absolute before:w-12 before:h-12 before:bg-push-play-charcoal-50 before:-top-9 before:left-31 before:clip-path`}>
+        <div className={`mx-auto relative text-base w-80 h-44 bg-push-play-charcoal-50 rounded-sm px-5 pt-4 drop-shadow-md drop-shadow-push-play-charcoal-600 before:content-[''] before:absolute before:w-12 before:h-12 before:bg-push-play-charcoal-50 before:-top-9 before:left-31 before:clip-path`}>
             <p className="font-semibold text-lg/[120%]">{albumInfo?.title}</p>
             <p className="text-lg/[120%] mb-2">{albumInfo?.artist_name}</p>
             <p className="text-base/[120%]">{reviewBody}</p>

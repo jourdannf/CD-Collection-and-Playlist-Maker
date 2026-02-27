@@ -45,6 +45,7 @@ export async function getUserBySession({getFullUser = false} = {}) {//might have
     let currentUser = user.rows[0]
 
     const {success, data} = sessionSchema.safeParse(currentUser);
+    console.log(`is successful: ${success}`);
 
     if (!success) return null;
 

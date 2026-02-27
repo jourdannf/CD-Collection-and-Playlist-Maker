@@ -90,7 +90,7 @@ export default function MusicLogInput ({className}) {
                 <Ratings name="rating" control={control} />
                 <ErrorMessage>{formState.errors.rating ? formState.errors.rating.message : ""}</ErrorMessage>
                 <br />
-                <Label>My Thougts</Label>
+                <Label>My Thoughts</Label>
                 <br />
                 <Textarea {...register("body")} className="w-full h-48 bg-push-play-blue-100 border border-push-play-blue-950 rounded-xl resize-none px-4 py-2 focus:outline-1 focus:drop-shadow-sm focus:drop-shadow-push-play-purple-600 focus:outline-push-play-purple-700 m-0" />
                 <ErrorMessage>{formState.errors.body ? formState.errors.body.message : ""}</ErrorMessage>

@@ -7,7 +7,7 @@ export const userRegisterationSchema = z.object({
 });
 
 export const sessionSchema = z.object({
-    user_id: z.number()
+    user_id: z.coerce.number()
 });
 
 export const signInSchema = z.object ({

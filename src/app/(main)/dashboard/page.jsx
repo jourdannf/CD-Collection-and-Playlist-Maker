@@ -58,10 +58,10 @@ export default async function Home() {
       method: "GET"
     }
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/history`, opts);
-      const resArray = await res.json();
+//       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/history`, opts);
+//       const resArray = await res.json();
 
-      recentPlays = resArray;
+//       recentPlays = resArray;
 
       const albumsRes = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/albums`, opts);
       options = await albumsRes.json();
@@ -90,7 +90,7 @@ export default async function Home() {
         <div className="grid grid-flow-col auto-cols-[19%] overflow-x-scroll">
           {
             testItems?.map((e) => {
-              return <Album key={e.id} variant="showCaption" albumInfo={e} width="150" height="150" className="row-span-1" />
+              return <Album key={e.id} variant="showCaption" albumInfo={e} width="150" height="150" className="row-span-1 relative" size="medium" />
             })
           }
         </div>
@@ -99,7 +99,7 @@ export default async function Home() {
       <MusicLogInput className="col-start-1 col-end-3 mb-24" />
       
       <div className="col-start-1 col-end-2">
-          <h4 className="mb-6">My Top Three Picks</h4>
+          <h4 className="mb-6 text-center">My Top Three Picks</h4>
           <TopThreeContainer />
       </div>
       <div className="col-start-2 col-end-3">

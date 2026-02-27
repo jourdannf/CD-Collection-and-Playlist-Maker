@@ -6,8 +6,9 @@ export async function GET(request, {params}) {
     //TODO: Check that user has authentiation to use this route based on their user id, maybe in middleware
     const searchParams = request.nextUrl.searchParams;
     const offsetVal = searchParams.get('limit') * searchParams.get('offset');
-    const {user_id} = await getUserBySession();
-    const values = [(searchParams.get('search') || null) , searchParams.get('limit'), offsetVal, user_id];
+    console.log(searchParams);
+//    const {user_id} = await getUserBySession();
+    const values = [(searchParams.get('search') || null) , searchParams.get('limit'), offsetVal, 1];
     let fetchString = `
         SELECT 
             album_id,
@@ -15,20 +16,19 @@ export async function GET(request, {params}) {
             release_date,
             rating,
             album_art,
-            artist_name,
+            ar.artist_name,
             in_library,
             has_photobook,
             medium,
             plays
         FROM albums 
-        JOIN artists ON albums.artist_id = artists.artist_id
-        WHERE ($1::text is NULL OR title ILIKE $1 || '%' OR artist_name ILIKE $1 || '%') AND owner = $4
+        JOIN artists AS ar ON albums.artist_id = ar.artist_id
+        WHERE ($1::text is NULL OR title ILIKE $1 || '%' OR ar.artist_name ILIKE $1 || '%') AND owner = $4
         LIMIT $2 OFFSET $3
     `;
 
     try {
         const res = await pool.query(fetchString, values);
-        console.log(res)
 
         if (res.rows.length == 0) {
             return Response.json('', {status: 400});

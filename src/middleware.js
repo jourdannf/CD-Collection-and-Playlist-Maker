@@ -4,6 +4,7 @@ import { getUserBySession } from "./auth/core/session";
 const userRoutes = ["/dashboard", "/mixtape-maker", "my-collection"];
 const disocgRoutes = ["/my-wishlist"];
 
+
 export async function middleware(request) {
     const response = await middlewareAuth(request) ?? NextResponse.next();
 
@@ -17,9 +18,9 @@ async function middlewareAuth(request) {
         if (!user) {
             return NextResponse.redirect(new URL("/login", request.url))
         }
-        // const response = NextResponse.next()
-        // response.cookies.set('user', user);
-        // return response;
+        const response = NextResponse.next()
+        response.cookies.set('user', user);
+        return response;
     }
 }
 

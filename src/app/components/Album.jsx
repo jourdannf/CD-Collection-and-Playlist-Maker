@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Album ({variant, albumInfo, width, height, className, showCaption, id}) {
+export default function Album ({variant, albumInfo, width, height, className, showCaption, size, id}) {
 
     //If size is small then width and height is 118, meidum is 180, and large is 230
     
@@ -30,7 +30,7 @@ export default function Album ({variant, albumInfo, width, height, className, sh
     
     
     return (
-        <div className={`rounded-md ${className || {}} relative w-full aspect-square`}>
+        <div className={`${className || {}} ${containerSize[size]} aspect-square`}>
             <Image className="rounded-md" src={albumInfo?.album_art} fill alt={`Picture of album named ${albumInfo?.title}`} />
             {showCaption && 
             <>

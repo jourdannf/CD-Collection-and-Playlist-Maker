@@ -9,6 +9,8 @@ import Home from "./(main)/dashboard/page";
 export default async function IndexPage () {
 
     const user = await getUserBySession();
+    console.log("User")
+    console.log(user);
 
     if (!user) redirect('/login');
 

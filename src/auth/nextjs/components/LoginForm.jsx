@@ -29,6 +29,7 @@ export default function LoginForm () {
         }
 
         try {
+
             const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API_URL}/auth/login`, opts);
 
             !response.ok ? setError("root.serverError", {
