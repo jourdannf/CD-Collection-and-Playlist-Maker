@@ -21,9 +21,9 @@ export default async function RecentLogsContainer () {
 
     return (
        <>
-        {logs.map((logInfo) => {
+        {logs.length != 0 ? logs.map((logInfo) => {
             return <MusicLog key={logInfo.log_id} logInfo={logInfo} type={"short"} className="mb-8" direction="horizontal" imgSize="small"/>
-        })}
+        }) : <p className="text-center"> No recent logs. </p>}
        </>
     )
 }

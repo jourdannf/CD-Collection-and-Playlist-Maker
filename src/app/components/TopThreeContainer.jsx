@@ -47,7 +47,10 @@ export default function TopThreeContainer () {
             {/*  Each log will have to keep track of if it's currently being clicked on and text for speech bubble 
              If album is clicked on the speech bubble is filled with related text
              If album is clicked on the z index comes up to the forefront */
-             }
+            }
+
+            { logs.length != 0 &&
+
             <div className="mx-auto max-w-max justify-items-center flex *:hover:z-4 mb-16 *:hover:drop-shadow-sm *:hover:drop-shadow-push-play-charcoal-700" onClick={handleClick}>
                 
                 {logs.length == 3 &&
@@ -80,7 +83,12 @@ export default function TopThreeContainer () {
                 
                 }
             </div>
-            <SpeechBubble albumInfo={logs[selected]} />
+            }
+
+            {
+                logs.length != 0 ? <SpeechBubble albumInfo={logs[selected]} /> : <p className="text-center">No logs available.</p>
+            }
+            
         </>
     )
 }

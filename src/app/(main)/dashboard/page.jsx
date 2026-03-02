@@ -73,12 +73,12 @@ export default async function Home() {
     
   
 
-  options = options.map((album, i) => {
-    return {
-      id: album.album_id,
-      value: `${album.title} - Artist Name`
-    }
-  });
+  // options = options?.map((album, i) => {
+  //   return {
+  //     id: album.album_id,
+  //     value: `${album.title} - Artist Name`
+  //   }
+  // });
 
   // const user = useUserContext();
   

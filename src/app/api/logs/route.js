@@ -48,6 +48,7 @@ export async function GET(request, {params}) {
 
             JOIN albums ON music_logs.album_id = albums.album_id
             JOIN artists ON albums.aritst_id = artists.artist_id
+            
         ` : 
         `
             SELECT

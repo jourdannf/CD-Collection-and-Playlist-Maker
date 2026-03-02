@@ -26,7 +26,7 @@ export default function MusicLogInput ({className}) {
 
         let albums = await albumsRes.json();
         
-        albums = albums.map((album) => {
+        albums = albums?.map((album) => {
           return {
             id: album.album_id,
             value: `${album.title} - ${album.artist_name}`
